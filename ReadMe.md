@@ -9,7 +9,9 @@ First thing you want to do before installing **Youtubify** is to create a new da
 
 Your host will most likely be running **phpMyAdmin** as mysql manager, if that's the case here's a step by step guide (if not the proccess will be very similar on other managers).
 
-Login to your control panel, find and click phpMyAdmin link: ![][1] Click on the database tab in the top menu, enter any name you like and click create.![][2]
+Login to your control panel, find and click phpMyAdmin link: ![][1] 
+
+Click on the database tab in the top menu, enter any name you like and click create.![][2]
 
 ## Uploading Files
 
