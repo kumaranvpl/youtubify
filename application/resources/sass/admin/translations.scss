@@ -1,0 +1,56 @@
+#translations {
+	display: flex;
+
+	.flex-table {
+		flex: 1 1 auto;
+
+		.flex-table-header {
+			background-color: $admin-panel-header-color;
+		  	color: $admin-panel-header-text-color;
+		  	border-top: 3px solid $admin-panel-border-color;
+		  	border-top-right-radius: 3px;
+		  	border-top-left-radius: 3px;
+		}
+
+		.trans-header {
+			padding: 0.5em 0;
+			text-indent: 0.5em;
+		}
+
+		.flex-table-row {
+			&:hover {
+				input {
+					background-color: $light-table-hover-color;
+				}
+			}
+		}
+
+		.index-col {
+			max-width: 50px;
+			justify-content: center;
+		}
+
+		.with-input {
+			padding: 0;
+
+			> input {
+				width: 100%;
+				height: 100%;
+				border: 1px solid transparent;
+				padding: 0.5em;
+				line-height: inherit;
+				background-color: transparent;
+
+				&:focus {
+					outline: none;
+					border-color: $accent-color;
+				}
+			}
+		}
+	}
+
+	.right-col {
+		width: 30%;
+		padding: 0 20px;
+	}
+}

@@ -1,0 +1,33 @@
+.current-user-widget {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 25px 15px 0;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+
+  .dropdown-menu {
+    position: fixed;
+    z-index: 10;
+  }
+
+  > img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .user-email {
+    flex-grow: 1;
+    color: $text-color;
+    margin-right: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .edit-profile {
+    cursor: pointer;
+  }
+}

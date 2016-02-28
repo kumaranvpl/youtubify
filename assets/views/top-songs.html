@@ -1,0 +1,49 @@
+<div id="album-page" class="page-shadow scroll-container" ng-controller="ExternalPlayerControlsController" pretty-scrollbar>
+   <div ng-controller="TopSongsController">
+       <div class="filter-bar">
+           <div class="sort">{{:: 'top50' | translate }}</div>
+           <div class="filter hidden-phone">
+               <input type="text" ng-model="params.query" placeholder="{{:: 'filter' | translate }}">
+               <i class="icon icon-search"></i>
+           </div>
+       </div>
+
+       <div class="flex-table album-table">
+           <div class="flex-table-row flex-table-header" sortable-table-header>
+               <div class="flex-table-row-item track-number"></div>
+               <div class="flex-table-row-item add-remove-track hidden-phone"></div>
+               <div class="flex-table-row-item track-name" sort-field="name">{{:: 'song' | translate }}</div>
+               <div class="flex-table-row-item artist-name" sort-field="album.artist.name">{{:: 'artist' | translate }}</div>
+               <div class="flex-table-row-item album-name hidden-phone" sort-field="album.name">{{:: 'album' | translate }}</div>
+               <div class="flex-table-row-item track-duration hidden-phone" sort-field="duration"><i class="icon icon-clock"></i></div>
+               <div class="flex-table-row-item popularity hidden-phone" sort-field="spotify_popularity"><i class="icon icon-thumbs-up"></i></div>
+           </div>
+           <div class="flex-table-row" ng-repeat="track in topSongs | orderBy:params.sort | filter:params.query as sortedTracks" ng-class="{ playing: trackIsPlaying(track), saved: trackSaved(track) }" context-menu-item>
+               <div class="flex-table-row-item track-number hover-icon" ng-click="loadQueueAndPlayTrack(track, $index, sortedTracks)">
+                   <span class="track-index hidden-tablet">{{ $index+1 }}</span>
+                   <div class="play-icon"><i class="icon icon-play"></i></div>
+                   <div class="pause-icon"><i class="icon icon-pause"></i></div>
+                   <playing-icon class="inside-album-table"></playing-icon>
+               </div>
+               <div class="flex-table-row-item add-remove-track hidden-phone">
+                   <i class="icon icon-plus add-track" ng-click="addTrack(track)"></i>
+                   <i class="icon icon-cancel-1 remove-track" ng-click="removeTrack(track)"></i>
+                   <i class="icon icon-ok track-added" ng-click="removeTrack(track)"></i>
+               </div>
+               <div class="flex-table-row-item track-name"><div class="ellipses">{{ track.name }}</div></div>
+               <div class="flex-table-row-item artist-name"><all-track-artists artists="track.artists"></all-track-artists></div>
+               <div class="flex-table-row-item album-name hidden-phone"><a class="ellipses" ui-sref="album({artistName:track.album.artist.name, name:track.album.name})">{{ track.album.name }}</a></div>
+               <div class="flex-table-row-item track-duration hidden-phone">{{ track.duration }}</div>
+               <div class="flex-table-row-item popularity hidden-phone">
+                   <div class="popularity-widget">
+                       <div class="popularity-fill" style="width: {{ track.spotify_popularity+'%' }}"></div>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+       <div class="no-items" ng-if="sortedTracks && ! sortedTracks.length">
+           <div class="title"><i class="icon icon-note"></i> {{:: 'noSongsMatchCriteria' | translate }}</div>
+       </div>
+   </div>
+</div>

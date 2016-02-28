@@ -1,0 +1,170 @@
+#search-page {
+  height: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  
+  .no-results {
+    width: 100%;
+    height: 100%;
+    font-weight: 100;
+    background-position: 0 30%;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    > .overlay {
+      display: flex;
+      font-size: 2rem;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0,0,0,0.85);
+
+      > p {
+        font-size: 1rem;
+        margin-top: 5px;
+      }
+    }
+  }
+
+  nav {
+    border-bottom: 1px solid $border-color;
+    padding: 15px 20px 0;
+    
+    > h1 {
+      font-weight: 400;
+      margin-bottom: 60px;
+    }
+    
+    > .navigation {
+      display: flex;
+
+      > .nav-item {
+        margin-right: 20px;
+        width: 60px;
+        padding-bottom: 8px;
+        font-size: 1.1rem;
+        border-bottom: 3px solid transparent;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+
+        &:hover {
+          border-color: darken($accent-color, 15%);
+        }
+
+        &.active {
+          border-color: $accent-color;
+          cursor: default;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  .tab {
+    padding: 30px 20px 20px;
+    
+    > .artists-albums {
+      display: flex;
+
+      > .items-panel {
+        flex: 0 0 50%;
+        width: 50%;
+        overflow: hidden;
+
+        > .header {
+          padding: 10px;
+          text-transform: uppercase;
+          display: flex;
+
+          > .name, .see-all {
+            flex: 1 1 0;
+          }
+
+          > .name {
+            color: $text-color-darker;
+          }
+
+          > .see-all {
+            text-align: right;
+            cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .artists, .albums {
+        display: flex;
+
+        > .artist, .album {
+          background-color: $background-color-lighter;
+          flex: 1 1 0;
+          margin: 0 10px;
+          align-items: center;
+          max-width: 170px;
+
+          > .image {
+            width: 100%;
+            height: 161px;
+
+            > img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+
+          > .info {
+            white-space: nowrap;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .artist-name, > .name {
+              text-overflow: ellipsis;
+              overflow: hidden;
+              max-width: 100%;
+              cursor: pointer;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+
+            .artist-name {
+              color: $text-color-darker;
+              padding-top: 4px;
+            }
+          }
+        }
+      }
+    }
+
+    .artists figcaption {
+      text-align: center;
+    }
+
+    > .tracks {
+      margin-top: 30px;
+      padding: 0 10px;
+
+      .track-number, .add-remove-track {
+        flex-grow: 0.3;
+        min-width: 60px;
+      }
+
+      .track-name, .album-name, .artist-name {
+        flex-grow: 2;
+      }
+    }
+  }
+}

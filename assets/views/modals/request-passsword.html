@@ -1,0 +1,22 @@
+<div class="modal hidden" id="request-password-modal" ng-controller="SocialLoginController">
+    <div class="backdrop" modal-backdrop></div>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>{{ 'enterYourPassword' | translate }}</h1>
+            <div ng-click="closeModal()" class="close-modal-icon"><i class="icon icon-cancel"></i></div>
+        </div>
+
+        <div class="sub-header">{{:: 'requestPassword' | translate }}</div>
+
+        <div class="input-container">
+            <input type="password" ng-model="credentials.password" placeholder="{{ 'password' | translate }}">
+            <div ng-if="errorMessage" class="md-modal-error" style="order: 2">{{ errorMessage }}</div>
+        </div>
+
+        <div class="buttons">
+            <button ng-click="closeModal()" class="cancel">{{ 'cancel' | translate }}</button>
+            <button ng-click="connectAccounts()" ng-disabled="!credentials.password" class="primary">{{ 'connect' | translate }}</button>
+        </div>
+    </div>
+</div>

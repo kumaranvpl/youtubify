@@ -1,0 +1,30 @@
+<div class="scroll-container" pretty-scrollbar lazy-img-container>
+    <div class="page-shadow albums-page" ng-controller="NewReleasesController">
+        <div class="filter-bar">
+            <div class="dropdown-container sort">{{:: 'newReleases' | translate }}</div>
+            <div class="filter hidden-phone">
+                <input type="text" ng-model="params.query" placeholder="{{:: 'filter' | translate }}">
+                <i class="icon icon-search"></i>
+            </div>
+        </div>
+
+        <section class="albums hover-overlay">
+            <figure class="album" ng-repeat="album in albums | filter:{name:params.query} as sortedAlbums" context-menu-item="album">
+                <div class="image">
+                    <img lazy-img="{{ utils.img(album.image, 'album') }}" ng-src="{{ utils.img(false, 'album') }}" alt="{{ album.name }}">
+                    <div class="overlay">
+                        <i class="icon icon-play play" ng-click="playAlbum(album)"></i>
+                    </div>
+                </div>
+                <figcaption>
+                    <a class="album-name" ui-sref="album({artistName:utils.encodeUrlParam(album.artist.name), name:utils.encodeUrlParam(album.name)})">{{ album.name }}</a>
+                    <a class="artist-name" ng-if="album.artist" ui-sref="artist({ name: utils.encodeUrlParam(album.artist.name) })">{{ album.artist.name }}</a>
+                </figcaption>
+            </figure>
+        </section>
+
+        <div class="no-items" ng-if="sortedAlbums && ! sortedAlbums.length">
+            <div class="title"><i class="icon icon-note"></i> {{:: 'noResults' | translate }}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+tags-input {
+    display: block;
+    min-height: 49px;
+    margin-bottom: -1px;
+}
+tags-input *, tags-input *:before, tags-input *:after {
+    box-sizing: border-box;
+}
+tags-input .host {
+    position: relative;
+    height: 100%;
+}
+tags-input .host:active {
+    outline: none;
+}
+tags-input .tags {
+    padding: 1px 5px;
+    overflow: hidden;
+    word-wrap: break-word;
+    cursor: text;
+    background-color: #fff;
+    border: 1px solid rgb(224,224,224);
+    height: 100%;
+}
+tags-input .tags .tag-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+tags-input .tags .tag-item {
+    margin: 7px 7px 0 0;
+    padding: 0 8px 0 12px;
+    display: inline-block;
+    float: left;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 16px;
+    background-color: rgb(224,224,224);
+    color: rgb(66,66,66);
+    outline: none !important;
+    cursor: default;
+
+    span {
+        padding-right: 5px;
+    }
+
+    .remove-button {
+        margin: 0 0 0 5px;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        vertical-align: sub;
+        font-size: 23px;
+        color: rgba(0,0,0,0.54);
+        outline: none !important;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+tags-input .tags .tag-item.selected {
+    background-color: $accent-color;
+}
+tags-input .tags .input {
+    border: 0;
+    outline: none;
+    margin: 2px;
+    padding: 0;
+    padding-left: 5px;
+    float: left;
+    height: 43px;
+}
+tags-input .tags .input.invalid-tag {
+    color: #ff0000;
+}
+tags-input .tags .input::-ms-clear {
+    display: none;
+}

@@ -1,0 +1,32 @@
+#custom-css-modal {
+    > .modal-content {
+      width: 80%;
+      height: 80%;
+      max-width: none;
+      max-height: none;
+      padding: 0;
+
+      > .modal-header {
+        background-color: $background-color-lighter;
+        color: $text-color;
+        padding: 10px;
+
+        > .close-modal-icon {
+          top: 7px;
+          right: 7px;
+          color: $text-color;
+        }
+
+        > h1 {
+          font-size: 1rem;
+          font-weight: 300;
+        }
+      }
+
+      #editor {
+        width: 100%;
+        height: calc(100% - 37px);
+        font-size: 1.1rem;
+      }
+    }
+}

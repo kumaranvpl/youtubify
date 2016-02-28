@@ -1,0 +1,37 @@
+<div class="scroll-container" pretty-scrollbar>
+    <div class="page-shadow albums-page">
+        <div class="filter-bar">
+            <div class="dropdown-container sort" dropdown>
+                <div class="text dropdown-trigger">{{:: 'sortedBy' | translate }} {{ translate(params.sort) }}<i class="icon icon-sort-alt-up"></i></div>
+                <div class="dropdown-menu hidden">
+                    <div class="dropdown-item" ng-class="{ active: params.sort == '-name' }" ng-click="sortAlbums('-name')">{{:: 'name' | translate }}</div>
+                    <div class="dropdown-item" ng-class="{ active: params.sort == 'artist.name' }" ng-click="sortAlbums('artist.name')">{{:: 'artist' | translate }}</div>
+                </div>
+            </div>
+            <div class="filter hidden-phone">
+                <input type="text" ng-model="params.query" placeholder="{{:: 'filter' | translate }}">
+                <i class="icon icon-search"></i>
+            </div>
+        </div>
+
+        <section class="albums hover-overlay">
+            <figure class="album" ng-repeat="album in library.albums | orderBy:params.sort | filter:{name:params.query} as sortedAlbums" context-menu-item="album">
+                <div class="image">
+                    <img ng-src="{{ utils.img(album.image, 'album') }}" alt="{{ album.name }}">
+                    <div class="overlay">
+                        <i class="icon icon-play play" ng-click="playAlbum(album)"></i>
+                    </div>
+                </div>
+                <figcaption>
+                    <a class="album-name" ui-sref="album({artistName:utils.encodeUrlParam(album.artist.name), name:utils.encodeUrlParam(album.name)})">{{ album.name }}</a>
+                    <a class="artist-name" ng-if="album.artist" ui-sref="artist({ name: utils.encodeUrlParam(album.artist.name) })">{{ album.artist.name }}</a>
+                </figcaption>
+            </figure>
+        </section>
+
+        <div class="no-items" ng-if="libraryLoaded && sortedAlbums && ! sortedAlbums.length">
+            <div class="title"><i class="icon icon-note"></i> {{:: 'noAlbumsInLibrary' | translate }}</div>
+            <div class="sub">{{:: 'noAlbumsExpl' | translate }}</div>
+        </div>
+    </div>
+</div>

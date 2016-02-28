@@ -1,0 +1,44 @@
+<div id="translations" ng-controller="TranslationsController">
+
+    <div class="flex-table light">
+        <div class="flex-table-row flex-table-header">
+            <div class="flex-table-row-item index-col"></div>
+            <div class="flex-table-row-item">{{:: 'handle' | translate }}</div>
+            <div class="flex-table-row-item trans-header">{{:: 'translation' | translate }}</div>
+        </div>
+        <div class="flex-table-row" ng-repeat="item in translations[activeLocale] | filter: query">
+            <div class="flex-table-row-item index-col">{{ $index }}</div>
+            <div class="flex-table-row-item">{{ item.key }}</div>
+            <div class="flex-table-row-item with-input"><input type="text" ng-model="item.trans"></div>
+        </div>
+    </div>
+
+    <div class="right-col">
+        <div class="admin-panel">
+            <div class="panel-header">{{:: 'searchForLangLine' | translate }}</div>
+            <div class="panel-body">
+                <input type="text" ng-model="query" placeholder="{{:: 'search' | translate }}...">
+                <button class="primary no-shadow" ng-click="saveTranslations()">{{:: 'save' | translate }}</button>
+                <button class="primary no-shadow" ng-click="confirmTranslationsReset()">{{:: 'reset' | translate }}</button>
+            </div>
+        </div>
+
+       <div class="admin-panel">
+           <div class="panel-header">{{:: 'selectLocale' | translate }}</div>
+           <div class="panel-body">
+               <select ng-model="activeLocale" ng-change="changeLocale()">
+                   <option value="{{ locale }}" ng-repeat="locale in locales track by $index">{{ locale }}</option>
+               </select>
+               <button class="danger no-shadow" ng-click="deleteActiveLocale()">{{:: 'delete' | translate }}</button>
+           </div>
+       </div>
+
+        <div class="admin-panel">
+            <div class="panel-header">{{:: 'createLocale' | translate }}</div>
+            <div class="panel-body">
+                <input type="text" placeholder="{{:: 'name' | translate }}..." ng-model="newLocaleName">
+                <button class="primary no-shadow" ng-disabled="!newLocaleName" ng-click="createNewLocale(newLocaleName)">{{:: 'create' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>

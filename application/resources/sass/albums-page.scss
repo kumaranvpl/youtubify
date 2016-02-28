@@ -1,0 +1,165 @@
+.albums-page {
+  min-height: 100%;
+  max-width: 1600px;
+  padding: 20px 25px;
+  margin: 0 auto;
+
+  @media only screen and (max-width:$phone) {
+    padding: 10px;
+  }
+
+  .albums {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+
+    .album {
+      display: flex;
+      flex-direction: column;
+      width: 20%;
+      margin: 0;
+      padding: 14px;
+
+      @media only screen and (max-width : $tablet) {
+        width: 33.33%;
+      }
+
+      @media only screen and (max-width : $tablet-portrait) {
+        width: 50%;
+      }
+
+      @media only screen and (max-width : 300px) {
+        width: 100%;
+      }
+
+      > .image {
+        position: relative;
+
+        > img {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+      }
+      
+      > figcaption {
+        background-color: $background-color-lighter;
+        padding: 10px;
+        flex: 1 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .album-name, .artist-name {
+          cursor: pointer;
+          display: block;
+          color: inherit;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        .artist-name {
+          color: $text-color-darker;
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+}
+
+.hover-overlay {
+  .image {
+    position: relative;
+
+    > img {
+      display: block;
+    }
+
+    &:hover {
+      > .overlay {
+        display: flex;
+      }
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    > .play {
+      font-size: 2.2rem;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      border: 2px solid $text-color;
+      background-color: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &.icon-play {
+        padding-left: 3px;
+      }
+    }
+
+    > .add-remove-track {
+      max-width: 30px;
+      margin-right: 40px;
+
+      > .add, .remove, .added {
+        font-size: 1.8rem;
+        margin-right: 40px;
+        cursor: pointer;
+      }
+
+      > .remove, .added {
+        display: none;
+      }
+    }
+
+    &.saved {
+      > .add-remove-track {
+        > .added {
+          display: block;
+        }
+
+        > .add {
+          display: none;
+        }
+
+        &:hover {
+          > .added {
+            display: none;
+          }
+          
+          > .remove {
+            display: block;
+          }
+        }
+      }
+    }
+
+    > .options {
+      width: 45px;
+      height: 45px;
+      margin-left: 40px;
+      font-size: 1.7rem;
+      border: 1px solid $text-color;
+      background-color: rgba(0,0,0,0.7);
+      border-radius: 50%;
+      padding: 5px 0 0 5px;
+      cursor: pointer;
+      margin-top: 3px;
+    }
+  }
+}

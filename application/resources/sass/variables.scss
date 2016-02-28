@@ -1,0 +1,166 @@
+//-- General --
+//## General styles used across the whole application.##
+
+//** Main background color used across the site.
+$main-color: #19191B;
+
+//** Lighter (or darker) background color used across the site.
+$background-color-lighter: lighten($main-color, 5%);
+
+//** Color used for things like buttons, player bar, active states etc.
+$accent-color: #78b806;
+
+//** Main border color used for things like album tracks separator color.
+$border-color: lighten(#232428, 3%);
+
+//** Primary font used across the application.
+$font-family: RobotoDraft,'Helvetica Neue',sans-serif;
+
+//** Main text color used across all pages.
+$text-color: lighten(#5D5D5F, 43%);
+
+//** Darker text color, used for things that should have less emphasis.
+$text-color-darker: #898B8C;
+//##
+
+//-- Breakpoints --
+//## Controls the widths at which design will adapt to a particular device (phone, tablet, desktop).##
+$tablet: 1024px;
+$tablet-portrait: 768px;
+$phone: 627px;
+$phone-portrait: 375px;
+//##
+
+//-- Left Panel --
+//## All the left panel styles.##
+$left-panel-width: 220px;
+$left-panel-color: $background-color-lighter;
+$left-panel-text-color: $text-color;
+$left-panel-divider-color: lighten($background-color-lighter, 4%);
+$left-panel-active-item-color: lighten($background-color-lighter, 5%);
+
+//** Color of artist name at the bottom of left panel when track is playing.
+$left-panel-artist-name-text-color: $text-color-darker;
+
+$search-bar-height: 35px;
+$search-bar-color: lighten($background-color-lighter, 5%);
+$search-bar-border: 1px solid lighten($background-color-lighter, 15%);
+//##
+
+//-- Right Panel --
+//## All the right panel (queue) styles.##
+$right-panel-width: 250px;
+$right-panel-color: $left-panel-color;
+$right-panel-queue-item-color: lighten($background-color-lighter, 4%);
+$right-panel-track-name-text-color: $text-color;
+$right-panel-artist-name-text-color: $text-color-darker;
+$right-panel-playing-track-text-color: #fff;
+$right-panel-absolute-box-shadow: 0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12);
+//##
+
+//-- Search Panel --
+//## Styles for search suggestions panel (the one that opens without clicking enter).##
+$search-panel-header-color: $background-color-lighter;
+$search-panel-background-color: $main-color;
+$search-panel-width: 365px;
+$search-panel-heading-color: $text-color-darker;
+$search-panel-text-color: $text-color;
+$search-panel-backdrop-color: rgba(0,0,0,0.5);
+//##
+
+//-- Player --
+//## Controls bottom player bar appearance.##
+$player-container-color: $left-panel-color;
+$player-container-border-color: darken($main-color, 2%);
+$player-seekbar-color: lighten($player-container-color, 8%);
+$player-elapsed-color: $accent-color;
+$player-handle-color: #fff;
+$player-text-color: #fff;
+$progress-height: 5px;
+$handle-height: 13px;
+$player-controls-height: 50px;
+//##
+
+//-- Artist Page --
+//## Controls artist page styles (siteurl.com/artist/name).##
+$header-height: 320px;
+$top-track-image-height: 40px;
+$playing-song-color: $accent-color;
+$artist-page-padding: 40px;
+$artist-page-color: $text-color;
+$artist-page-image-overlay-color: $main-color;
+$similar-artist-item-color: $background-color-lighter;
+//##
+
+//-- Dropdowns --
+//## Controls the styles for all dropdowns across the application.##
+$dropdown-color: #fff;
+$dropdown-text-color: rgba(0,0,0,.87);
+$dropdown-font-size: 1.04rem;
+$dropdown-icon-color: #9AACB5;
+//##
+
+//-- Context Menu --
+//## Controls the styles for all context menus (when right clicking on something) across the application.##
+$context-menu-background-color: $background-color-lighter;
+$context-menu-width: 220px;
+$context-menu-height: 280px;
+$context-menu-text-color: $text-color;
+$context-menu-image-height: 60px;
+$context-menu-image-width: 60px;
+//##
+
+//-- Admin --
+//## Controls the style for all admin pages.##
+$admin-left-sidebar-width: 220px;
+$admin-left-sidebar-color: #333333;
+$admin-left-sidebar-text-color: #eee;
+$admin-page-color: #F3F3F4;
+$admin-page-text-color: #676a6c;
+$admin-panel-color: #fff;
+$admin-panel-hover-color: darken($admin-panel-color, 5%);
+$admin-panel-border-color: #e7eaec;
+$admin-panel-header-color: #F7F7F7;
+$admin-panel-header-text-color: $admin-page-text-color;
+$admin-panel-action-icons-color: #adadad;
+$admin-nav-height: 80px;
+//##
+
+//-- Tables --
+//## General styles for all the tables (album tracks, songs library etc) across the site.##
+$light-table-color: $admin-panel-color;
+$light-table-hover-color: darken($light-table-color, 3%);
+$light-table-border-color: $admin-panel-border-color;
+$light-table-header-color: $light-table-color;
+$light-table-text-color: rgba(0,0,0,0.87);
+$light-table-header-text-color: $light-table-text-color;
+
+$popularity-widget-color: $background-color-lighter;
+$popularity-widget-fill-color: $text-color-darker;
+$album-table-icons-color: lighten($text-color, 10%);
+$album-table-icons-background-color: lighten($background-color-lighter, 10%);
+$table-striped-row-color: $admin-panel-header-color;
+$table-row-color: darken($background-color-lighter, 1%);
+$should-table-be-striped: false;
+$should-table-rows-have-borders: true;
+$should-table-have-borders: false;
+//##
+
+//-- Buttons --
+//## General styles for all buttons across the site.##
+$button-color: lighten($main-color, 4%);
+$button-text-color: $text-color;
+$button-border-color: lighten($border-color, 10%);
+$primary-button-color: $accent-color;
+$primary-button-text-color: #fff;
+$danger-button-color: #ea6153;
+$danger-button-text-color: $primary-button-text-color;
+$danger-button-border-color: #ea6153;
+//##
+
+//-- Scroll Bar --
+//## Styles for custom scrollbar accress the site.##
+$scrollbar-color: lighten($background-color-lighter, 10%);
+$scrollbar-hover-color: lighten($background-color-lighter, 20%);
+$scrollbar-handle-hover-color: $background-color-lighter;
+//##

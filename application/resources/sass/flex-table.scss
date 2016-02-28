@@ -1,0 +1,112 @@
+.flex-table {
+  display: flex;
+  flex-flow: column nowrap;
+  font-size: 1rem;
+  line-height: 1.5;
+
+  @if $should-table-have-borders {
+    border: 1px solid $border-color;
+  }
+
+  .ellipses {
+    max-width: 95%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: inherit;
+  }
+
+  a.ellipses {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &-header {
+    font-weight: 500;
+    background-color: $table-row-color;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: $table-row-color !important;
+    }
+
+    &[sortable-table-header] {
+      .flex-table-row-item {
+        cursor: pointer;
+        user-select: none;
+      }
+    }
+
+    .flex-table-row-item {
+        border: none;
+    }
+  }
+
+
+  &-row {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+
+    &:hover {
+      background-color: lighten($main-color, 2%);
+    }
+
+    &-item {
+      display: flex;
+      flex-flow: row nowrap;
+      flex-grow: 1;
+      flex-basis: 0;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-all;
+      word-break: break-word;
+      padding: 0.5em;
+
+      @if $should-table-rows-have-borders {
+        border: 1px solid $border-color;
+      }
+
+      &:before { content: none; }
+      
+      @media only screen and (max-width:$tablet) {
+        &.more-options {
+          width: 30px !important;
+
+          > .icon {
+            display: block !important;
+          }
+        }
+        
+        &.hidden-phone {
+          display: none;
+        }
+      }
+    }
+  }
+  
+  &.light {
+    .flex-table-row {
+      background-color: $light-table-color;
+      color: $light-table-text-color;
+
+      &:hover {
+        background-color: $light-table-hover-color;
+      }
+    }
+
+    .flex-table-row-item {
+      border: 1px solid $light-table-border-color;
+      margin: -1px 0 0 -1px;
+    }
+
+    .flex-table-header {
+      background-color: $light-table-header-color;
+      color: $light-table-header-text-color;
+
+      &:hover {
+        background-color: $light-table-header-color !important;
+      }
+    }
+  }
+}

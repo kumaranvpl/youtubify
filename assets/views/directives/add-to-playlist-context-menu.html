@@ -1,0 +1,18 @@
+<div class="add-to-playlist scroll-container" pretty-scrollbar>
+    <div class="back">
+        <i class="icon icon-left-open-big"></i>
+        <div class="text">{{:: 'back' | translate }}</div>
+    </div>
+
+    <div class="new-playlist" ng-click="createPlaylist()">
+        <i class="icon icon-plus"></i>
+        <div class="text">{{:: 'newPlaylist' | translate }}</div>
+    </div>
+
+    <div class="playlists">
+        <div class="playlist" ng-repeat="playlist in playlists.all" ng-if="playlist.is_owner" ng-click="addToPlaylist(playlist)">
+            <i class="icon icon-note"></i>
+            <div class="text">{{ playlist.name }}</div>
+        </div>
+    </div>
+</div>

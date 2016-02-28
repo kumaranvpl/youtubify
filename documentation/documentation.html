@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    	<title>Youtubify</title>
+    	<meta name="author" content="Vebto">
+    	<meta name="copyright" content="Vebto">
+    	<meta name="date" content="2015-06-19">
+    	
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    	
+        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+        <link href="assets/css/docs.css" rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    </head>
+
+    <body>
+        <div id="docs-row" class="clearfix">
+            <h1 class="col-sm-4">Documentation</h1>
+        </div>
+        <div class="container">
+            <div class="row">
+                <ul class="sidebar list-unstyled" data-spy="affix" data-offset-top="80" data-offset-bottom="200">
+                    <li class="header"><i class="fa fa-gears"></i><span>Installation</span></li>
+
+                    <li class="active"><a href="#create-db">Create a new database</a></li>
+                    <li><a href="#upload-files">Upload the files</a></li>
+                    <li><a href="#install">Installing</a></li>
+                    <li><a href="#update">Updating to new versions</a></li>
+
+                    <li class="header" data-toggle="collapse" data-target="#api-keys-list"><i class="fa fa-key"></i>API Keys <span class="caret"></span></li>
+                    <li class="collapse" id="api-keys-list">
+                    	<ul class="list-unstyled">
+                    		<li><a href="#api-keys">Overview</a></li>
+                    		<li><a href="#youtube-key">Youtube API Key</a></li>
+                    		<li><a href="#echonest-key">EchoNest API Key</a></li>
+                    		<li><a href="#spotify-keys">Spotify Key and Secret</a></li>
+                    	</ul>
+                    </li>
+
+                    <li class="header" data-toggle="collapse" data-target="#social-list"><i class="fa fa-users"></i>Social Login <span class="caret"></span></li>
+                    <li class="collapse" id="social-list">
+                        <ul class="list-unstyled">
+                            <li><a href="#social-overview">Overview</a></li>
+                            <li><a href="#social-facebook">Facebook</a></li>
+                            <li><a href="#social-twitter">Twitter</a></li>
+                            <li><a href="#social-google">Google</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="header" data-toggle="collapse" data-target="#mail-list"><i class="fa fa-envelope"></i>Mail <span class="caret"></span></li>
+                    <li class="collapse" id="mail-list">
+                        <ul class="list-unstyled">
+                            <li><a href="#mail-mandrill">Registering for Mandrill</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="header" data-toggle="collapse" data-target="#admin-list"><i class="fa fa-lock"></i>Admin <span class="caret"></span></li>
+                    <li class="collapse" id="admin-list">
+                        <ul class="list-unstyled">
+                           <li><a href="#admin-analytics">Analytics</a></li>
+                           <li><a href="#appearence">Appearence</a></li>
+                           <li><a href="#translations">Translations</a></li>
+                            <li><a href="#admin-users">Users</a></li>
+                            <li><a href="#admin-settings">Settings</a></li>
+                        </ul>
+                    </li>    
+
+                    <li class='header'><i class="fa fa-life-ring"></i>Support</li>
+                    <li><a href="#support">Send a support request</a></li>
+                 </ul>
+
+                <div class="col-sm-9 col-sm-offset-3" id="docs-content">
+                    <section id="create-db">
+                        <h2>Creating a new database</h2>
+                        <p>First thing you want to do before installing <strong>Youtubify</strong> is to create a new database on your mysql server. If you already know how to do this/or have already created one just skip to the <a href="#upload-files">next step</a>.</p> 
+                        <p>Your host will most likely be running <strong>phpMyAdmin</strong> as mysql manager, if that's the case here's a step by step guide (if not the proccess will be very similar on other managers).</p>
+                        <p>Login to your control panel, find and click phpMyAdmin link: <img src="assets/images/db_ex_2.png"> Click on the database tab in the top menu, enter any name you like and click create.<img src="assets/images/db_ex_3.png"></p>
+                    </section>
+                   
+                    <section id="upload-files">
+                        <h2>Uploading Files</h2>
+                        <p>After creating a database, unzpip the .zip file you donwloaded and upload the <strong>contents</strong> of <strong>Youtubify</strong> folder to your servers root folder (usually called www or html or something similar) or a sub-directory, shared hosting providers usually have a web based file manager, but you should use something like <a href="https://filezilla-project.org/">Filezilla</a> to do the upload as the web based managers can cause various problems fairly often.</p>
+
+                        <p>Make sure that <strong>application/storage</strong> and all the <strong>sub-folders</strong> are writable by your server (have 777 permissions if you are on shared hosting). You can change files and folders permissions by right-clicking them in the filemanager, clicking file permissions, and then entering 777 in the permissions field.</p>
+                    </section>
+
+                    <section id="install">
+                        <h2>Installing Youtubify</h2>
+                        <p>After you uploaded Youtubify files, simply open up your site url and follow on-screen instructions to finish the installation.</p>
+                        <img src="assets/images/install_ex_1.png">
+                    </section>
+
+                    <section id="update">
+                        <h2>Updating <strong>Youtubify</strong> to new versions</h2>
+                        
+                        <ul>
+                            <li>1. Extract the .zip file you downloaded.</li>
+                            <li>2. Upload and overwrite all the files same way you did when you installed Youtubify.</li>
+                            <li>3. Visit http://yoursite.com/update url and click <strong>Update Now</strong> button.</li>
+                        </ul>
+                    </section>
+
+                    <section id="api-keys" class="new-section">
+                    	<h2>API Keys</h2>
+
+                    	<p>In order make some features of the <strong>youtubify</strong> work you will need to register for a some API Keys. Check out the sections below for information on how to get them. Once you've got your keys simply enter them in corresponding fields in admin area -> third party services and keys.</p>
+                    	<img src="assets/images/api_keys_ex_1.png">
+                    </section>
+
+                    <section id="youtube-key">
+                    	<h2>Youtube API Key</h2>
+
+                    	<p>This key is <strong>required</strong> in order to play music on youtubify. You can use the same <strong>google app</strong> you have created for social login and google anlytics (refer to social login google section of the docs). Simply create a new api key from your google project page and enable youtube api from the same page. <strong>Note: leave refferers field empty</strong>. Then enter this key in admin area > settings > 3rd party keys > Youtube API Key.</p>
+                    	<img src="assets/images/youtube_key_ex_1.png">
+                    	<img src="assets/images/youtube_key_ex_2.png">
+                    	<img src="assets/images/youtube_key_ex_3.png">
+                    </section>
+
+                    <section id="echonest-key">
+                    	<h2>Echonest API Key</h2>
+
+                    	<p>This key is <strong>optional.</strong> When entered it will enable some extra features like artist radio, biography and images. To get echonest api key, register for an account here https://developer.echonest.com/account/register, once you have created an activated our account you will be able to see your api key here https://developer.echonest.com/account/profile, simply enter it in admin area > settings > 3rd party keys > Echonest API Key.</p>
+                    	<img src="assets/images/echonest_key_ex_1.png">
+                    </section>
+
+                    <section id="spotify-keys">
+                    	<h2>Spotify Key and Secret</h2>
+
+                    	<p>Spotify keys are <strong>optional.</strong> When entered it will enable new releases fetching directly from spotify. To get these keys, login or register <a href="https://developer.spotify.com/my-applications/#!/register">here</a>, accept all the terms, then create a new application at this <a href="https://developer.spotify.com/my-applications/#!/applications/create">url</a> (you can enter anything in name and description fields), then you will be able to see your keys, simply enter them in admin area > settings > 3rd party keys > Spotify ID and Spotify Secret fields.</p>
+                    	<img src="assets/images/spotify_ex_1.png">
+                    </section>
+
+                    <section id="social-overview" class="new-section">
+                        <h2>Social Login</h2>
+
+                        <p>In order make social login (logging in via google, twitter and facebook) work you will need to register for a corresponding app and get that services <strong>Client ID</strong> and <strong>Client Secret</strong>. Check out the section for each service for a detailed instruction for how to register and get those tokens. Once you've got your client id and secret simply enter them in corresponding field in admin area -> third party services and keys.</p>
+                        <img src="assets/images/social_ex_5.png">
+                    </section>
+
+                    <section id="social-facebook">
+                        <h2>Facebook</h2>
+
+                        <p>You can resgister for a facebook app <a target="_blank" href="https://developers.facebook.com/">Here</a> by clicking on <strong>My Apps > add a new app</strong> at the top. Once you create the app you can find your id and secret in your app dashboard, you will also need to enter your site url in <strong>Settings > site url field</strong> and make your app public from <strong>Staus & Review</strong> tab.</p>
+                        <img src="assets/images/facebook_ex_1.png">
+                        <img src="assets/images/social_ex_1.png">
+                    </section>
+
+                    <section id="social-twitter">
+                        <h2>Twitter</h2>
+
+                        <p>You can register for a twitter app <a target="_blank" href="https://dev.twitter.com/apps/new">Here</a>, after you register you will need to enter your site url in <strong>Website</strong> and <strong>Callback Url</strong> fields in your app settings, you can find your key and secret in the <strong>Keys & Access Tokens</strong> tab.</p>
+                        <img src="assets/images/twitter_ex_1.png">
+                        <img src="assets/images/social_ex_2.png">
+                    </section>
+
+                    <section id="social-google">
+                        <h2>Google</h2>
+
+                        <p>You can register for a google app <a target="_blank" href="https://cloud.google.com/console/project">Here</a> by clicking on <strong>Create new project</strong>, after creating new project go to credentials tab and in the authorized redirect uri field enter <strong>http://yoursiteurl.com/auth/social/google/login</strong>, you might also need to enable <strong>Google plus</strong> and <strong>contacts</strong> APIs.</p>
+                        <img src="assets/images/google_ex_1.png">
+                        <img src="assets/images/social_ex_3.png">
+                    </section>
+
+                     <section id="mail-mandrill" class="new-section">
+                        <h2>Mail</h2>
+
+                        <p>In order to make mail work (for password reset and other functions), you will need to register for a mandrill API key. Mandrill is used to avoid the many problems that occur when using public smtp servers (like gmail or your hostings private one). Here's how to get your API key.</p>
+
+                        <p>If you want to use SMTP instead (or one of the other available options), go to <strong>admin area > settings > mail</strong> and simply change mandrill to another option and enter any other required details like host, usernamer, password etc.</p>
+                        
+                        <h3>Register for mandrill api key</h3>
+                        <p>To register for mandrill key go to this <a target="_blank" href="https://mandrill.com/signup/">url</a>, create a new account and then log in. Then click <strong>get api keys -> +add api key</strong></p>
+                        <img src="assets/images/mandrill_ex_1.png">
+                        <img src="assets/images/mandrill_ex_2.png">
+                        <p>Then simply copy mandrill api key and enter it into corresponding field in <strong>admin area > settings > mail</strong></p>
+                        <img src="assets/images/mandrill_ex_3.png">
+                        <img src="assets/images/mandrill_ex_4.png">
+                    </section>
+
+                    <section id="admin-analytics" class="new-section">
+                        <h2>Analytics</h2>
+
+                        <h3>Registering for google analytics account</h3>
+                        <p>Analytics page is powered by google analytics so you will need to register for google analytics and add their supplied code to your site. Here's how to do it.</p>
+
+                        <ul>
+                            <li>1. Go to this <a href="https://www.google.com/analytics/web/">url</a>. You will be prompted to login to your google account or create a new one if you don't have it already. Do it.</li>
+                            <li>
+                                2. Click on Admin -> Property -> Create new Property -> fill out required fields -> click on get tracking ID
+                                <img src="assets/images/analytics_ex_1.png">
+                                <img src="assets/images/analytics_ex_2.png">
+                            </li>
+                            <li>
+                                3. Go to <strong>Admin area -> settings -> third party service keys</strong> and paste the code into <strong>google analytics tracking code</strong> field (only paste in the code that starts with UA, not the whole script).
+                                <img src="assets/images/analytics_ex_3.png">
+                            </li>
+                        </ul>
+						
+						<h3>Registering for google ID</h3>
+                        <p>You will also need to enter your <strong>google ID</strong> in the same page for analytics to work. It's the same ID as for google social login so refer to documenation on social login to see how to get that key. Only make sure that enable google analytics API from google developers console and enter your site url in javascript origins field.</p>
+                        <img src="assets/images/analytics_ex_6.png">
+                        <img src="assets/images/analytics_ex_7.png">
+
+                        <h3>Viewing analytics information</h3>
+                        <p>Once you have created analytics account and entered it in settings page, go to admin area -> analytics, click on <strong>Access google analytics button</strong>, then click <strong>accept</strong></p>
+                        <img src="assets/images/analytics_ex_5.png">
+                        <p>And you are done. You can now easily view analytics information right from the admin area. You can also select different analytics account, property and view from the bottom of the page.</p>
+                        <img src="assets/images/analytics_ex_4.png">
+                    </section>
+
+                    <section id="appearence">
+                    	<h2>Appearence</h2>
+
+                    	<p>From appearence page you can modify how your site looks by changing colors, fonts, sizes and more. Simply change the value in the field you want and click <strong>save</strong> on the right. Youtubify will compile a custom css stylesheet (just as if it was written by a programmer!) without you needing to have any coding knowledge. Original stylesheet will be preserved so you can switch back at any time. You can also create multiple stylesheets(light, dark etc) and switch them at any time from panel on the left. You can also insert custom css, by typing it into custom css panel.</p>
+
+                    	<p>Note that <strong>variables</strong> and <strong>functions</strong> might sometimes be used in some of the appearence fields. These are very simple to understand. For example, by default <strong>main background color</strong> is <strong>lighten($main-color, 5%)</strong>, this simply means that it will take the color value from $main-color field in appearence page (#19191b by default) and make that color 5% lighter.</p>
+
+                    	<img src="assets/images/appearence_ex_1.png">
+                    </section>
+
+                    <section id="translations">
+                    	<h2>Translations</h2>
+
+                    	<p>You can translate youtubify right from the admin area so there's no need to mess with configuration files or 3rd party applications. Simpley open translations page and enter your translation for a particular line under <strong>translation</strong> column in the table.</p>
+
+                    	<p>Note that while you can translate the original (englsish) locale, it is recommended to create a new one (frome the panel on the left) so you don't need to worry about overwriting it with future updates.</p>
+
+                    	<img src="assets/images/translations_ex_1.png">
+                    </section>
+
+                    <section id="admin-users">
+                        <h2>Users</h2>
+
+                        <p>From users page, you can get an overview of your site users, create a new one, delete existing ones and edit their profile information.</p>
+                        <img src="assets/images/users_ex_1.png">
+                    </section>
+
+                    <section id="admin-settings">
+                        <h2>Settings</h2>
+
+                        <p>On the settings page you can change various options on your site from your homepage view to user registration. There's a description under each options so you shouldn't have any troubles figuring out which setting does what.</p>
+                        <img src="assets/images/settings_ex_1.png">
+                    </section>
+
+                    <section id="support">
+                        <h2>Support</h2>
+                        <p>If you have any problems or questions, please contact me here <a href="https://github.com/kumaranvpl/">https://github.com/kumaranvpl/</a> to send us a message instead of doing it in the comments, so we can resolive it as fast as possible, thanks!</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script>
+        	$(function() {
+			  $('a[href*=#]:not([href=#])').click(function() {
+			    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+			      var target = $(this.hash);
+			      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+			      if (target.length) {
+			        $('html,body').animate({
+			          scrollTop: target.offset().top
+			        }, 1000);
+			        return false;
+			      }
+			    }
+			  });
+			});
+        </script>
+    </body>
+</html>

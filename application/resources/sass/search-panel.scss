@@ -1,0 +1,159 @@
+.search-panel-backdrop {
+  width: calc(100% - #{$left-panel-width});
+  background-color: $search-panel-backdrop-color;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: $left-panel-width;
+  z-index: 6;
+}
+
+.search-panel {
+  background-color: $search-panel-background-color;
+  color: $search-panel-text-color;
+  position: absolute;
+  top: 0;
+  left: -640px;
+  height: 100%;
+  width: $search-panel-width;
+  padding: 0 20px;
+  overflow: auto;
+  z-index: 3;
+  transition: left 0.3s ease;
+  border: 1px solid darken($main-color, 2%);
+
+  &.full-page {
+    position: static;
+    width: 100%;
+    height: calc(100% - 40px);
+    
+    .view-all {
+      display: none;
+    }
+  }
+
+  &.out {
+    left: 0;
+  }
+
+  > .view-all {
+    background-color: $search-panel-header-color;
+    padding: 15px;
+    margin: 15px 0 25px;
+    border-radius: 3px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: lighten($search-panel-header-color, 3%);
+    }
+
+    > .icon {
+      float: right;
+    }
+  }
+
+  > .result-container {
+
+    &.albums {
+      .media-text:hover, .media-subtext:hover {
+        text-decoration: underline;
+      }
+    }
+
+    > h2 {
+      color: $search-panel-heading-color;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-top: 20px;
+    }
+
+    > .track {
+      margin-bottom: 10px;
+      padding: 7px 10px;
+      background-color: $search-panel-header-color;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: lighten($search-panel-header-color, 3%);
+      }
+
+      > .track-name {
+        font-weight: 400;
+        font-size: 1.1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 290px;
+      }
+
+      > .artist-name {
+        color: $text-color-darker;
+
+        > .artists {
+          display: flex;
+          color: $text-color-darker;
+          overflow: hidden;
+
+          > .artist {
+            cursor: pointer;
+            padding-left: 4px;
+            flex-shrink: 0;
+
+            &:first-of-type {
+              padding-left: 0;
+            }
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+    
+    > .media {
+      display: flex;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+
+      &:hover {
+        background-color: $search-panel-header-color;
+      }
+
+      > .media-image {
+        width: 55px;
+        height: 55px;
+        object-fit: cover;
+        flex: 0 0 auto;
+      }
+
+      > .media-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 11px;
+        flex: 1 1 auto;
+
+        > .media-text, .media-subtext {
+          color: $text-color;
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 250px;
+        }
+
+        > .media-subtext {
+          color: $text-color-darker;
+        }
+      }
+    }
+  }
+}

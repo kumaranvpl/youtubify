@@ -1,0 +1,28 @@
+.user-form-modal {
+
+  .modal-header {
+    margin-bottom: 20px;
+  }
+
+  .modal-error {
+    margin-bottom: 20px;
+  }
+
+  .input-container {
+    margin-bottom: 10px;
+
+    > input, > select {
+      border: 1px solid darken($admin-panel-border-color, 5%);
+      height: 35px;
+      border-radius: 3px;
+      width: 60%;
+      padding: 0 10px;
+    }
+
+    > label {
+      width: 35%;
+      display: inline-block;
+      font-weight: 500;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+<div id="compat-check" class="step-panel">
+	<p>First we will check if your server meets the requirements for <strong>Youtubify</strong>, if not, the installer will list all the problems that you need to correct before proceeding. Click <strong>Check Now</strong> to continue.</p>
+  <p>If nothing happens when you click <strong>Check Now</strong> please make sure that <strong>.htaccess</strong> file exists in youtubify root folder and that it has the same contents as <strong>.htaccess</strong> file in the download from CodeCanyon.</p>
+
+	<div class="center-buttons">
+		<button class="primary" ng-click="checkCompat()">Check Now</button>
+		<button class="primary" ng-disabled="!enableNextStep" ng-click="nextStep()">Next</button>
+	</div>
+
+	<h4 class="hidden" id="problem">Seems like there are some problems with your server, to continue you'll have to fix them. Consult the table below for more details.</h4>
+
+	<table ng-if="compatResults" class="table table-striped">
+    	<thead>
+        	<tr>
+          		<th>#</th>
+          		<th>Type</th>
+          		<th>Name</th>
+          		<th>Should be</th>
+          		<th>Is</th>
+        	</tr>
+      	</thead>
+     	<tbody>
+        	<tr ng-repeat="extension in compatResults.extensions">
+          		<td>{{ $index + 1 }}</td>
+          		<td class="text-capitalize">{{ extension.type }}</td>
+          		<td>{{ extension.name }}</td>
+          		<td><span class="success">{{ extension.expected ? 'Enabled' : 'Disabled' }}</span></td>
+          		<td><span ng-class="extension.expected === extension.actual ? 'success' : 'danger'">{{ extension.actual ? 'Enabled' : 'Disabled' }}</span></td>
+        	</tr>
+
+        	<tr ng-repeat="folder in compatResults.folders">
+          		<td>{{ $index + compatResults.extensions.length }}</td>
+          		<td>Direcotry</td>
+          		<td>{{ folder.path }}</td>
+          		<td><span class="success">Writable</span></td>
+          		<td><span ng-class="folder.writable ? 'success' : 'danger'">{{ folder.writable ? 'Writable' : 'Not-Writable' }}</span></td>
+          		
+        	</tr>
+      	</tbody>
+    </table>
+</div>  

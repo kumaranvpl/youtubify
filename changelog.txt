@@ -1,0 +1,6 @@
+- Page title will now correctly show currently playing song and artist.
+- Page changes will now be correctly logged on google analytics.
+- Fixed an issue where responsive ads from adsense were not working properly.
+- Fixed an issue where some albums would have duplicate tracks.
+- Fixed some issues that occurred when using https.
+- Fixed an issue where context menu add to playlist panel was not scrollable.

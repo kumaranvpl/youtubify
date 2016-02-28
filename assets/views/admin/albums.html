@@ -1,0 +1,67 @@
+<section ng-controller="AdminAlbumsController" class="full-height">
+    <div class="material-table" ng-controller="AdminTableController">
+        <div class="header" ng-if="!selectedItems.length">
+            <div class="caption">{{:: 'Albums' | translate }}</div>
+            <div class="controls">
+                <div class="search">
+                    <input placeholder="{{:: 'search' | translate }}" type="text" ng-model="params.query" ng-model-options="{ debounce: 300, updateOn: 'keyup' }">
+                    <i class="icon icon-search"></i>
+                </div>
+            </div>
+        </div>
+        <div class="selected-header" ng-if="selectedItems.length">
+            <div class="caption">{{ selectedItems.length }} {{:: 'albumsSelected' | translate }}</div>
+            <div class="controls">
+                <i class="icon icon-trash" ng-click="deleteItems()"></i>
+            </div>
+        </div>
+        <div class="flex-table table-hover light admin-table">
+            <div class="flex-table-row flex-table-header">
+                <div class="flex-table-row-item small-col align-left">
+                    <input type="checkbox" ng-checked="$parent.selectedItems.length === items.length" ng-click="toggleAllItems()">
+                </div>
+                <div class="flex-table-row-item image">{{:: 'image' | translate }}</div>
+                <div class="flex-table-row-item name-col">{{:: 'name' | translate }}</div>
+                <div class="flex-table-row-item name-col">{{:: 'artist' | translate }}</div>
+                <div class="flex-table-row-item">{{:: 'popularity' | translate }}</div>
+                <div class="flex-table-row-item">{{:: 'releaseDate' | translate }}</div>
+                <div class="flex-table-row-item">{{:: 'numOfTracks' | translate }}</div>
+                <div class="flex-table-row-item small-col align-right"></div>
+            </div>
+
+            <div class="table-body">
+                <div class="flex-table-row" dir-paginate="item in $parent.items | itemsPerPage: params.itemsPerPage" total-items="totalItems" current-page="params.page" ng-class="{ selected: isItemSelected(item) }" ng-click="select(item)">
+                    <div class="flex-table-row-item small-col align-left">
+                        <input type="checkbox" ng-checked="isItemSelected(item)">
+                    </div>
+                    <div class="flex-table-row-item image"><img ng-src="{{ utils.img(item.image, 'album') }}"/></div>
+                    <div class="flex-table-row-item name-col"><a ng-href="{{ utils.albumUrl(item) }}">{{ item.name }}</a></div>
+                    <div class="flex-table-row-item name-col">{{ item.artist.name }}</div>
+                    <div class="flex-table-row-item">{{ item.spotify_popularity }}</div>
+                    <div class="flex-table-row-item">{{ item.release_date }}</div>
+                    <div class="flex-table-row-item">{{ item.tracks.length }}</div>
+                    <div class="flex-table-row-item small-col align-right"><i class="icon icon-pencil" ng-click="showUpdateItemModal(item); $event.stopPropagation()"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <section class="controls">
+                <div class="per-page">
+                    {{:: 'rowsPerPage' | translate }}
+                    <select ng-model="params.itemsPerPage">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="meta">
+                    {{:: 'showingAlbums' | translate }} 1-{{ params.itemsPerPage }} {{ 'to' | translate }} {{ utils.humanReadableNumber(totalItems) }}
+                </div>
+                <dir-pagination-controls></dir-pagination-controls>
+            </section>
+        </div>
+    </div>
+</section>

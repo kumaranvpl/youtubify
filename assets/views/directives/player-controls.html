@@ -1,0 +1,46 @@
+<section id="player-controls">
+    <div class="buttons">
+        <i class="icon icon-to-start prev"></i>
+        <i class="icon icon-play toggle-play" ng-if="!player.loadingTrack && !player.isPlaying"></i>
+        <i class="icon icon-pause toggle-play" ng-if="!player.loadingTrack && player.isPlaying"></i>
+        <i class="icon icon-spin2 track-loading spin" ng-if="player.loadingTrack"></i>
+        <i class="icon icon-to-end next"></i>
+    </div>
+
+    <div class="track-info" ng-if="isPhone">
+        <div class="track-name">{{ player.currentTrack.name }}</div>
+        <div class="artist-name">{{ player.currentTrack.artist }}</div>
+    </div>
+
+    <div class="controls-toggler">
+        <i class="icon icon-dot-3" sidebar-toggler=".buttons.right"></i>
+    </div>
+
+    <div class="progress-container">
+        <div class="elapsed-time hidden-phone">0:00</div>
+        <div class="progress-bar">
+            <div class="elapsed"></div>
+            <div class="progress"></div>
+            <div class="handle"></div>
+        </div>
+        <div class="track-length hidden-phone">0:00</div>
+    </div>
+    
+    <div class="lyrics hidden-phone" ng-class="{ 'showing-lyrics': player.isShowingLyrics, disabled: !player.currentTrack }" ng-if="!utils.getSetting('hide_lyrics_button')">{{:: 'lyrics' | translate }}</div>
+
+    <div class="buttons right" ng-class="{ closed: isPhone }">
+        <i class="icon icon-video toggle-video" ng-class="{ disabled: !player.currentTrack }" ng-if="!utils.getSetting('hide_video_button')"></i>
+        <i class="icon icon-menu toggle-queue"></i>
+        <i class="icon icon-shuffle-1 shuffle" ng-class="{ shuffling: player.isShuffling }"></i>
+        <div class="repeat" ng-class="{ 'repeating-one': player.isRepeatingOne, repeating: player.isRepeating}">
+            <i class="icon icon-loop"></i>
+        </div>
+        <div class="volume-container" volume-controls>
+            <i class="icon icon-volume-up-1 volume"></i>
+            <div class="volume-bar">
+                <div class="volume-level"></div>
+                <div class="volume-handle"></div>
+            </div>
+        </div>
+    </div>
+</section>

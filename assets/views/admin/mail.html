@@ -1,0 +1,23 @@
+<div ng-controller="SettingsController" class="admin-mail-container">
+    <div ng-controller="AdminMailController" class="settings-container">
+        <form ng-submit="updateSettings()">
+            <section class="admin-panel">
+                <div class="panel-header">{{:: 'mailTemplates' | translate }}</div>
+                <div class="panel-body">
+                    <div class="templates-nav">
+                        <div class="nav-items">
+                            <div class="nav-item" ng-repeat="name in templateNames" ng-click="selectTemplate(name)" ng-class="{ active: activeTemplateName === name }">{{ name+'Template' | translate }}</div>
+                        </div>
+                        <div class="save">
+                            <button class="primary" ng-click="saveTemplate()" type="button">{{:: 'save' | translate }}</button>
+                        </div>
+                    </div>
+                    <div class="editor-container">
+                        <textarea id="editor" ck-editor="activeTemplate"></textarea>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,225 @@
+/*!
+ * Documenter 2.0
+ * http://rxa.li/documenter
+ *
+ * Copyright 2013, Xaver Birsak
+ * http://revaxarts.com
+ *
+ */
+html, body{max-width:100%;}
+body{ padding-bottom: 40px;}
+
+#documenter_content{
+	padding-top: 200px;
+}
+#documenter-cover{
+	min-height: 600px;
+}
+
+.masthead h1{
+	margin-top: 48px;
+}
+
+section h3,
+section h4,
+section h5,
+section h6 {
+	padding: 0;
+	clear: both;
+	line-height: 1.2em;
+	margin-top: 2em;
+}
+section h3{ font-size:2em;}
+section h4{ font-size:1.5em;}
+section h5{ font-size:1.3em;}
+section h6{ font-size:1.1em;}
+
+hr.notop{
+	margin-top:3px;
+}
+	
+footer{
+	padding-bottom:500px;
+}
+.container{
+	padding-bottom:3px;
+	position: relative;
+}
+.navbar a.brand{
+	display:inline-block;
+	width:200px;
+	background-position:center left;
+	background-repeat:no-repeat;
+	background-size: contain;
+	text-indent:-9999px;
+	margin:0;
+	padding:0;
+	top: 0;
+	bottom: 0;
+	position: absolute;
+}
+
+.page-header{
+	border:0;
+}
+.navbar .nav {
+	margin: 10px 10px 0 200px;
+	float: none;
+}
+.navbar .nav li a{
+	border-radius:3px;
+	display:block;
+	white-space:nowrap;
+	padding:6px 11px 7px;
+	max-width:120px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	text-decoration:none;
+	margin-left: 3px;
+	margin-bottom: 3px;
+}
+.navbar .nav li ul{
+	border-radius:5px;
+	display:none;
+	position:absolute;
+	list-style-type:none;
+	min-width:100px;
+	padding:3px;
+	box-shadow:0 0 3px rgba(0,0,0,0.3);
+
+}
+.navbar .nav > li:hover ul{
+	display:block;
+}
+
+.marketing-byline {
+	list-style:none;
+	margin-left: 0;
+	margin-bottom: 24px;
+}
+.marketing-byline li{
+	display:inline;
+	padding:0 2px;
+}
+.download-info{
+	clear:both;
+}
+section{
+	margin-top:300px;
+}
+img{
+	height:auto !important;
+}
+iframe{
+	max-width:100% !important;
+}
+
+@media (max-width: 979px) {
+	#documenter_content{
+		padding-top: 0px;
+	}
+	.navbar .nav {
+		margin: 10px 10px 0 0;
+	}
+	.navbar .nav > li > a{
+		padding:6px 11px 7px;
+		max-width:100%;
+		overflow:hidden;
+		text-overflow:ellipsis;
+	}
+	.navbar .nav li ul{
+		display:none;
+		box-shadow:none;
+		position:static;
+	}
+	.navbar .nav li:hover ul{
+		display:block;
+	}
+	.navbar .nav li ul li{
+		display:block;
+	}
+	.navbar .nav li a{
+		max-width:100%;
+	}
+
+	section{
+		margin-top:80px;
+	}
+}
+@media (max-width: 480px) {
+	section{
+		margin-top:30px;
+	}
+}
+
+* {font-family:'Ubuntu',sans-serif !important}
+
+img {
+  display: block;
+  padding: 9.5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+p, li { color: #747474 !important }
+
+li { 
+  border-bottom: 1px solid #E4E4E4;
+  padding: 10px;
+  list-style-type: circle;
+}
+
+section ul {
+  margin-top: 33px;
+  margin-bottom: 33px;
+}
+
+li strong { color: #2E3236;}
+
+.sub-contents {
+	margin-top: -40px;
+	list-style: none !important;
+}
+
+.sub-contents a {
+	color: #679275 !important;
+	padding-left: 5px;
+}
+
+.sub-contents li {
+	border-bottom: 0px transparent;
+	padding: 1px;
+	list-style: none;
+}
+
+.sub-contents li ul {
+	margin: 1px 22px;
+}
+
+.sub-contents li:before {
+ content: "\0BB \020" !important;
+ }
+
+.marketing-byline li {
+	padding: 8px;
+}
+
+.nav li {
+	border-bottom: 0px transparent;
+}
+
+.pr {
+	margin-top: 30px;
+	margin-bottom:30px;
+	font-size: 20px;
+}
+
+.sol, #trouble pre, #trouble li {
+	margin-left: 40px;
+}

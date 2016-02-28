@@ -1,0 +1,68 @@
+#songs-page {
+  height: 100%;
+  max-width: 1600px;
+  padding: 20px 25px;
+  margin: 0 auto;
+  position: relative;
+
+  @media only screen and (max-width : $phone) {
+    padding: 5px;
+  }
+
+  .flex-table {
+    > .flex-table-header {
+      background-color: transparent;
+      font-weight: 100;
+      color: $text-color-darker;
+    }
+
+    > .flex-table-row {
+      height: 42px;
+
+      &:hover {
+        .track-index {
+          display: none;
+        }
+      }
+
+      > .flex-table-row-item {
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        padding: 0;
+        align-items: center;
+      }
+    }
+  }
+
+  .track-number, .add-remove-track {
+    flex-grow: 0.3;
+    min-width: 60px;
+    justify-content: center;
+    color: $text-color-darker;
+    
+    > .remove-track {
+      display: none;
+    }
+    
+    &:hover {
+      > .remove-track {
+        display: block;
+      }
+      
+      > .track-added {
+        display: none;
+      }
+    }
+  }
+
+  .track-duration, .popularity {
+    flex-grow: 0.6;
+    justify-content: center;
+  }
+
+  .track-name, .album-name, .artist-name {
+    flex-grow: 2;
+    white-space: nowrap;
+  }
+}

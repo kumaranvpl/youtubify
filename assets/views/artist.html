@@ -1,0 +1,216 @@
+<div id="artist-page" class="page-shadow" ng-controller="ExternalPlayerControlsController" pretty-scrollbar lazy-img-container>
+    <div ng-controller="ArtistController">
+        <div class="artist-header" ng-style="{'background-image': 'url(' + utils.img(artist.image_large, 'artist-big') + ')'}" context-menu-item="artist">
+            <div class="header-overlay">
+                <div class="artist-image">
+                    <img ng-src="{{ utils.img(artist.image_large, 'artist') }}">
+                </div>
+                <div class="artist-info">
+                    <h1>{{ artist.name }}</h1>
+                    <div class="genres">
+                        <div class="genre" ng-repeat="genre in artist.genres" ng-click="utils.toState('genre', {name: genre.name})">{{ genre.name }}</div>
+                    </div>
+                    <button ng-disabled="!artistReady" ng-show="!isPlaying()" ng-click="playAllTracks()" class="primary pill-button"><i class="icon icon-play"></i> {{:: 'playAll' | translate }}</button>
+                    <button ng-disabled="!artistReady" ng-show="isPlaying()" ng-click="pauseAllTracks()" class="primary pill-button"><i class="icon icon-pause"></i> {{:: 'pause' | translate }}</button>
+                    <button ng-disabled="!artistReady" more-options-menu="artist" more-options-item="artist" class="pill-button">{{:: 'more' | translate }}...</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <div class="nav-item" ng-class="{ active: tabs.active === 'overview' }" ng-click="openTab('overview')">Overview</div>
+            <div class="nav-item" ng-class="{ active: tabs.active === 'similarArtists' }" ng-click="openTab('similarArtists')">{{:: 'similarArtists' | translate }}</div>
+            <div class="nav-item" ng-class="{ active: tabs.active === 'about' }" ng-click="openTab('about')" ng-if="utils.getSetting('echonest_api_key')">{{:: 'about' | translate }}</div>
+        </div>
+
+        <div class="artist-body">
+            <div class="tab" id="about" ng-show="tabs.active === 'about'" ng-controller="ArtistAboutController" ng-if="utils.getSetting('echonest_api_key')">
+                <div class="images">
+                    <div class="image" ng-repeat="image in images | limitTo:4">
+                        <img ng-src="{{ image.url }}" alt="{{ artist.name }}">
+                    </div>
+                </div>
+                <p>{{ bio.text }}</p>
+
+                <div id="splash" ng-class="{ show: aboutLoading }">
+                    <div id="splash-spinner">
+                        <div class="inner one"></div>
+                        <div class="inner two"></div>
+                        <div class="inner three"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab artists-page" id="similar" ng-show="tabs.active === 'similarArtists'">
+                <section class="artists hover-overlay">
+                    <figure class="artist" ng-repeat="similar in artist.similar" context-menu-item="artist" context-menu-context-item="similar">
+                        <div class="image">
+                            <img ng-src="{{ utils.img(similar.image_large, 'artist') }}" alt="{{ similar.name }}">
+                            <div class="overlay">
+                                <i class="icon icon-play play" ng-click="playArtist(similar)"></i>
+                            </div>
+                        </div>
+                        <figcaption>
+                            <a class="artist-name" ui-sref="artist({name:utils.encodeUrlParam(similar.name)})">{{ similar.name }}</a>
+                        </figcaption>
+                    </figure>
+                </section>
+            </div>
+
+            <div class="tab" id="overview" ng-show="tabs.active === 'overview'">
+                <div class="media-col">
+                    <section class="top-tracks">
+                        <h4>{{:: 'popularSongs' | translate }}</h4>
+                        <div class="flex-table album-table">
+                            <div class="flex-table-row" ng-repeat="track in topTracks | limitTo: showingMoreTopTracks ? 20 : 5" ng-class="{ playing: trackIsPlaying(track), saved: trackSaved(track) }" context-menu-item>
+                                <div class="flex-table-row-item track-image hover-icon" ng-click="playTrack(track, $index)">
+                                    <img class="image" lazy-img="{{ utils.img(track.album.image, 'album') }}" ng-src="{{ utils.img(false, 'album') }}">
+                                    <div class="play-icon"><i class="icon icon-play"></i></div>
+                                    <playing-icon></playing-icon>
+                                    <div class="pause-icon"><i class="icon icon-pause"></i></div>
+                                </div>
+                                <div class="flex-table-row-item add-remove-track hidden-phone">
+                                    <i class="icon icon-plus add-track" ng-click="addTrack(track)"></i>
+                                    <i class="icon icon-cancel-1 remove-track" ng-click="removeTrack(track)"></i>
+                                    <i class="icon icon-ok track-added" ng-click="removeTrack(track)"></i>
+                                </div>
+                                <div class="flex-table-row-item track-name"><div class="ellipses">{{ track.name }}</div></div>
+                                <div class="flex-table-row-item album-name hidden-phone"><a class="ellipses" ng-href="{{ utils.albumUrl(track) }}">{{ track.album_name }}</a></div>
+                                <div class="flex-table-row-item more-options"><i class="icon icon-dot-3" more-options-menu="track"></i></div>
+                                <div class="flex-table-row-item track-duration hidden-phone">{{ track.duration }}</div>
+                            </div>
+                        </div>
+
+                        <button ng-click="toggleTopTracksAmount()" class="toggle-more-tracks" ng-if="topTracks.length > 5">{{ showingMoreTopTracks ? 'Show Less' : 'Show More' }}</button>
+                    </section>
+
+                    <div class="ad-container" ng-if="ad3" ng-bind-html="ad3"></div>
+
+                    <div class="separator" ng-if="filteredAlbums.length || filteredSingles.length">
+                        <div class="title">
+                            {{:: 'albums' | translate }}
+                        </div>
+                        <div class="dropdown-container" dropdown>
+                            <i class="icon icon-sort-alt-up dropdown-trigger"></i>
+                            <div class="dropdown-menu hidden">
+                                <div class="dropdown-item" ng-class="{ active: albumSort == '-release_date' }" ng-click="sortAlbums('-release_date')">{{:: 'latestAlbumsFirst' | translate }}</div>
+                                <div class="dropdown-item" ng-class="{ active: albumSort == '-spotify_popularity' }" ng-click="sortAlbums('-spotify_popularity')">{{:: 'mostPopAlbumsFirst' | translate }}</div>
+                                <div class="dropdown-item" ng-class="{ active: albumSort == 'release_date' }" ng-click="sortAlbums('release_date')">{{:: 'oldestAlbumsFirst' | translate }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="albums">
+                        <div class="album" ng-repeat="album in artist.albums | orderBy: albumSort as filteredAlbums track by $index" ng-if="album.tracks.length">
+                            <div class="album-header" context-menu-item="album" sub-name="artist.name">
+                                <div class="album-image">
+                                    <img lazy-img="{{ utils.img(album.image, 'album') }}" ng-src="{{ utils.img(false, 'album') }}">
+                                </div>
+                                <div class="album-name">
+                                    <div class="release-date">{{ album.release_date }}</div>
+                                    <h2><a ui-sref="album({artistName: utils.encodeUrlParam(artist.name), name: utils.encodeUrlParam(album.name)})">{{ album.name }}</a></h2>
+                                    <div class="buttons">
+                                        <button more-options-menu="album" sub-name="artist.name" class="pill-button">{{:: 'more' | translate }}...</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex-table album-table">
+                                <div class="flex-table-row flex-table-header" sortable-table-header>
+                                    <div class="flex-table-row-item track-number" sort-field="id">#</div>
+                                    <div class="flex-table-row-item add-remove-track hidden-phone"></div>
+                                    <div class="flex-table-row-item track-name" sort-field="name">{{:: 'song' | translate }}</div>
+                                    <div class="flex-table-row-item more-options"></div>
+                                    <div class="flex-table-row-item track-duration hidden-phone" sort-field="duration"><i class="icon icon-clock"></i></div>
+                                    <div class="flex-table-row-item popularity hidden-phone" sort-field="spotify_popularity"><i class="icon icon-thumbs-up"></i></div>
+                                </div>
+                                <div class="flex-table-row" ng-repeat="track in album.tracks | orderBy:params.sort" ng-class="{ playing: trackIsPlaying(track), saved: trackSaved(track) }" context-menu-item>
+                                    <div class="flex-table-row-item track-number hover-icon" ng-click="playTrack(track)">
+                                        <span class="track-index hidden-tablet">{{ track.number }}</span>
+                                        <div class="play-icon"><i class="icon icon-play"></i></div>
+                                        <playing-icon class="inside-album-table"></playing-icon>
+                                        <div class="pause-icon"><i class="icon icon-pause"></i></div>
+                                    </div>
+                                    <div class="flex-table-row-item add-remove-track hidden-phone">
+                                        <i class="icon icon-plus add-track" ng-click="addTrack(track)"></i>
+                                        <i class="icon icon-cancel-1 remove-track" ng-click="removeTrack(track)"></i>
+                                        <i class="icon icon-ok track-added" ng-click="removeTrack(track)"></i>
+                                    </div>
+                                    <div class="flex-table-row-item track-name">
+                                        {{ track.name }}
+                                        <featured-artists artist="artist" artists="track.artists"></featured-artists>
+                                    </div>
+                                    <div class="flex-table-row-item more-options"><i class="icon icon-dot-3" more-options-menu="track"></i></div>
+                                    <div class="flex-table-row-item track-duration hidden-phone">{{ track.duration }}</div>
+                                    <div class="flex-table-row-item popularity hidden-phone">
+                                        <div class="popularity-widget">
+                                            <div class="popularity-fill" style="width: {{ track.spotify_popularity+'%' }}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="album" ng-repeat="album in singles | orderBy: albumSort as filteredSingles track by album.id" ng-if="album.tracks.length">
+                            <div class="album-header">
+                                <div class="album-image">
+                                    <img lazy-img="{{ utils.img(album.image, 'album') }}" ng-src="{{ utils.img(false, 'album') }}">
+                                </div>
+                                <div class="album-name">
+                                    <div class="release-date">{{ album.release_date }}</div>
+                                    <h2><a ui-sref="album({artistName: utils.encodeUrlParam(artist.name), name: utils.encodeUrlParam(album.name)})">{{ album.name }}</a></h2>
+                                </div>
+                            </div>
+
+                            <div class="flex-table album-table">
+                                <div class="flex-table-row flex-table-header" sortable-table-header>
+                                    <div class="flex-table-row-item track-number" sort-field="id">#</div>
+                                    <div class="flex-table-row-item add-remove-track hidden-phone"></div>
+                                    <div class="flex-table-row-item track-name" sort-field="name">{{:: 'song' | translate }}</div>
+                                    <div class="flex-table-row-item more-options"></div>
+                                    <div class="flex-table-row-item track-duration hidden-phone" sort-field="duration"><i class="icon icon-clock"></i></div>
+                                    <div class="flex-table-row-item popularity hidden-phone" sort-fieled="spotify_popularity"><i class="icon icon-thumbs-up"></i></div>
+                                </div>
+                                <div class="flex-table-row" ng-repeat="track in album.tracks" ng-class="{ playing: trackIsPlaying(track), saved: trackSaved(track) }" context-menu-item>
+                                    <div class="flex-table-row-item track-number hover-icon" ng-click="playTrack(track)">
+                                        <span class="track-index hidden-tablet">{{ track.number }}</span>
+                                        <div class="play-icon"><i class="icon icon-play"></i></div>
+                                        <playing-icon class="inside-album-table"></playing-icon>
+                                        <div class="pause-icon"><i class="icon icon-pause"></i></div>
+                                    </div>
+                                    <div class="flex-table-row-item add-remove-track hidden-phone">
+                                        <i class="icon icon-plus add-track" ng-click="addTrack(track)"></i>
+                                        <i class="icon icon-cancel-1 remove-track" ng-click="removeTrack(track)"></i>
+                                        <i class="icon icon-ok track-added" ng-click="removeTrack(track)"></i>
+                                    </div>
+                                    <div class="flex-table-row-item track-name">
+                                        {{ track.name }}
+                                        <featured-artists artist="artist" artists="track.artists"></featured-artists>
+                                    </div>
+                                    <div class="flex-table-row-item more-options"><i class="icon icon-dot-3" more-options-menu="track"></i></div>
+                                    <div class="flex-table-row-item track-duration hidden-phone">{{ track.duration }}</div>
+                                    <div class="flex-table-row-item popularity hidden-phone">
+                                        <div class="popularity-widget">
+                                            <div class="popularity-fill" style="width: {{ track.spotify_popularity+'%' }}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="info-col" ng-class="{ 'no-similar': ! artist.similar.length }">
+                    <div class="similar-artists">
+                        <h4>{{:: 'similarArtists' | translate }}</h4>
+                        <div class="artist" ng-repeat="similar in artist.similar | limitTo:4" ng-click="goToArtistPage(similar)" context-menu-item="artist" context-menu-context-item="similar">
+                            <img lazy-img="{{ utils.img(similar.image_small, 'artist') }}" ng-src="{{ utils.img(false, 'artist') }}">
+                            <div class="name">{{ similar.name }}</div>
+                        </div>
+                    </div>
+
+                    <div class="ad-container" ng-if="ad4" ng-bind-html="ad4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

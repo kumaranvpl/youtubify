@@ -1,0 +1,97 @@
+<section id="public-user-profile" ng-controller="PublicProfileController" pretty-scrollbar ng-show="profileReady">
+
+    <div class="header" ng-style="{'background-image': 'url(' + utils.img(false, 'artist-big') + ')'}">
+        <div class="header-overlay">
+            <div class="inner-header">
+                <div class="avatar">
+                    <img ng-src="{{ users.getAvatar(user) }}" alt="{{ users.getUsername(user) }}">
+                </div>
+                <div class="info">
+                    <div class="username">{{ users.getNameOrEmail(user) }}</div>
+                    <div class="actions">
+                        <button class="follow-button" ng-click="followUser()" ng-if="!followingThisUser() && users.current.id != user.id">{{:: 'follow' | translate }}</button>
+                        <button class="follow-button active" ng-click="unfollowUser()" ng-if="followingThisUser() && users.current.id != user.id">{{:: 'unfollow' | translate }}</button>
+                        <div class="follow-info">
+                            <div class="following">
+                                <div class="number">{{ user.followed_users.length }}</div>
+                                <div class="text">{{:: 'following' | translate }}</div>
+                            </div>
+                            <div class="followers">
+                                <div class="number">{{ user.followers.length }}</div>
+                                <div class="text">{{:: 'followers' | translate }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="navigation">
+            <div class="nav-item" ng-class="{ active: selectedTab === 'playlists' }" ng-click="selectTab('playlists')">{{:: 'publicPlaylists' | translate }}</div>
+            <div class="nav-item" ng-class="{ active: selectedTab === 'following' }" ng-click="selectTab('following')">{{:: 'following' | translate }}</div>
+            <div class="nav-item" ng-class="{ active: selectedTab === 'followers' }" ng-click="selectTab('followers')">{{:: 'followers' | translate }}</div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab" id="playlists" ng-class="{ open: selectedTab === 'playlists' }">
+                <div class="playlists hover-overlay">
+                    <div class="playlist" ng-repeat="playlist in user.playlists | limitTo:5 as sortedPlaylists">
+                        <div class="image">
+                            <img ng-src="{{ getPlaylistImage(playlist) }}" alt="{{ playlist.name }}">
+                            <div class="overlay">
+                                <i class="icon icon-play play" ng-click="playPlaylist(playlist)"></i>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <a class="name" ui-sref="playlist({ id:playlist.id })">{{ playlist.name }}</a>
+                            <div class="tracks-number">{{ playlist.tracks.length }} {{:: 'songs' | translate }}</div>
+                        </div>
+                    </div>
+
+                    <div class="no-playlists" ng-if="sortedPlaylists && !sortedPlaylists.length">
+                        <i class="icon icon-note"></i> <span>{{:: 'noPublicPlaylists' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab" id="following" ng-class="{ open: selectedTab === 'following' }">
+                <div class="follow-item" ng-repeat="followedUser in user.followed_users as following">
+                    <div class="image">
+                        <img ng-src="{{ users.getAvatar(followedUser) }}" alt="{{ users.getNameOrEmail(followedUser) }}">
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <a class="name" ui-sref="user({ id: followedUser.id })">{{ users.getNameOrEmail(followedUser) }}</a>
+                            <div class="followers">
+                                {{ followedUser.followers_count }} {{:: 'followers' | translate }}
+                            </div>
+                        </div>
+                        <button class="follow-button" ng-click="followUser(followedUser)" ng-if="!followingUser(followedUser) && followedUser.id != users.current.id">{{:: 'follow' | translate }}</button>
+                        <button class="follow-button active" ng-click="unfollowUser(followedUser)" ng-if="followingUser(followedUser) && followedUser.id != users.current.id">{{:: 'unfollow' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab" id="followers" ng-class="{ open: selectedTab === 'followers' }">
+                <div class="follow-item" ng-repeat="follower in user.followers as followers">
+                    <div class="image">
+                        <img ng-src="{{ users.getAvatar(follower) }}" alt="{{ users.getNameOrEmail(follower) }}">
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <a class="name" ui-sref="user({ id: follower.id })">{{ users.getNameOrEmail(follower) }}</a>
+                            <div class="followers">
+                                {{ follower.followers_count }} {{:: 'followers' | translate }}
+                            </div>
+                        </div>
+                        <button class="follow-button" ng-click="followUser(follower)" ng-if="!followingUser(follower) && follower.id != users.current.id">{{:: 'follow' | translate }}</button>
+                        <button class="follow-button active" ng-click="unfollowUser(follower)" ng-if="followingUser(follower) && follower.id != users.current.id">{{:: 'unfollow' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

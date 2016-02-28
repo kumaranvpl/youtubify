@@ -1,0 +1,46 @@
+<div class="modal hidden user-form-modal wider" id="new-user-modal">
+    <div class="backdrop" modal-backdrop></div>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>{{:: 'updateTrack' | translate }}</h1>
+            <div ng-click="closeModal()" class="close-modal-icon"><i class="icon icon-cancel"></i></div>
+        </div>
+
+        <form ng-submit="updateTrack()">
+            <div class="modal-error">
+                <div class="error" ng-repeat="error in errors">{{ error }}</div>
+            </div>
+
+            <div class="input-container">
+                <label for="name">{{:: 'name' | translate }}</label>
+                <input placeholder="{{:: 'name' | translate }}" id="name" type="name" ng-model="selectedItem.name">
+            </div>
+
+            <div class="input-container">
+                <label for="albumName">{{:: 'albumName' | translate }}</label>
+                <input  placeholder="{{:: 'albumName' | translate }}" id="albumName" type="text" ng-model="selectedItem.album_name">
+            </div>
+
+            <div class="input-container">
+                <label for="artists">{{:: 'artists' | translate }}</label>
+                <input placeholder="{{:: 'artists' | translate }}" id="artists" type="text" ng-model="selectedItem.artists">
+            </div>
+
+            <div class="input-container">
+                <label for="duration">{{:: 'duration' | translate }}</label>
+                <input  placeholder="{{:: 'duration' | translate }}" id="duration" type="text" ng-model="selectedItem.duration">
+            </div>
+
+            <div class="input-container">
+                <label for="youtube_id">{{:: 'youtubeId' | translate }}</label>
+                <input placeholder="{{:: 'youtubeId' | translate }}"  id="youtube_id" type="text" ng-model="selectedItem.youtube_id">
+            </div>
+            
+            <div class="buttons">
+                <button type="button" class="cancel" ng-click="closeModal()">{{:: 'cancel' | translate }}</button>
+                <button type="submit" class="primary">{{:: 'update' | translate }}</button>
+            </div>
+        </form>
+    </div>
+</div>

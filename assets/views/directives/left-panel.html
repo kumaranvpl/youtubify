@@ -1,0 +1,83 @@
+<section id="left-panel" class="togglable-sidebar" ng-class="{ closed: isPhone }">
+    <div ng-controller="PlaylistModifyController" class="left-panel-inner">
+        <div class="content" pretty-scrollbar>
+            <a ui-sref="home" class="logo hidden-phone"><img ng-src="{{ utils.getLogoUrl('light') }}" alt="logo"></a>
+
+            <div class="search-bar">
+                <input type="text" placeholder="{{:: 'search' | translate }}..." ng-model="search.query" ng-model-options="{ debounce: 400 }" ng-change="search.getResults(search.query)" on-enter="search.viewAllResults()">
+                <i class="icon icon-spin6 spin search-bar-spinner" ng-if="search.ajaxInProgress"></i>
+                <i class="icon icon-cancel-1 search-bar-clear" ng-click="search.clearQuery()" ng-if="!search.ajaxInProgress && search.query.length"></i>
+            </div>
+
+            <div class="main-menu">
+                <div class="menu-item" ui-sref="phone-search" ui-sref-active="active" ng-if="isPhone">{{:: 'search' | translate }}</div>
+                <div class="menu-item" ui-sref="top-albums" ui-sref-active="active">{{:: 'popularAlbums' | translate }}</div>
+                <div class="menu-item" ui-sref="new-releases" ui-sref-active="active">{{:: 'newReleases' | translate }}</div>
+                <div class="menu-item" ui-sref="top-songs" ui-sref-active="active">{{:: 'top50' | translate }}</div>
+                <div class="menu-item" ui-sref="popular-genres" ui-sref-active="active">{{:: 'popularGenres' | translate }}</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="current-user-widget" ng-if="users.current">
+                <img ng-src="{{ users.getAvatar() }}"/>
+                <a class="user-email" ui-sref="user({id:users.current.id})">
+                    {{ users.getUsername() }}
+                </a>
+                <div class="dropdown-container" dropdown>
+                    <i class="icon icon-cog edit-profile dropdown-trigger"></i>
+                    <div class="dropdown-menu hidden">
+                        <div class="dropdown-item" ng-if="users.current.isAdmin" ui-sref="admin.analytics"><i class="icon icon-gauge"></i>{{:: 'adminArea' | translate }}</div>
+                        <div class="dropdown-item" ng-click="users.showAccountSettingsModal($event)"><i class="icon icon-pencil"></i> {{:: 'accountSettings' | translate }}</div>
+                        <div class="dropdown-item" ng-click="users.showAccountSettingsModal($event, 'avatar')"><i class="icon icon-emo-sunglasses"></i> {{:: 'changeAvatar' | translate }}</div>
+                        <div class="dropdown-item" ng-click="users.showAccountSettingsModal($event, 'password')"><i class="icon icon-lock"></i> {{:: 'changePassword' | translate }}</div>
+                        <div class="dropdown-item" ng-click="users.logout()"><i class="icon icon-login"></i> {{:: 'logOut' | translate }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-btns" ng-if="!users.current">
+                <button class="primary login-btn" ui-sref="login">{{:: 'login' | translate }}</button>
+                <button class="cancel register-btn" ui-sref="register" ng-if="utils.getSetting('enableRegistration')">{{:: 'register' | translate }}</button>
+            </div>
+
+            <div class="your-music">
+                <h2>{{:: 'yourMusic' | translate }}</h2>
+                <div class="menu-item" ui-sref="songs" ui-sref-active="active"><i class="icon icon-note"></i> {{:: 'songs' | translate }}</div>
+                <div class="menu-item" ui-sref="albums" ui-sref-active="active"><i class="icon icon-cd"></i> {{:: 'albums' | translate }}</div>
+                <div class="menu-item" ui-sref="artists" ui-sref-active="active"><i class="icon icon-mic"></i> {{:: 'artists' | translate }}</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="playlists-container">
+                <div class="playlists">
+                    <h2>{{:: 'playlists' | translate }}</h2>
+                    <div class="playlists-list">
+                        <div class="menu-item" ng-repeat="playlist in playlists.all" ui-sref="playlist({id:playlist.id})" ui-sref-active="active"><i class="icon icon-note"></i> {{ playlist.name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="new-playlist" ng-click="openNewPlaylistModal()">
+            <i class="icon icon-plus"></i>
+            <div class="text">{{:: 'newPlaylist' | translate }}</div>
+        </div>
+
+        <div class="current-track" ng-show="player.currentTrack" ng-controller="ExternalPlayerControlsController">
+            <img ng-src="{{ utils.img(player.currentTrack.image, 'album') }}">
+            <div class="info">
+                <div class="track-name" title="{{ player.currentTrack.name }}">{{ player.currentTrack.name }}</div>
+                <div class="artist-name">
+                    <all-track-artists artists="player.currentTrack.artists"></all-track-artists>
+                </div>
+            </div>
+            <div class="add-remove" ng-class="{ saved: trackSaved(player.currentTrack) }">
+                <i class="icon icon-plus add-track" ng-click="addTrack(player.currentTrack)"></i>
+                <i class="icon icon-cancel-1 remove-track" ng-click="removeTrack(player.currentTrack)"></i>
+                <i class="icon icon-ok track-added" ng-click="removeTrack(player.currentTrack)"></i>
+            </div>
+        </div>
+    </div>
+</section>

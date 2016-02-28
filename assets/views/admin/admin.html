@@ -1,0 +1,48 @@
+<div id="admin">
+    <aside pretty-scrollbar class="scroll-container togglable-sidebar">
+        <a ui-sref="home" class="logo"><img ng-src="{{ utils.getLogoUrl('light') }}" alt="logo"></a>
+        <div class="current-user-widget" ng-if="users.current">
+            <img ng-src="{{ users.getAvatar() }}"/>
+            <a class="user-email" ui-sref="user({id:users.current.id})">
+                {{ users.getUsername() }}
+            </a>
+            <div class="dropdown-container" dropdown>
+                <i class="icon icon-cog edit-profile dropdown-trigger"></i>
+                <div class="dropdown-menu hidden">
+                    <div class="dropdown-item" ui-sref="home"><i class="icon icon-lock"></i>{{:: 'homepage' | translate }}</div>
+                    <div class="dropdown-item" ng-click="users.showAccountSettingsModal($event)"><i class="icon icon-pencil"></i> {{:: 'accountSettings' | translate }}</div>
+                    <div class="dropdown-item" ng-click="users.showAccountSettingsModal($event, 'avatar')"><i class="icon icon-emo-sunglasses"></i> {{:: 'changeAvatar' | translate }}</div>
+                    <div class="dropdown-item" ng-click="users.showAccountSettingsModal($event)"><i class="icon icon-lock"></i> {{:: 'changePassword' | translate }}</div>
+                    <div class="dropdown-item" ng-click="users.logout()"><i class="icon icon-login"></i> {{:: 'logOut' | translate }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav">
+            <div class="nav-item" ui-sref=".analytics" ui-sref-active="open"><i class="icon icon-gauge"></i> <span class="text">{{:: 'analytics' | translate }}</span></div>
+            <div class="nav-item" ui-sref=".users" ui-sref-active="open"><i class="icon icon-users"></i> <span class="text">{{:: 'users' | translate }}</span></div>
+            <div class="nav-item" ui-sref=".translations" ui-sref-active="open"><i class="icon icon-globe"></i> <span class="text">{{:: 'translations' | translate }}</span></div>
+            <div class="nav-item" ui-sref=".appearance" ui-sref-active="open"><i class="icon icon-brush"></i> <span class="text">{{:: 'appearance' | translate }}</span></div>
+            <div class="nav-item" ui-sref=".settings" ui-sref-active="open"><i class="icon icon-cog"></i> <span class="text">{{:: 'settings' | translate }}</span></div>
+            <div class="nav-item" ui-sref=".ads" ui-sref-active="open"><i class="icon icon-wallet"></i> <span class="text">{{:: 'ads' | translate }}</span></div>
+            <div class="nav-item" ui-sref=".artists" ui-sref-active="open"><i class="icon icon-mic"></i> <span class="text">{{:: 'artists' | translate }}</span></div>
+            <div class="nav-item" ui-sref=".tracks" ui-sref-active="open"><i class="icon icon-note"></i> <span class="text">{{:: 'tracks' | translate }}</span></div>
+            <div class="nav-item" ui-sref=".albums" ui-sref-active="open"><i class="icon icon-cd"></i> <span class="text">{{:: 'albums' | translate }}</span></div>
+            <div class="nav-item" ui-sref=".mail" ui-sref-active="open"><i class="icon icon-mail"></i> <span class="text">{{:: 'mailTemplates' | translate }}</span></div>
+        </div>
+    </aside>
+
+    <div class="admin-page">
+        <nav>
+            <i class="icon icon-menu toggle-icon" sidebar-toggler></i>
+            <div class="nav-items">
+                <div class="logout" ng-click="users.logout()"><i class="icon icon-login"></i> <div class="text">{{:: 'logOut' | translate }}</div></div>
+            </div>
+        </nav>
+        <section id="admin-content" ui-view du-scroll-container></section>
+    </div>
+
+
+</div>
+
+<demo-alert ng-if="utils.isDemo" storageKey="admin" message="Note that admin area is accessible to all users on demo site. It would normally only be accessible to admin as expected."></demo-alert>

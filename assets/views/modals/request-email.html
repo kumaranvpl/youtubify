@@ -1,0 +1,18 @@
+<div class="modal hidden" id="request-email-modal">
+    <div class="backdrop" modal-backdrop></div>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>{{ 'enterYourTwitterEmail' | translate }}</h1>
+            <div ng-click="closeModal()" class="close-modal-icon"><i class="icon icon-cancel"></i></div>
+        </div>
+        <div class="input-container">
+            <input type="email" ng-model="credentials.email" placeholder="{{ 'email' | translate }}">
+        </div>
+
+        <div class="buttons">
+            <button ng-click="closeModal()" class="cancel">{{ 'cancel' | translate }}</button>
+            <button ng-click="createAndLoginUser()" ng-disabled="!credentials.email" class="primary">{{ 'login' | translate }}</button>
+        </div>
+    </div>
+</div>

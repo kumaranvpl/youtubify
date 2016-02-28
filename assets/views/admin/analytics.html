@@ -1,0 +1,101 @@
+<section id="analytics-page" ng-controller="AnalyticsController">
+    <section class="stats-row">
+        <div class="stats-container">
+            <div class="stats-icon"><i class="icon icon-users"></i></div>
+            <div class="details">
+                <div class="number">{{ stats.users }}</div>
+                <div class="text">{{:: 'totalUsers' | translate }}</div>
+            </div>
+        </div>
+        <div class="stats-container">
+            <div class="stats-icon"><i class="icon icon-note"></i></div>
+            <div class="details">
+                <div class="number">{{ stats.tracks }}</div>
+                <div class="text">{{:: 'totalTracks' | translate }}</div>
+            </div>
+        </div>
+        <div class="stats-container">
+            <div class="stats-icon"><i class="icon icon-cd"></i></div>
+            <div class="details">
+                <div class="number">{{ stats.artists }}</div>
+                <div class="text">{{:: 'totalArtists' | translate }}</div>
+            </div>
+        </div>
+        <div class="stats-container">
+            <div class="stats-icon"><i class="icon icon-mic"></i></div>
+            <div class="details">
+                <div class="number">{{ stats.albums }}</div>
+                <div class="text">{{:: 'totalAlbums' | translate }}</div>
+            </div>
+        </div>
+        <div class="stats-container">
+            <div class="stats-icon"><i class="icon icon-users-1"></i></div>
+            <div class="details">
+                <div id="active-users-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="unauthorized-container">
+        <img ng-src="{{ baseUrl + 'assets/images/analytics.png' }}"/>
+    </div>
+
+    <div class="charts-row hidden">
+        <div class="chart-panel large">
+            <div class="chart-panel-header">
+                <div class="title">This Week vs Last Week</div>
+                <div class="sub-title">By sessions</div>
+            </div>
+            <div class="chart-panel-body">
+                <div class="chart-container" id="this-vs-last-week"></div>
+                <div class="chart-legend" id="legend-1-container"></div>
+            </div>
+        </div>
+
+        <div class="chart-panel small">
+            <div class="chart-panel-header">
+                <div class="title">Top Browsers</div>
+                <div class="sub-title">By pageviews</div>
+            </div>
+            <div class="chart-panel-body">
+                <div class="chart-container" id="chart-3-container"></div>
+                <div class="chart-legend" id="legend-3-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-row hidden">
+        <div class="chart-panel large">
+            <div class="chart-panel-header">
+                <div class="title">This Month Vs Last Month</div>
+                <div class="sub-title">By pageviews</div>
+            </div>
+            <div class="chart-panel-body">
+                <div class="chart-container" id="chart-2-container"></div>
+                <div class="chart-legend" id="legend-2-container"></div>
+            </div>
+        </div>
+
+        <div class="chart-panel small">
+            <div class="chart-panel-header">
+                <div class="title">Top Countries</div>
+                <div class="sub-title">By sessions</div>
+            </div>
+            <div class="chart-panel-body">
+                <div class="chart-container" id="chart-4-container"></div>
+                <div class="chart-legend" id="legend-4-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-row hidden">
+        <div class="view-selector">
+            <div id="view-selector-container"></div>
+        </div>
+    </div>
+
+    <div id="embed-api-auth-container"></div>
+
+
+    <div ed-load-analytics></div>
+</section>

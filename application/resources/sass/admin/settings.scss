@@ -1,0 +1,133 @@
+.settings-container {
+
+  &.full-width {
+    > form {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+
+      .input-container > textarea {
+        max-width: 750px;
+        height: 160px;
+      }
+    }
+  }
+
+  > form {
+    width: calc(100% - 200px);
+    margin-left: 230px;
+    padding: 0 30px 0 0;
+
+    .input-container {
+      margin-bottom: 20px;
+
+      > input, > select, > textarea {
+        height: 35px;
+        border: 1px solid $admin-panel-border-color;
+        width: 100%;
+        outline: none !important;
+        max-width: 350px;
+      }
+
+      > textarea {
+        height: 85px;
+      }
+
+      > input {
+        padding: 10px;
+      }
+
+      > select {
+        padding: 0 7px;
+      }
+
+      > p {
+        font-size: 0.88rem;
+        font-weight: 400;
+        margin-top: 5px;
+        padding: 0 1px;
+
+        &:empty {
+          display: none;
+        }
+      }
+
+      > label {
+        display: block;
+        margin-bottom: 5px;
+        text-transform: capitalize;
+      }
+    }
+
+    .logo-container {
+      margin-bottom: 20px;
+
+      .label {
+        margin-bottom: 10px;
+      }
+
+      .image {
+        background-color: $admin-left-sidebar-color;
+        margin-bottom: 20px;
+        max-width: $left-panel-width;
+        border-radius: 3px;
+
+        > img {
+          display: block;
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
+
+.admin-mail-container {
+  height: 100%;
+
+  form, .admin-panel, .settings-container {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .panel-body {
+    height: calc(100% - 44px);
+
+    .editor-container {
+      height: calc(100% - 62px);
+    }
+  }
+  
+  .templates-nav {
+    display: flex;
+
+    > .nav-items {
+     flex: 1 1 auto;
+
+     > .nav-item {
+       padding: 10px;
+       border: 1px solid $admin-panel-border-color;
+       margin: 0 15px 20px 0;
+       width: 250px;
+       flex: 0 0 auto;
+       border-radius: 3px;
+       cursor: pointer;
+       text-align: center;
+       display: inline-block;
+
+       &.active {
+         background-color: $accent-color;
+         color: $primary-button-text-color;
+         border-color: transparent;
+       }
+     }
+    }
+
+    > .save {
+      flex: 1 1 auto;
+      text-align: right;
+    }
+  }
+}

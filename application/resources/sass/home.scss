@@ -1,0 +1,54 @@
+#home {
+  position: relative;
+  overflow: auto;
+  height: 100%;
+
+  .genre {
+    padding: 15px;
+    background-color: lighten($background-color-lighter, 2%);
+    text-transform: capitalize;
+    margin: 0 13px;
+    border-radius: 3px;
+    display: flex;
+    font-size: 1.1rem;
+    font-weight: 400;
+
+    > .name, > .more {
+      width: 50%;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    > .more {
+      text-align: right;
+    }
+    
+  }
+
+  .artists {
+    .artist {
+      position: relative;
+
+      figcaption {
+        min-height: 35px;
+        text-align: center;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        margin: 0 14px 14px 14px;
+        max-width: calc(100% - 28px);
+        background-color: rgba(0,0,0,0.7);
+
+        > .artist-name {
+          max-width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}

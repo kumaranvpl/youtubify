@@ -1,0 +1,35 @@
+<div class="search-panel full-page" pretty-scrollbar ng-controller="PhoneSearchController">
+
+    <div class="view-all" ng-click="search.viewAllResults()">{{:: 'viewAllResults' | translate }} <i class="icon icon-right-open"></i></div>
+
+    <div class="result-container" ng-if="search.results.artists.length">
+        <h2>{{:: 'artists' | translate }}</h2>
+        <a class="media" ng-repeat="artist in search.results.artists | orderBy:'-spotify_popularity' | limitTo:3" ng-click="search.goToArtistPage(artist)">
+            <img ng-src="{{ utils.img(artist.image_small, 'artist') }}" class="media-image">
+            <div class="media-body">
+                <div class="media-text">{{ artist.name }}</div>
+            </div>
+        </a>
+    </div>
+
+    <div class="result-container" ng-if="search.results.tracks.length">
+        <h2>{{:: 'songs' | translate }}</h2>
+        <div class="track" ng-repeat="track in search.results.tracks | orderBy:'-spotify_popularity' | limitTo:3" ng-click="search.playTrack(track)">
+            <div class="track-name">{{ track.name }}</div>
+            <div class="artist-name">
+                <all-track-artists artists="track.artists"></all-track-artists>
+            </div>
+        </div>
+    </div>
+
+    <div class="result-container albums" ng-if="search.results.albums.length">
+        <h2>{{:: 'albums' | translate }}</h2>
+        <div class="media" ng-repeat="album in search.results.albums | orderBy:'-spotify_popularity' | limitTo:3">
+            <img ng-src="{{ utils.img(album.image, 'album') }}" class="media-image" ng-click="search.goToAlbumPage(album)">
+            <div class="media-body">
+                <div class="media-text" ng-click="search.goToAlbumPage(album)">{{ album.name }}</div>
+                <div class="media-subtext" ng-click="search.goToArtistPage(album.artist)">{{ album.artist.name }}</div>
+            </div>
+        </div>
+    </div>
+</div>

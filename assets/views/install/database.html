@@ -1,0 +1,46 @@
+<div class="row step-panel">
+	<h2>Database Configuration</h2>
+
+	<div ng-class="{ hidden: !error }" id="error">
+      	<span id="msg">{{ error }}</span>
+    </div>
+
+	<div class="input-container">
+		<label for="host">Host</label>
+		<input type="text" name="host" id="host" class="form-control"  ng-model="dbDetails.host">
+	</div>
+
+	<div class="input-container">
+		<label for="database">Database Name</label>
+		<input type="text" name="database" id="database" class="form-control" ng-model="dbDetails.database">
+	</div>
+
+	<div class="input-container">
+		<label for="username">Username</label>
+		<input type="username" name="username" id="username" class="form-control" ng-model="dbDetails.username">
+	</div>
+
+	<div class="input-container">
+		<label for="password">Password</label>
+		<input type="password" name="password" id="password" class="form-control" ng-model="dbDetails.password">
+	</div>
+
+	<div class="input-container">
+		<label for="prefix">Prefix</label>
+		<input type="text" name="prefix" id="prefix" class="form-control" ng-model="dbDetails.prefix">
+		<div class="help-block">This will be prepended to database table names, you can leave it blank.</div>
+	</div>
+</div>
+
+<div class="row manual-fill">
+	<div class="col-sm-6">
+		<p>There might be some problems if <strong>.env</strong> file is not writable. In that case you can open it up with a text editor, fill in the details manually and check the box below.</p>
+		<div class="checkbox">
+	      	<input type="checkbox" id="filledManually" ng-checked="dbDetails.alreadyFilled" ng-model="dbDetails.alreadyFilled"><label for="filledManually">I filled in my database details manually</label>	    	
+	  	</div>
+	</div>
+
+	<div class="button-container">
+        <button ng-click="createDb()" class="primary">Next</button>
+    </div>
+</div>

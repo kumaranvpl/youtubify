@@ -1,0 +1,332 @@
+#album-page {
+  min-height: 100%;
+  max-width: 1600px;
+  padding: 25px;
+  margin: 0 auto;
+  
+  .album-header {
+    display: flex;
+    margin-bottom: 40px;
+
+    > .info {
+      flex: 1;
+      max-width: 100%;
+
+      .artist-name {
+        font-size: 1.1rem;
+        color: $text-color;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      > .album-name {
+        font-size: 3rem;
+        font-weight: 100;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      > .album-info {
+        margin-top: 18px;
+
+        > .info-container {
+          margin-bottom: 2px;
+          display: flex;
+          font-size: 1.05rem;
+
+          > .name {
+            margin-right: 5px;
+            min-width: 120px;
+            color: darken($text-color, 15%);
+          }
+
+          > .value {
+            font-weight: 500;
+          }
+        }
+      }
+
+      .actions {
+        margin-top: 20px;
+
+        > .primary {
+          margin-right: 10px;
+          min-width: 100px;
+        }
+      }
+    }
+    
+    > .album-image {
+      margin-right: 15px;
+
+      > img {
+        height: 225px;
+        width: 225px;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .ad-container {
+    margin: -30px 0 30px;
+  }
+
+  @media only screen and (max-width:$phone) {
+    padding: 10px;
+
+    .album-name {
+      font-size: 2rem !important;
+    }
+
+    .album-header {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
+
+.album-table {
+  @media only screen and (max-width : $phone) {
+    font-size: 0.9rem;
+
+    .track-name {
+      margin-right: 8px;
+    }
+  }
+
+  .flex-table-row {
+    height: 42px;
+
+    @if $should-table-be-striped {
+      &:nth-child(odd) {
+        background-color: $table-striped-row-color;
+      }
+    }
+
+    &:hover {
+      .track-index {
+        display: none;
+      }
+
+      .play-icon {
+        display: flex;
+      }
+      
+      .more-options > .icon {
+        display: inline-block;
+      }
+    }
+
+    .flex-table-row-item {
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      padding: 0;
+      align-items: center;
+    }
+  }
+
+  .playing {
+    color: $playing-song-color;
+    background-color: $background-color-lighter;
+
+    .album-name, .track-duration, .artists > .artist {
+      color: $playing-song-color;
+    }
+
+    .track-index {
+      display: none;
+    }
+
+    .playing-icon-container {
+      display: flex;
+    }
+    
+    .hover-icon {
+      cursor: pointer;
+      position: relative;
+
+      &:hover {
+        .playing-icon-container {
+          display: none;
+        }
+        
+        .pause-icon {
+          display: flex;
+        }
+      }
+    }
+
+    &:hover {
+      .play-icon {
+        display: none;
+      }
+    }
+
+    @media only screen and (max-width : $tablet) {
+      font-size: 0.9rem;
+
+      .play-icon {
+        display: none !important;
+      }
+    }
+  }
+
+  .play-icon, .pause-icon {
+    display: none;
+    background-color: lighten($background-color-lighter, 10%);
+    color: $album-table-icons-color;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    width: 27px;
+    height: 27px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .play-icon {
+    padding-left: 3px;
+
+    @media only screen and (max-width : $tablet) {
+      display: flex !important;
+    }
+  }
+
+  .pause-icon {
+    padding-left: 1px;
+  }
+
+  .inside-album-table {
+    background-color: $album-table-icons-background-color;
+    color: $album-table-icons-color;
+    width: 27px;
+    height: 27px;
+    position: static;
+    border-radius: 50%;
+    padding-left: 4px;
+
+    > .playing-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  
+  .featuring, .artists {
+    display: flex;
+    color: $text-color-darker;
+    padding-left: 3px;
+    max-width: 87%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    > .dash {
+      color: $text-color;
+      padding: 0 5px 0 3px;
+    }
+
+    > .artist {
+      cursor: pointer;
+      padding-left: 4px;
+
+      &:first-of-type {
+        padding-left: 0;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .artists {
+    padding-left: 0;
+  }
+
+  .track-number, .add-remove-track {
+    flex-grow: 0.5;
+    min-width: 50px;
+    justify-content: center;
+    color: $text-color-darker;
+  }
+
+  .more-options {
+    width: 60px;
+    flex: 0 0 auto;
+
+    > .icon {
+      cursor: pointer;
+      display: none;
+    }
+  }
+
+  .track-attached-at {
+    color: $text-color-darker;
+  }
+
+  .track-duration, .popularity {
+    flex-grow: 0.6;
+    color: $text-color-darker;
+    justify-content: center;
+    min-width: 50px;
+  }
+
+  .track-name, .album-name, .artist-name {
+    flex-grow: 7;
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .album-name {
+    color: $text-color-darker;
+  }
+
+  .remove-track, .track-added {
+    display: none;
+  }
+
+  .saved {
+    .track-added {
+      display: block;
+    }
+
+    .add-track {
+      display: none;
+    }
+
+    .add-remove-track:hover {
+      .track-added {
+        display: none;
+      }
+
+      .remove-track {
+        display: block;
+      }
+    }
+  }
+
+  .add-remove-track {
+    cursor: pointer;
+
+    &:hover {
+      color: $album-table-icons-color;
+    }
+  }
+
+  .popularity-widget {
+    width: 70%;
+    height: 6px;
+    position: relative;
+    background-color: $popularity-widget-color;
+
+    > .popularity-fill {
+      height: 100%;
+      background-color: $popularity-widget-fill-color;
+    }
+  }
+}

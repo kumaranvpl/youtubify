@@ -1,0 +1,161 @@
+#context-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: $context-menu-background-color;
+  width: $context-menu-width;
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);
+  padding: 10px 0 0;
+  overflow: hidden;
+  z-index: 99;
+  user-select: none;
+  list-style: none;
+  color: $context-menu-text-color;
+
+  @media only screen and (max-width:$phone) {
+    width: calc(100% - 40px) !important;
+    left: 20px !important;
+    top: 50px !important;
+  }
+
+  > .header {
+    display: flex;
+    width: 92%;
+    margin: 0 auto;
+    padding: 0 0 10px;
+    border-bottom: 1px solid lighten($background-color-lighter, 5%);
+
+    > .image {
+      width: $context-menu-image-width;
+      height: $context-menu-image-height;
+      margin-right: 15px;
+      flex: 0 0 auto;
+
+      > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    > .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      white-space: nowrap;
+
+      > .name, .sub-name {
+        overflow: hidden;
+        max-width: $context-menu-width - $context-menu-image-width - 40px;
+        text-overflow: ellipsis;
+      }
+
+      > .name {
+        margin-bottom: 2px;
+        color: $text-color;
+      }
+
+      > .sub-name {
+        font-size: 0.9rem;
+        color: $text-color-darker;
+      }
+    }
+  }
+
+  > .body {
+    position: relative;
+    flex: 1 1 auto;
+
+    > .add-to-playlist {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      background-color: $context-menu-background-color;
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      font-size: 1.05rem;
+      transition: transform 0.25s ease;
+
+      &.slide-out {
+        transform: translateX(100%);
+      }
+
+      > .back {
+        display: flex;
+        border-bottom: 1px solid lighten($background-color-lighter, 6%);
+        padding-bottom: 10px;
+        cursor: pointer;
+
+        &:hover {
+          color: lighten($text-color, 15%);
+        }
+
+        > .icon {
+          margin-right: 5px;
+        }
+      }
+
+      > .new-playlist {
+        display: flex;
+        margin: 18px 0;
+        cursor: pointer;
+
+        &:hover {
+          color: $text-color;
+        }
+
+        > .icon {
+          margin-right: 5px;
+        }
+      }
+
+      > .playlists {
+        > .playlist {
+          display: flex;
+          padding: 4px;
+          background-color: lighten($background-color-lighter, 3%);
+          margin-bottom: 6px;
+          border-radius: 3px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: lighten($background-color-lighter, 5%);
+            color: $text-color;
+          }
+
+          > .icon {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .context-menu-item {
+    padding: 10px 10px;
+    cursor: pointer;
+    border-left: 5px solid transparent;
+
+    @media only screen and (max-width:$phone) {
+      border-bottom: 1px solid lighten($background-color-lighter, 5%);
+      padding: 20px 10px;
+    }
+
+    > .icon {
+      margin-right: 10px;
+    }
+
+    &:hover {
+      background-color: lighten($background-color-lighter, 5%);
+      border-left: 5px solid #8F8F8F;
+    }
+  }
+
+  .separator {
+    background-color: lighten($background-color-lighter, 5%);
+    height: 1px;
+    padding: 0;
+  }
+}

@@ -1,0 +1,41 @@
+<div class="modal hidden user-form-modal wider" id="new-user-modal">
+    <div class="backdrop" modal-backdrop></div>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>{{:: 'updateAlbum' | translate }}</h1>
+            <div ng-click="closeModal()" class="close-modal-icon"><i class="icon icon-cancel"></i></div>
+        </div>
+
+        <form ng-submit="updateAlbum()">
+            <div class="modal-error">
+                <div class="error" ng-repeat="error in errors">{{ error }}</div>
+            </div>
+
+            <div class="input-container">
+                <label for="name">{{:: 'name' | translate }}</label>
+                <input placeholder="{{:: 'name' | translate }}" id="name" type="name" ng-model="selectedItem.name">
+            </div>
+
+            <div class="input-container">
+                <label for="popularity">{{:: 'popularity' | translate }}</label>
+                <input  placeholder="{{:: 'popularity' | translate }}" id="popularity" type="text" ng-model="selectedItem.spotify_popularity">
+            </div>
+
+            <div class="input-container">
+                <label for="image">{{:: 'image' | translate }}</label>
+                <input placeholder="{{:: 'image' | translate }}" id="image" type="text" ng-model="selectedItem.image">
+            </div>
+
+            <div class="input-container">
+                <label for="release_date">{{:: 'releaseDate' | translate }}</label>
+                <input placeholder="{{:: 'release_date' | translate }}" id="release_date" type="text" ng-model="selectedItem.release_date">
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="cancel" ng-click="closeModal()">{{:: 'cancel' | translate }}</button>
+                <button type="submit" class="primary">{{:: 'update' | translate }}</button>
+            </div>
+        </form>
+    </div>
+</div>

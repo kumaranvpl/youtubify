@@ -1,0 +1,37 @@
+<section id="login-page">
+
+    <div ng-class="{ loading: loading }" class="container login-container">
+        <form ng-submit="submit()">
+
+            <a ui-sref="home"><img ng-src="{{ utils.getLogoUrl('light') }}" alt="logo" class="logo"></a>
+
+            <auth-errors></auth-errors>
+
+            <div class="input-container">
+                <input name="email" placeholder="{{:: 'email' | translate }}" type="text" ng-model="credentials.email" class="input-field">
+            </div>
+            <div class="input-container">
+                <input name="password" type="password" placeholder="{{:: 'password' | translate }}" name="password" ng-model="credentials.password" class="input-field">
+                <div class="forgot-password" ng-click="showPasswordResetModal($event)">{{:: 'forgot' | translate }}</div>
+            </div>
+
+            <section class="flex-align">
+                <div class="pull-left">
+                    <input ng-model="credentials.remember" class="md-primary" type="checkbox">{{:: 'rememberMe' | translate }}
+                </div>
+                <div class="pull-right" ng-controller="SocialLoginController">
+                    <button type="submit" class="primary">{{:: 'login' | translate }}</button>
+                </div>
+            </section>
+
+            <p ng-if="registrationEnabled">{{:: 'noAccount' | translate }} <a ui-sref="register">{{ 'registerHere' | translate }}</a> {{:: 'orLoginWith' | translate }}</p>
+
+            <div class="social-icons" ng-controller="SocialLoginController" ng-if="registrationEnabled">
+                <div ng-click="loginWith('facebook')" class="social-icon facebook" ed-tooltip="{{:: 'loginWithFacebook' | translate }}"></div>
+                <div ng-click="loginWith('google')" class="social-icon googleplus" ed-tooltip="{{:: 'loginWithGoogle' | translate }}"></div>
+                <div ng-click="loginWith('twitter')" class="social-icon twitter" ed-tooltip="{{:: 'loginWithTwitter' | translate }}"></div>
+            </div>
+            <div class="loader" ng-show="loading"><i class="icon icon-spin6 spin"></i></div>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,28 @@
+<div class="modal hidden" id="share-modal" ng-controller="ShareModalController">
+    <div class="backdrop" modal-backdrop></div>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>{{:: 'share' | translate }} {{:: shareable.name }} <span ng-if="rawType == 'folder'">{{ type }}</span></h1>
+            <div ng-click="closeModal()" class="close-modal-icon"><i class="icon icon-cancel"></i></div>
+        </div>
+
+        <div class="input-group">
+            <input class="form-control" readonly="true" type="text" ng-model="link" select-on-click id="share-modal-input">
+            <button class="primary" type="button" ng-click="copyLinkToClipboard()">{{:: 'copyLink' | translate }}</button>
+        </div>
+
+        <share-icons></share-icons>
+
+        <form class="email-container" name="form">
+            <p>{{:: 'sendLinkViaEmail' | translate }}:</p>
+            <tags-input type="email" name="emails" ng-model="emails" placeholder="{{:: '+email' | translate }}" add-on-space="true" on-tag-adding="utils.validateEmail($tag)"></tags-input>
+            <textarea ng-model="emailMessage" columns="1" rows="3" placeholder="{{:: 'messageOptional' | translate }}"></textarea>
+        </form>
+
+        <div class="buttons">
+            <button ng-click="closeModalAndSendEmails()" class="primary">{{:: 'done' | translate }}</button>
+            <md-progress-circular ng-if="mailSendInProgress" md-mode="indeterminate" class="mail-spinner"></md-progress-circular>
+        </div>
+    </div>
+</div>

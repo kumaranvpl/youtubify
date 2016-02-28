@@ -1,0 +1,24 @@
+<div id="home" ng-controller="HomeController" pretty-scrollbar>
+    <div class="artists-page">
+        <section ng-repeat="genre in genres" ng-if="genre.artists.length">
+            <div class="genre">
+                <div class="name" ng-click="utils.toState('genre', {name: genre.name})">{{ genre.name }}</div>
+                <div class="more" ng-click="utils.toState('genre', {name: genre.name})">{{:: 'viewMore' | translate }} <i class="icon icon-right-open"></i></div>
+            </div>
+            <section class="artists hover-overlay">
+                <figure class="artist" ng-repeat="artist in genre.artists">
+                    <div class="image">
+                        <img ng-src="{{ utils.img(artist.image_large, 'artist') }}" alt="{{ artist.name }}">
+                        <div class="overlay">
+                            <i class="icon icon-play play" ng-click="playArtist(artist)"></i>
+                        </div>
+                    </div>
+                    <figcaption>
+                        <a class="artist-name" ui-sref="artist({name:utils.encodeUrlParam(artist.name)})">{{ artist.name }}</a>
+                        <div class="number-of-tracks" ng-show="artist.numberOfTracks">{{ artist.numberOfTracks }} {{:: 'songsInYourLib' | translate }}</div>
+                    </figcaption>
+                </figure>
+            </section>
+        </section>
+    </div>
+</div>

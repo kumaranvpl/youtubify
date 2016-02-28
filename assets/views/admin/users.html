@@ -1,0 +1,69 @@
+<section ng-controller="UsersController">
+    <div class="material-table" ng-controller="AdminTableController">
+        <div class="header" ng-if="!selectedItems.length">
+            <div class="caption">
+                <button class="primary" ng-click="showCreateUserModal()">{{:: 'add' | translate }}</button>
+            </div>
+            <div class="controls">
+                <div class="search">
+                    <input placeholder="{{:: 'search' | translate }}" type="text" ng-model="params.query" ng-model-options="{ debounce: 300, updateOn: 'keyup' }">
+                    <i class="icon icon-search"></i>
+                </div>
+            </div>
+        </div>
+        <div class="selected-header" ng-if="selectedItems.length">
+            <div class="caption">{{ selectedItems.length }} {{:: 'usersSelected' | translate }}</div>
+            <div class="controls">
+                <i class="icon icon-trash" ng-click="deleteUsers(selectedItems)"></i>
+            </div>
+        </div>
+        <div class="flex-table table-hover light admin-table">
+            <div class="flex-table-row flex-table-header">
+                <div class="flex-table-row-item small-col align-left">
+                    <input type="checkbox" ng-checked="selectedItems.length === $parent.items.length" ng-click="toggleAllItems()">
+                </div>
+                <div class="flex-table-row-item image">{{:: 'avatar' | translate }}</div>
+                <div class="flex-table-row-item">{{:: 'email' | translate }}</div>
+                <div class="flex-table-row-item">{{:: 'username' | translate }}</div>
+                <div class="flex-table-row-item">{{:: 'firstName' | translate }}</div>
+                <div class="flex-table-row-item">{{:: 'lastName' | translate }}</div>
+                <div class="flex-table-row-item">{{:: 'gender' | translate }}</div>
+                <div class="flex-table-row-item small-col align-right"></div>
+            </div>
+
+            <div class="table-body">
+                <div class="flex-table-row" dir-paginate="user in $parent.items | itemsPerPage: params.itemsPerPage" total-items="totalItems" current-page="params.page" ng-class="{ selected: isItemSelected(user) }" ng-click="select(user)">
+                    <div class="flex-table-row-item small-col align-left">
+                        <input type="checkbox" ng-checked="isItemSelected(user)">
+                    </div>
+                    <div class="flex-table-row-item image"><img ng-src="{{ users.getAvatar(user) }}"/></div>
+                    <div class="flex-table-row-item name-col">{{ utils.isDemo ? 'Hidden on Demo Site' : user.email }}</div>
+                    <div class="flex-table-row-item">{{ user.username || '-' }}</div>
+                    <div class="flex-table-row-item">{{ user.first_name || '-' }}</div>
+                    <div class="flex-table-row-item">{{ user.last_name || '-' }}</div>
+                    <div class="flex-table-row-item">{{ (user.gender | translate) || '-' }}</div>
+                    <div class="flex-table-row-item small-col align-right"><i class="icon icon-pencil" ng-click="showUpdateUserModal(user); $event.stopPropagation()"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <section class="controls">
+                <div class="per-page">
+                    {{:: 'rowsPerPage' | translate }}
+                    <select ng-model="params.itemsPerPage">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="meta">
+                    {{:: 'showingUsers' | translate }} 1-{{ params.itemsPerPage }} {{ 'to' | translate }} {{ totalItems }}
+                </div>
+                <dir-pagination-controls></dir-pagination-controls>
+            </section>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,56 @@
+<div id="songs-page" class="page-shadow" ng-controller="ExternalPlayerControlsController" pretty-scrollbar>
+   <div ng-controller="SongsController">
+       <div class="filter-bar">
+           <div class="dropdown-container sort" dropdown>
+               <div class="text dropdown-trigger">{{:: 'sortedBy' | translate }} {{ translate(params.sort) }}<i class="icon icon-sort-alt-up"></i></div>
+               <div class="dropdown-menu hidden">
+                   <div class="dropdown-item" ng-class="{ active: params.sort == 'name' }" ng-click="sortSongs('-name')">{{:: 'name' | translate }}</div>
+                   <div class="dropdown-item" ng-class="{ active: params.sort == '-pivot.created_at' }" ng-click="sortSongs('-pivot.created_at')">{{:: 'dateAdded' | translate }}</div>
+                   <div class="dropdown-item" ng-class="{ active: params.sort == '-duration' }" ng-click="sortSongs('-duration')">{{:: 'duration' | translate }}</div>
+                   <div class="dropdown-item" ng-class="{ active: params.sort == 'album.name' }" ng-click="sortSongs('album.name')">{{:: 'albumName' | translate }}</div>
+                   <div class="dropdown-item" ng-class="{ active: params.sort == 'album.artist.name' }" ng-click="sortSongs('album.artist.name')">{{:: 'artistName' | translate }}</div>
+               </div>
+           </div>
+           <div class="filter hidden-phone">
+               <input type="text" ng-model="params.query" placeholder="{{:: 'filter' | translate }}">
+               <i class="icon icon-search"></i>
+           </div>
+       </div>
+
+       <div class="flex-table album-table">
+           <div class="flex-table-row flex-table-header" sortable-table-header>
+               <div class="flex-table-row-item track-number"></div>
+               <div class="flex-table-row-item add-remove-track hidden-phone"></div>
+               <div class="flex-table-row-item track-name" sort-field="name">{{:: 'song' | translate }}</div>
+               <div class="flex-table-row-item artist-name" sort-field="album.artist.name">{{:: 'artist' | translate }}</div>
+               <div class="flex-table-row-item album-name hidden-tablet-portrait" sort-field="album.name">{{:: 'album' | translate }}</div>
+               <div class="flex-table-row-item more-options"></div>
+               <div class="flex-table-row-item track-attached-at hidden-tablet-portrait" sort-field="pivot.created_at"><i class="icon icon-calendar-1"></i></div>
+               <div class="flex-table-row-item track-duration hidden-phone" sort-field="duration"><i class="icon icon-clock"></i></div>
+           </div>
+           <div class="flex-table-row" ng-repeat="track in library.tracks | orderBy:params.sort | filter:params.query  as sortedTracks track by $index" ng-class="{ playing: trackIsPlaying(track), saved: trackSaved(track) }" context-menu-item>
+               <div class="flex-table-row-item track-number hover-icon" ng-click="loadQueueAndPlayTrack(track, $index, sortedTracks)">
+                   <span class="track-index hidden-tablet">{{ $index+1 }}</span>
+                   <div class="play-icon"><i class="icon icon-play"></i></div>
+                   <div class="pause-icon"><i class="icon icon-pause"></i></div>
+                   <playing-icon class="inside-album-table"></playing-icon>
+               </div>
+               <div class="flex-table-row-item add-remove-track hidden-phone">
+                   <i class="icon icon-cancel-1 remove-track" ng-click="removeTrack(track)"></i>
+                   <i class="icon icon-ok track-added" ng-click="removeTrack(track)"></i>
+               </div>
+               <div class="flex-table-row-item track-name"><div class="ellipses">{{ track.name }}</div></div>
+               <div class="flex-table-row-item artist-name"><all-track-artists artists="track.artists"></all-track-artists></div>
+               <div class="flex-table-row-item album-name hidden-tablet-portrait"><a class="ellipses" ui-sref="album({artistName:track.album.artist.name, name:track.album.name})">{{ track.album.name }}</a></div>
+               <div class="flex-table-row-item more-options"><i class="icon icon-dot-3" more-options-menu="track"></i></div>
+               <div class="flex-table-row-item track-attached-at hidden-tablet-portrait">{{ track.attached_at }}</div>
+               <div class="flex-table-row-item track-duration hidden-phone">{{ track.duration }}</div>
+           </div>
+       </div>
+
+       <div class="no-items" ng-if="library.loaded && sortedTracks && ! sortedTracks.length">
+           <div class="title"><i class="icon icon-note"></i> {{:: 'noSongsInLibrary' | translate }}</div>
+           <div class="sub">{{:: 'noSongsExpl' | translate }}</div>
+       </div>
+   </div>
+</div>

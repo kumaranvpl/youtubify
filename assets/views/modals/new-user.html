@@ -1,0 +1,59 @@
+<div class="modal hidden user-form-modal" id="new-user-modal">
+    <div class="backdrop" modal-backdrop></div>
+
+    <div class="modal-content" pretty-scrollbar>
+        <div class="modal-header">
+            <h1>{{:: 'createNewUser' | translate }}</h1>
+            <div ng-click="closeModal()" class="close-modal-icon"><i class="icon icon-cancel"></i></div>
+        </div>
+
+        <form ng-submit="createNewUser()">
+            <div class="modal-error">
+                <div class="error" ng-repeat="error in errors">{{ error }}</div>
+            </div>
+
+            <div class="input-container">
+                <label for="email">{{:: 'email' | translate }}</label>
+                <input placeholder="{{:: 'email' | translate }}" id="email" type="email" ng-model="userModel.email">
+            </div>
+
+            <div class="input-container">
+                <label for="password">{{:: 'password' | translate }}</label>
+                <input  placeholder="{{:: 'password' | translate }}" id="password" type="password" ng-model="userModel.password">
+            </div>
+
+            <div class="input-container">
+                <label for="repeatPassword">{{:: 'repeatPassword' | translate }}</label>
+                <input placeholder="{{:: 'repeatPassword' | translate }}" id="repeatPassword" type="password" ng-model="userModel.password_confirmation">
+            </div>
+
+            <div class="input-container">
+                <label for="username">{{:: 'username' | translate }}</label>
+                <input placeholder="{{:: 'username' | translate }}" id="username" type="text" ng-model="userModel.username">
+            </div>
+
+            <div class="input-container">
+                <label for="first_name">{{:: 'firstName' | translate }}</label>
+                <input  placeholder="{{:: 'firstName' | translate }}" id="first_name" type="text" ng-model="userModel.first_name">
+            </div>
+
+            <div class="input-container">
+                <label for="last_name">{{:: 'lastName' | translate }}</label>
+                <input placeholder="{{:: 'lastName' | translate }}"  id="last_name" type="text" ng-model="userModel.last_name">
+            </div>
+            
+           <div class="input-container">
+               <label for="gender">{{:: 'gender' | translate }}</label>
+               <select id="gender" ng-model="userModel.gender">
+                   <option value="male" translate>male</option>
+                   <option value="female" translate>female</option>
+               </select>
+           </div>
+
+            <div class="buttons">
+                <button type="button" class="cancel" ng-click="closeModal()">{{:: 'cancel' | translate }}</button>
+                <button type="submit" class="primary">{{:: 'create' | translate }}</button>
+            </div>
+        </form>
+    </div>
+</div>

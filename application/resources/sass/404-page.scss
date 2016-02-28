@@ -1,0 +1,15 @@
+#not-found-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  > h1 {
+    font-size: 5rem;
+    font-weight: 100;
+
+    @media only screen and (max-width:$phone) {
+      font-size: 3rem;
+    }
+  }
+}

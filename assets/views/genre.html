@@ -1,0 +1,26 @@
+<section class="scroll-container" infinite-scroll="load()" threshold="100" pretty-scrollbar>
+    <div class="artists-page" class="page-shadow">
+
+        <div class="filter-bar">
+            <div class="sort text-capitalize">{{ genre.name }}</div>
+            <div class="filter">
+                <input type="text" ng-model="query" ng-change="load()" placeholder="{{:: 'filter' | translate }}">
+                <i class="icon icon-search"></i>
+            </div>
+        </div>
+
+        <section class="artists hover-overlay">
+            <figure class="artist" ng-repeat="artist in artists as sortedArtists">
+                <div class="image">
+                    <img ng-src="{{ utils.img(artist.image_large, 'artist') }}" alt="{{ artist.name }}">
+                    <div class="overlay">
+                        <i class="icon icon-play play" ng-click="playArtist(artist)"></i>
+                    </div>
+                </div>
+                <figcaption>
+                    <a class="artist-name" ui-sref="artist({name:utils.encodeUrlParam(artist.name)})">{{ artist.name }}</a>
+                </figcaption>
+            </figure>
+        </section>
+    </div>
+</section>

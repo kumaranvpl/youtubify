@@ -1,0 +1,147 @@
+html, body, #main-view {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#main-view {
+  &.has-advert {
+    height: calc(100% - 180px);
+  }
+
+  &.has-multiple-adverts {
+    height: calc(100% - 415px);
+  }
+
+  @media only screen and (max-width:$phone) {
+    height: calc(100% - 40px);
+  }
+}
+
+html {
+  box-sizing: border-box;
+  line-height: 1.42857143;
+  font-size: 14px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: $font-family;
+  background-color: $main-color;
+
+  #splash {
+    padding: 0 20px $player-controls-height + 30 0;
+  }
+
+  &.loading-with-overlay {
+    #splash {
+      background-color: rgba(0,0,0,0.8);
+    }
+  }
+}
+
+.app-container {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  color: $text-color;
+  overflow: hidden;
+  
+  &.visible {
+    display: flex;
+  }
+
+  > .page-container {
+    height: calc(100% - #{$player-controls-height});
+    display: flex;
+    position: relative;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: $accent-color;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.middle-view {
+  flex: 1 1 auto;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: $main-color;
+
+  > .ad-container {
+    margin: 30px 0;
+  }
+
+  > .mobile-nav {
+    display: none;
+    position: relative;
+    z-index: 99999;
+    background-color: $background-color-lighter;
+    font-size: 2rem;
+    padding: 0 10px;
+    box-shadow: $right-panel-absolute-box-shadow;
+    align-items: center;
+
+    &.show {
+      display: flex;
+    }
+
+    > .state-name {
+      text-transform: uppercase;
+      font-size: 1rem;
+      padding: 2px 15px 0 10px;
+    }
+
+    .mobile-search-bar {
+      width: 85%;
+      height: 20px;
+      position: relative;
+      background-color: transparent;
+      border: 1px solid transparent;
+      border-bottom: 1px solid $text-color-darker;
+      border-radius: 3px;
+      font-size: 0.9rem;
+
+      > input {
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 5px 10px 8px 20px;
+        border-radius: 3px;
+        border: none;
+        outline: none !important;
+      }
+
+      > .icon-search {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      > .search-bar-spinner {
+        position: absolute;
+        top: -2px;
+        right: 0;
+        color: $accent-color;
+      }
+    }
+  }
+}
+
+#full-page-view {
+  height: 100%;
+  overflow: hidden;
+}
+
+#full-page-view:empty {
+  display: none;
+}

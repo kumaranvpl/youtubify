@@ -1,0 +1,37 @@
+<div id="radio-page" ng-controller="RadioController" ng-style="{'background-image': 'url(' + utils.img(player.currentTrack.image_large, 'artist-big') + ')'}" ng-show="radioPageIsReady">
+    <div class="overlay" ng-controller="ExternalPlayerControlsController">
+        <div class="prev" ng-class="{ disabled: !player.hasPrevious() }"><i class="icon icon-left-open" ng-click="player.playPrevious()"></i></div>
+
+        <div class="radio-queue-item hover-overlay">
+            <div class="image">
+                <img ng-src="{{ utils.img(player.currentTrack.image, 'album') }}" alt="{{ player.currentTrack.name }}">
+                <div class="overlay" ng-class="{ saved: trackSaved(player.currentTrack), playing: player.isPlaying }">
+                    <div class="add-remove-track">
+                        <i class="icon icon-plus add" ng-click="addTrack(player.currentTrack)"></i>
+                        <i class="icon icon-ok added" ng-click="addTrack(player.currentTrack)"></i>
+                        <i class="icon icon-cancel-1 remove" ng-click="removeTrack(player.currentTrack)"></i>
+                    </div>
+
+                    <i class="icon icon-play play" ng-click="playTrack(player.currentTrack)" ng-if="!player.isPlaying"></i>
+                    <i class="icon icon-pause play" ng-click="playTrack(player.currentTrack)" ng-if="player.isPlaying"></i>
+
+                    <playing-icon></playing-icon>
+
+                    <i class="icon icon-dot-3 options" more-options-menu="track" more-options-item="player.currentTrack"></i>
+                </div>
+            </div>
+            <div class="info">
+                <div class="radio-item-info">
+                    <a class="artist" ng-href="{{ utils.artistUrl(player.currentTrack.artist)}} ">{{ player.currentTrack.artist }}</a>
+                    <a class="track" ng-href="{{ utils.trackUrl(player.currentTrack) }}">{{ player.currentTrack.name }}</a>
+                </div>
+                <div class="rate">
+                    <div class="icon-button" ng-class="{ liked: likedTracks.indexOf(player.currentTrack.name) > -1 }"><i class="icon icon-thumbs-up" ng-click="moreLikeThis(player.currentTrack)"></i></div>
+                    <div class="icon-button"><i class="icon icon-thumbs-down" ng-click="lessLikeThis(player.currentTrack)"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="next"><i class="icon icon-right-open" ng-click="loadNextRadioItem()"></i></div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="modal hidden" id="account-settings-modal">
+    <div class="backdrop" modal-backdrop></div>
+
+    <section class="modal-content" pretty-scrollbar>
+        <div class="modal-header">
+            <div class="md-modal-avatar">
+                <img class="img-responsive" ng-src="{{ users.getAvatar() }}"/>
+            </div>
+            <div class="name">{{ users.current.first_name }} {{ users.current.last_name }}</div>
+            <div class="email">{{:: users.current.email }}</div>
+        </div>
+
+        <div class="md-modal-nav">
+            <div ng-click="activeTab = 'settings'" ng-class="{ active: activeTab === 'settings' }" class="md-modal-nav-item"><i class="icon icon-cog"></i></div>
+            <div ng-click="activeTab = 'avatar'" ng-class="{ active: activeTab === 'avatar' }" class="md-modal-nav-item"><i class="icon icon-emo-sunglasses"></i></div>
+            <div ng-click="activeTab = 'password'" ng-class="{ active: activeTab === 'password' }" class="md-modal-nav-item"><i class="icon icon-lock"></i></div>
+        </div>
+
+        <div class="md-modal-tab" ng-class="{ open: activeTab === 'settings' }">
+            <div class="input-container">
+                <label>{{ 'username' | translate }}</label>
+                <input class="username" type="text" ng-model="users.accountSettings.username">
+            </div>
+
+            <div class="input-container">
+                <label>{{ 'firstName' | translate }}</label>
+                <input type="text" ng-model="users.accountSettings.first_name">
+            </div>
+
+            <div class="input-container">
+                <label>{{ 'lastName' | translate }}</label>
+                <input type="text" ng-model="users.accountSettings.last_name">
+            </div>
+
+            <div class="input-container">
+                <label>{{ 'gender' | translate }}</label>
+                <select placeholder="{{:: 'gender' | translate }}" ng-model="users.accountSettings.gender">
+                    <option value="male" translate>{{:: 'male' | translate }}</option>
+                    <option value="female" translate>{{:: 'female' | translate }}</option>
+                    <option value="" translate>{{:: 'notSaying' | translate }}</option>
+                </select>
+            </div>
+
+            <div class="buttons">
+                <button ng-click="users.closeModal()" class="cancel">{{:: 'close' | translate }}</button>
+                <button ng-click="users.updateAccountSettings()" class="primary">{{:: 'update' | translate }}</button>
+            </div>
+        </div>
+
+        <div class="md-modal-tab" ng-class="{ open: activeTab === 'password' }">
+            <form ng-submit="users.changePassword()">
+                <div class="modal-error" ng-if="users.lastErrors">
+                    <div class="error" ng-repeat="error in users.lastErrors">{{ error }}</div>
+                </div>
+
+                <div class="input-container" ng-if="users.current.password">
+                    <label>{{ 'oldPassword' | translate }}</label>
+                    <input type="password" ng-model="users.changePasswordModel.oldPassword">
+                </div>
+
+                <div class="input-container">
+                    <label>{{ 'newPassword' | translate }}</label>
+                    <input type="password" ng-model="users.changePasswordModel.newPassword">
+                </div>
+
+                <div class="input-container">
+                    <label>{{ 'confirmPassword' | translate }}</label>
+                    <input type="password" ng-model="users.changePasswordModel.newPassword_confirmation">
+                </div>
+
+                <div class="buttons">
+                    <button ng-click="users.closeModal()" class="cancel">{{:: 'close' | translate }}</button>
+                    <button type="submit" class="primary">{{:: 'change' | translate }}</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="md-modal-tab avatar-tab" ng-class="{ open: activeTab === 'avatar' }">
+
+            <img class="img-responsive" ng-src="{{ users.getAvatar() }}"/>
+
+            <p>{{:: 'avatarAcceptedFormats' | translate }}</p>
+            <p>{{:: 'avatarResizeExpl' | translate }}</p>
+
+            <div class="modal-error" ng-if="users.lastErrors">
+                <div class="error" ng-repeat="error in users.lastErrors">{{ error }}</div>
+            </div>
+
+            <div class="buttons">
+                <button ng-click="users.closeModal()" class="cancel">{{:: 'close' | translate }}</button>
+                <button ng-click="users.removeAvatar()" class="cancel" ng-disabled="!users.current.avatar_url">{{:: 'remove' | translate }}</button>
+                <button file-upload="upload" class="primary">
+                    <i class="icon icon-upload-cloud"></i>
+                    {{:: 'upload' | translate }}
+                </button>
+            </div>
+        </div>
+    </section>
+</div>

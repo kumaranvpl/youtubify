@@ -1,0 +1,238 @@
+.material-table {
+  box-shadow: 0 1px 1px rgba(0,0,0,.04);
+  border: 1px solid $light-table-border-color;
+  text-rendering: optimizeLegibility;
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+  background-color: $admin-panel-header-color;
+  min-height: 100%;
+
+  .admin-table {
+    .flex-table-header {
+      border-bottom: 1px solid $light-table-border-color;
+      text-transform: capitalize;
+
+      &:hover {
+        background-color: $admin-panel-header-color !important;
+      }
+    }
+
+    .flex-table-row {
+      padding: 0 25px;
+      background-color: $admin-panel-header-color;
+      border-bottom: 1px solid $admin-panel-border-color;
+
+      .icon {
+        cursor: pointer;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+
+      &:nth-child(even) {
+        background-color: lighten($admin-panel-header-color, 1%);
+      }
+
+      &.selected {
+        background-color: darken($admin-panel-header-color, 5%);
+      }
+    }
+
+    .flex-table-row-item {
+      height: 57px;
+      border: none;
+      align-items: center;
+
+      a {
+        color: $light-table-text-color;
+      }
+
+      &.small-col {
+        max-width: 50px;
+      }
+
+      &.name-col {
+        flex-grow: 1.3;
+      }
+
+      &.image {
+        max-width: 60px;
+        margin: 0 35px 0 25px;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .header, .selected-header {
+    padding: 20px;
+    height: 68px;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+
+    > .caption {
+      font-size: 20px;
+      font-weight: 500;
+      display: flex;
+      justify-content: flex-start;
+      width: 30%;
+
+      > .btn:first-of-type {
+        margin-right: 10px;
+      }
+    }
+
+    > .controls {
+      font-size: 20px;
+      line-height: 1;
+      display: flex;
+      justify-content: flex-end;
+      width: 70%;
+
+      > i {
+        cursor: pointer;
+        transition: color 0.2s ease;
+        color: #ff5722;
+
+        &:hover {
+          color: lighten(#ff5722, 10%);
+        }
+      }
+    }
+  }
+
+  .selected-header {
+    background-color: rgba(255,87,34, 0.3);
+    color: $light-table-color;
+
+    .caption {
+      color: #ff5722;
+      font-weight: 500;
+      font-size: 16px;
+    }
+  }
+
+  .search {
+    height: 40px;
+    position: relative;
+    border-radius: 3px;
+    border: 1px solid $admin-panel-border-color;
+
+    > input {
+      border: none;
+      height: 100%;
+      padding: 0 10px 0 35px;
+      border-radius: 3px;
+      font-size: 1.1rem;
+      line-height: normal;
+
+      &:focus, &:active {
+        outline: none;
+      }
+    }
+
+    > i {
+      position: absolute;
+      top: 12px;
+      left: 5px;
+      font-size: 1.1rem;
+    }
+  }
+
+  .footer {
+    margin-top: 25px;
+    margin-left: auto;
+    padding-bottom: 15px;
+    flex: 0 0 auto;
+    width: 100%;
+
+    dir-pagination-controls, .per-page, .meta {
+      display: inline-block;
+      color: #737373;
+      font-weight: 500;
+    }
+
+    select {
+      margin: 0 30px 0 5px;
+      display: inline-block;
+      padding: 0;
+      vertical-align: bottom;
+      border: 1px solid $admin-panel-border-color;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      
+      @media (max-width: $tablet) {
+        padding-left: 25px;
+        display: flex;
+
+        > .per-page {
+          display: none;
+        }
+      }
+    }
+
+    .meta {
+      margin-right: 30px;
+    }
+
+    .pagination {
+      list-style: none;
+      margin-right: 25px;
+      padding: 0;
+
+      > li {
+        display: inline-block;
+
+        &:first-of-type > a {
+          border-right: none;
+        }
+
+        &.active a {
+          color: $accent-color;
+        }
+
+        > a {
+          color: inherit;
+          padding: 8px 15px;
+          background-color: lighten($admin-panel-header-color, 1%);
+          border: 1px solid $admin-panel-border-color;
+          margin-left: -1px;
+
+          &:focus, &:active {
+            outline: none;
+          }
+        }
+      }
+
+      @media (max-width: $tablet) {
+        margin: 0;
+
+        > li {
+          display: none;
+
+          &:first-of-type, &:last-of-type {
+            display: inline-block;
+            font-size: 1rem;
+            line-height: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .ajax-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+}

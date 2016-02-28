@@ -1,0 +1,451 @@
+<div class="settings-container" ng-controller="SettingsController">
+
+    <ul class="scrollspy-navigation">
+        <li class="nav-item" du-scrollspy="homepage" du-smooth-scroll="homepage">{{:: 'homepage' | translate }}</li>
+        <li class="nav-item" du-scrollspy="localization" du-smooth-scroll="localization">{{:: 'localization' | translate }}</li>
+        <li class="nav-item" du-scrollspy="meta" du-smooth-scroll="meta">{{:: 'generalSettings' | translate }}</li>
+        <li class="nav-item" du-scrollspy="users" du-smooth-scroll="users">{{:: 'users' | translate }}</li>
+        <li class="nav-item" du-scrollspy="player-panel" du-smooth-scroll="player-panel">{{:: 'player' | translate }}</li>
+        <li class="nav-item" du-scrollspy="cache" du-smooth-scroll="cache">{{:: 'cache' | translate }}</li>
+        <li class="nav-item" du-scrollspy="mail" du-smooth-scroll="mail">{{:: 'mail' | translate }}</li>
+        <li class="nav-item" du-scrollspy="keys" du-smooth-scroll="keys">{{:: '3rdPartyServiceKeys' | translate }}</li>
+    </ul>
+
+    <form ng-submit="updateSettings()">
+        <section class="admin-panel" id="homepage">
+            <div class="panel-header"><i class="icon icon-home"></i> {{:: 'homepage' | translate }}</div>
+            <div class="panel-body">
+
+                <section class="settings-select">
+                    <div class="input-container">
+                        <label>{{:: 'homepage' | translate }}</label>
+                        <select ng-model="settings.homepage">
+                            <option value="default" translate>default</option>
+                            <option value="login" translate>loginPage</option>
+                            <option value="custom" translate>customPage</option>
+                        </select>
+                        <p>{{:: 'homepageExpl' | translate }}</p>
+                    </div>
+                </section>
+
+                <div class="input-container" ng-if="settings.homepage === 'custom'">
+                    <label>{{:: 'customHomepagePath' | translate }}</label>
+                    <input ng-model="settings.customHomePath"/>
+                    <p>{{:: 'customHomepagePathExpl' | translate }}</p>
+                </div>
+
+                <div class="input-container" ng-if="settings.homepage === 'default'">
+                    <label>{{:: 'primaryHomeSection' | translate }}</label>
+                    <select ng-model="settings.primaryHomeSection">
+                        <option value="top-songs" translate>top50</option>
+                        <option value="top-albums" translate>popularAlbums</option>
+                        <option value="popular-genres" translate>popularGenres</option>
+                        <option value="new-releases" translate>newReleases</option>
+                    </select>
+                    <p>{{:: 'primaryHomeSectionExpl' | translate }}</p>
+                </div>
+
+                <div class="input-container" ng-if="settings.homepage === 'default'">
+                    <label>{{:: 'homepageGenres' | translate }}</label>
+                    <input ng-model="settings.homepageGenres"/>
+                    <p>{{:: 'homepageGenresExpl' | translate }}</p>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'strictLatestReleases' | translate }}</label>
+                    <select ng-model="settings.latest_albums_strict">
+                        <option value="1" translate>yes</option>
+                        <option value="0" translate>no</option>
+                    </select>
+                    <p>{{:: 'strictLatestReleasesExpl' | translate }}</p>
+                </div>
+
+                <button class="primary" type="submit">{{:: 'update' | translate }}</button>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="localization">
+            <div class="panel-header"><i class="icon icon-globe"></i> {{:: 'localization' | translate }}</div>
+            <div class="panel-body">
+                <div class="input-container">
+                    <label for="date-locale">{{:: 'dateLocale' | translate }}</label>
+                    <input id="date-locale" ng-model="settings.dateLocale"/>
+                    <p>{{:: 'dateLocaleExpl' | translate }} <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">Wikipedia</a></p>
+                </div>
+
+                <div class="input-container">
+                    <label for="trans-locale">{{:: 'transLocale' | translate }}</label>
+                    <select id="trans-locale" ng-model="settings.env.trans_locale" ng-options="locale for locale in info.transLocales"></select>
+                    <p>{{:: 'transLocaleExpl' | translate }}</p>
+                </div>
+
+                <button class="primary" type="submit">{{:: 'update' | translate }}</button>
+                <a class="btn cancel" ui-sref="admin.translations">{{:: 'manage' | translate }}</a>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="meta">
+            <div class="panel-header"><i class="icon icon-cog"></i> {{:: 'generalSettings' | translate }}</div>
+            <div class="panel-body">
+                <div class="logo-container">
+                    <div class="label">{{:: 'siteLogo' | translate }}</div>
+                    <div class="image">
+                        <img ng-src="{{ logoUrl }}">
+                    </div>
+                    <button class="cancel" ng-click="uploadLogo()" type="button" ng-if="utils.getSetting('logo_url')">{{:: 'remove' | translate }}</button>
+                    <button class="primary" file-upload="uploadLogo" type="button">{{:: 'upload' | translate }}</button>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'siteName' | translate }}</label>
+                    <input ng-model="settings.siteName"/>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'metaTitle' | translate }}</label>
+                    <input ng-model="settings.metaTitle"/>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'metaDescription' | translate }}</label>
+                    <textarea ng-model="settings.metaDescription"></textarea>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'enablePushState' | translate }}</label>
+                    <select ng-model="settings.enablePushState">
+                        <option value="1" translate>yes</option>
+                        <option value="0" translate>no</option>
+                    </select>
+                    <p>{{:: 'pushStateExpl' | translate }}</p>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'enableHttps' | translate }}</label>
+                    <select ng-model="settings.enable_https">
+                        <option value="1" translate>yes</option>
+                        <option value="0" translate>no</option>
+                    </select>
+                </div>
+
+                <div class="input-container" ng-if="settings.enablePushState == 1">
+                    <label>PushState Root URL</label>
+                    <input ng-model="settings.pushStateRootUrl"/>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'searchProvider' | translate }}</label>
+                    <select ng-model="settings.search_provider">
+                        <option value="database">Local Database</option>
+                        <option value="spotify" translate>Spotify</option>
+                    </select>
+                    <p>{{:: 'searchProviderExpl' | translate }}</p>
+                </div>
+
+                <button class="primary" type="submit">{{:: 'update' | translate }}</button>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="users">
+            <div class="panel-header"><i class="icon icon-users"></i> {{:: 'users' | translate }}</div>
+            <div class="panel-body">
+
+                <section class="input-container">
+                    <label>{{:: 'enableRegistration' | translate }}</label>
+                    <select ng-model="settings.enableRegistration">
+                        <option value="1" translate>yes</option>
+                        <option value="0" translate>no</option>
+                    </select>
+                    <p>{{:: 'enableRegistrationExpl' | translate }}</p>
+                </section>
+
+                <section class="input-container">
+                    <label>{{:: 'forceLogin' | translate }}</label>
+                    <select ng-model="settings.force_login">
+                        <option value="0" translate>no</option>
+                        <option value="1" translate>yes</option>
+                    </select>
+                    <p>{{:: 'forceLoginExpl' | translate }}</p>
+                </section>
+
+                <button class="primary" type="submit">{{:: 'update' | translate }}</button>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="player-panel">
+            <div class="panel-header"><i class="icon icon-users"></i> {{:: 'player' | translate }}</div>
+            <div class="panel-body">
+
+                <div class="input-container">
+                    <label>{{:: 'youtubeRegionCode' | translate }}</label>
+                    <input ng-model="settings.youtube_region_code" type="text"/>
+                    <p>{{:: 'youtubeRegionCodeExpl' | translate }}</p>
+                </div>
+
+                <section class="input-container">
+                    <label>{{:: 'showYoutubePlayer' | translate }}</label>
+                    <select ng-model="settings.show_youtube_player">
+                        <option value="0" translate>no</option>
+                        <option value="1" translate>yes</option>
+                    </select>
+                    <p>{{:: 'showYoutubePlayerExpl' | translate }}</p>
+                </section>
+
+                <section class="input-container">
+                    <label>{{:: 'hideLyricsButton' | translate }}</label>
+                    <select ng-model="settings.hide_lyrics_button">
+                        <option value="0" translate>no</option>
+                        <option value="1" translate>yes</option>
+                    </select>
+                </section>
+
+                <section class="input-container">
+                    <label>{{:: 'hideVideoButton' | translate }}</label>
+                    <select ng-model="settings.hide_video_button">
+                        <option value="0" translate>no</option>
+                        <option value="1" translate>yes</option>
+                    </select>
+                </section>
+
+                <section class="input-container">
+                    <label>{{:: 'hideQueueByDefault' | translate }}</label>
+                    <select ng-model="settings.hide_queue">
+                        <option value="0" translate>no</option>
+                        <option value="1" translate>yes</option>
+                    </select>
+                </section>
+
+                <button class="primary" type="submit">{{:: 'update' | translate }}</button>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="cache">
+            <div class="panel-header"><i class="icon icon-users"></i> {{:: 'cache' | translate }}</div>
+            <div class="panel-body">
+
+                <section class="input-container">
+                    <label>{{:: 'cacheDriver' | translate }}</label>
+                    <select ng-model="settings.env.cache_driver">
+                        <option value="file">File</option>
+                        <option value="array">Array</option>
+                        <option value="apc">APC</option>
+                        <option value="database">Database</option>
+                        <option value="memcached">Memcached</option>
+                        <option value="redis">Redis</option>
+                    </select>
+                    <p>{{:: 'cacheDriverExpl' | translate }}</p>
+                </section>
+
+                <div class="input-container" ng-if="settings.env.cache_driver === 'database'">
+                    <label>{{:: 'table' | translate }}</label>
+                    <input ng-model="settings.env.cache_database_table" type="text"/>
+                </div>
+
+                <div class="input-container" ng-if="settings.env.cache_driver === 'database'">
+                    <label>{{:: 'connection' | translate }}</label>
+                    <input ng-model="settings.env.cache_database_connection" type="text"/>
+                </div>
+
+                <div class="input-container" ng-if="settings.env.cache_driver === 'redis'">
+                    <label>{{:: 'connection' | translate }}</label>
+                    <input ng-model="settings.env.cache_redis_connection" type="text"/>
+                </div>
+
+                <div class="input-container" ng-if="settings.env.cache_driver === 'memcached'">
+                    <label>{{:: 'host' | translate }}</label>
+                    <input ng-model="settings.env.cache_memcached_host" type="text"/>
+                </div>
+
+                <div class="input-container" ng-if="settings.env.cache_driver === 'memcached'">
+                    <label>{{:: 'port' | translate }}</label>
+                    <input ng-model="settings.env.cache_memcached_port" type="text"/>
+                </div>
+
+                <div class="input-container" ng-if="settings.env.cache_driver === 'memcached'">
+                    <label>{{:: 'weight' | translate }}</label>
+                    <input ng-model="settings.env.cache_memcached_weight" type="text"/>
+                </div>
+
+                <section class="input-container">
+                    <label>{{:: 'artistUpdateInterval' | translate }}</label>
+                    <select ng-model="settings.artist_update_interval">
+                        <option value="999">{{:: 'never' | translate }}</option>
+                        <option value="1">{{:: 'every' | translate }} {{:: 'day' | translate }}</option>
+                        <option value="3">{{:: 'every' | translate }} 3 {{:: 'days' | translate }}</option>
+                        <option value="7">{{:: 'every' | translate }} {{:: 'week' | translate }}</option>
+                        <option value="14">{{:: 'every' | translate }} 2 {{:: 'weeks' | translate }}</option>
+                        <option value="30">{{:: 'every' | translate }} {{:: 'month' | translate }}</option>
+                    </select>
+                    <p>{{:: 'artistUpdateIntervalExpl' | translate }}</p>
+                </section>
+
+                <section class="input-container">
+                    <label>{{:: 'homepageUpdateInterval' | translate }}</label>
+                    <select ng-model="settings.homepage_update_interval">
+                        <option value="999">{{:: 'never' | translate }}</option>
+                        <option value="1">{{:: 'every' | translate }} {{:: 'day' | translate }}</option>
+                        <option value="3">{{:: 'every' | translate }} 3 {{:: 'days' | translate }}</option>
+                        <option value="7">{{:: 'every' | translate }} {{:: 'week' | translate }}</option>
+                        <option value="14">{{:: 'every' | translate }} 2 {{:: 'weeks' | translate }}</option>
+                        <option value="30">{{:: 'every' | translate }} {{:: 'month' | translate }}</option>
+                    </select>
+                    <p>{{:: 'homepageUpdateIntervalExpl' | translate }}</p>
+                </section>
+
+                <section class="input-container">
+                    <label>{{:: 'topSongsProvider' | translate }}</label>
+                    <select ng-model="settings.top_songs_provider">
+                        <option value="spotify">Spotify</option>
+                        <option value="local">{{:: 'local' | translate }}</option>
+                    </select>
+                </section>
+
+                <button class="primary" type="submit">{{:: 'update' | translate }}</button>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="mail">
+            <div class="panel-header"><i class="icon icon-users"></i> {{:: 'mail' | translate }}</div>
+            <div class="panel-body">
+
+                <section class="input-container">
+                    <label>{{:: 'mailDriver' | translate }}</label>
+                    <select ng-model="settings.env.mail_driver">
+                        <option value="smtp">SMTP</option>
+                        <option value="mail">Mail</option>
+                        <option value="sendmail">Send Mail</option>
+                        <option value="mailgun">Mailgun</option>
+                        <option value="mandrill">Mandrill</option>
+                        <option value="log">Log</option>
+                    </select>
+                    <p>{{:: 'mailDriverExpl' | translate }}</p>
+                </section>
+
+                <div class="input-container" ng-if="regularMailDrivers.indexOf(settings.env.mail_driver) > -1">
+                    <label>{{:: 'host' | translate }}</label>
+                    <input ng-model="settings.env.mail_host" type="text"/>
+                </div>
+
+                <div class="input-container" ng-if="regularMailDrivers.indexOf(settings.env.mail_driver) > -1">
+                    <label>{{:: 'port' | translate }}</label>
+                    <input ng-model="settings.env.mail_port" type="text"/>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'fromAddress' | translate }}</label>
+                    <input ng-model="settings.env.mail_from_address" type="text"/>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'fromName' | translate }}</label>
+                    <input ng-model="settings.env.mail_from_name" type="text"/>
+                </div>
+
+                <div class="input-container" ng-if="regularMailDrivers.indexOf(settings.env.mail_driver) > -1">
+                    <label>{{:: 'mailUsername' | translate }}</label>
+                    <input ng-model="settings.env.mail_username" type="text"/>
+                </div>
+
+                <div class="input-container" ng-if="regularMailDrivers.indexOf(settings.env.mail_driver) > -1">
+                    <label>{{:: 'mailPassword' | translate }}</label>
+                    <input ng-model="settings.env.mail_password" type="text"/>
+                </div>
+
+                <div class="input-container" ng-if="settings.env.mail_driver === 'mandrill'">
+                    <label>Mandrill API Key</label>
+                    <input ng-model="settings.env.mandrill_api_key" type="password">
+                </div>
+
+                <div class="input-container" ng-if="settings.env.mail_driver === 'mailgun'">
+                    <label>Mailgun Domain</label>
+                    <input ng-model="settings.env.mailgun_domain" type="text">
+                </div>
+
+                <div class="input-container" ng-if="settings.env.mail_driver === 'mailgun'">
+                    <label>Mailgun Secret</label>
+                    <input ng-model="settings.env.mailgun_secret" type="text">
+                </div>
+
+                <button class="primary" type="submit">{{:: 'update' | translate }}</button>
+                <a class="btn cancel" ui-sref="admin.mail">{{:: 'manageTemplates' | translate }}</a>
+            </div>
+        </section>
+
+        <section class="admin-panel" id="keys">
+            <div class="panel-header flex">
+                <div class="name">
+                    <i class="icon icon-key"></i>
+                    {{:: '3rdPartyServiceKeys' | translate }}
+                    <p>{{:: 'socialLoginKeysExpl' | translate }}</p>
+                </div>
+                <div class="actions full-width">
+                    <button type="button" class="primary pull-right" show-admin-keys>{{:: 'showKeys' | translate }}</button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="input-container">
+                    <label>Youtube API Key</label>
+                    <input ng-model="settings.youtube_api_key" type="password">
+                    <p>{{:: 'youtubeApiExpl' | translate }}</p>
+                </div>
+
+                <div class="input-container">
+                    <label>EchoNest API Key</label>
+                    <input ng-model="settings.echonest_api_key" type="password">
+                    <p>{{:: 'echoNestApiExpl' | translate }}</p>
+                </div>
+
+                <div class="input-container">
+                    <label>Spotify ID</label>
+                    <input ng-model="settings.env.spotify_id" type="password">
+                    <p>{{:: 'spotifyIdExpl' | translate }}</p>
+                </div>
+
+                <div class="input-container">
+                    <label>Spotify Secret</label>
+                    <input ng-model="settings.env.spotify_secret" type="password">
+                    <p>{{:: 'spotifyIdExpl' | translate }}</p>
+                </div>
+
+                <div class="input-container">
+                    <label>Facebook {{:: 'id' | translate }}</label>
+                    <input ng-model="settings.env.facebook_id" type="password"/>
+                </div>
+
+                <div class="input-container">
+                    <label>Facebook {{:: 'secret' | translate }}</label>
+                    <input ng-model="settings.env.facebook_secret" type="password"/>
+                </div>
+
+                <div class="input-container">
+                    <label>Twitter {{:: 'id' | translate }}</label>
+                    <input ng-model="settings.env.twitter_id" type="password"/>
+                </div>
+
+                <div class="input-container">
+                    <label>Twitter {{:: 'secret' | translate }}</label>
+                    <input ng-model="settings.env.twitter_secret" type="password"/>
+                </div>
+
+                <div class="input-container">
+                    <label>Google {{:: 'id' | translate }}</label>
+                    <input ng-model="settings.env.google_id" type="password"/>
+                </div>
+
+                <div class="input-container">
+                    <label>Google {{:: 'secret' | translate }}</label>
+                    <input ng-model="settings.env.google_secret" type="password"/>
+                </div>
+
+                <div class="input-container">
+                    <label>{{:: 'googleAnalyticsCode' | translate }}</label>
+                    <input ng-model="settings.analytics" type="password">
+                    <p>{{:: 'googleAnalyticsCodeExpl' | translate }}</p>
+                </div>
+
+                <button class="primary" type="submit">{{:: 'update' | translate }}</button>
+            </div>
+        </section>
+    </form>
+</div>
+

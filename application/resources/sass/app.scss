@@ -1,0 +1,259 @@
+@import 'variables';
+@import 'vendor/normalize';
+@import 'vendor/perfect-scrollbar';
+@import 'vendor/angular-tooltips';
+@import 'vendor/fontello';
+@import 'base';
+@import 'utils';
+@import 'flex-table';
+@import 'buttons';
+@import 'reset-password';
+@import 'player-controls';
+@import 'search-panel';
+@import 'left-panel';
+@import 'right-panel';
+@import 'artist-page';
+@import 'loader';
+@import 'login-page';
+@import 'animations';
+@import 'modals';
+@import 'custom-css-modal';
+@import 'user-form-modal';
+@import 'songs-page';
+@import 'albums-page';
+@import 'artists-page';
+@import 'search-page';
+@import 'album-page';
+@import '404-page';
+@import 'context-menu';
+@import 'playlist-page';
+@import 'filter-bar';
+@import 'tags-input';
+@import 'share-modal';
+@import 'home';
+@import 'radio';
+@import 'public-user-profile';
+@import 'current-user-widget';
+@import 'account-settings-modal';
+@import 'ads-container';
+@import 'install';
+@import 'admin';
+@import 'admin/appearance.scss';
+@import 'admin/translations.scss';
+@import 'admin/settings.scss';
+@import 'admin/scrollspy-navigation.scss';
+@import 'admin/material-admin-table.scss';
+@import 'admin/analytics.scss';
+
+.playing-icon-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  background-color: rgba(0,0,0,0.3);
+
+  > .playing-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    display: flex;
+
+    > .one, .two, .three {
+      position: absolute;
+      bottom: 0;
+      width: 2px;
+      padding: 0 1px;
+      height: 0;
+      background-color: #fff;
+      margin-right: 3px;
+      transition: height 0.3s linear;
+      animation: bar 0.33s 0s both alternate ease infinite;
+    }
+
+    > .one {
+      left: 0;
+    }
+
+    > .two {
+      animation-delay: 0.2s;
+      left: 33%;
+    }
+
+    > .three {
+      left: 66%;
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes bar {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: 100%;
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: $dropdown-color;
+  text-align: left;
+  color: $dropdown-text-color;
+  font-size: $dropdown-font-size;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+
+  > .dropdown-item {
+    padding: 5px 25px 5px 10px;
+    cursor: pointer;
+    border-left: 5px solid transparent;
+
+    > i {
+      font-size: 1.4rem;
+      color: $dropdown-icon-color;
+      margin: 0 10px 0 5px;
+    }
+
+    &:first-of-type {
+      padding-top: 10px;
+    }
+
+    &:last-of-type {
+      padding-bottom: 10px;
+    }
+
+    &.active {
+      background-color: darken($dropdown-color, 10%);
+    }
+
+    &:hover {
+      background-color: darken($dropdown-color, 7%);
+    }
+  }
+}
+
+.player-container, .lyrics-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 7;
+
+  > .backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+  }
+
+  > .modal-inner-container {
+    width: 60%;
+    height: 80%;
+    max-width: 1200px;
+    max-height: 620px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    position: relative;
+    z-index: 8;
+    transition: all .4s cubic-bezier(.25,.8,.25,1);
+    transform: translate3d(0,100%,0) scale(0.2);
+    opacity: 0;
+
+
+    &.out {
+      transform: translate3d(0,0,0) scale(1);
+      opacity: 1;
+    }
+
+    > .close-lyrics-icon {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      border-radius: 50%;
+      background-color: $accent-color;
+      font-size: 1.3rem;
+      color: $primary-button-text-color;
+      width: 32px;
+      height: 32px;
+      padding: 4px 0 0 3.1px;
+      cursor: pointer;
+      z-index: 9;
+
+      &:hover {
+        background-color: darken($accent-color, 5%);
+      }
+    }
+
+    > #player {
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    > .yt-overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 9;
+    }
+  }
+}
+
+.player-container.show.hidden {
+  display: flex !important;
+  visibility: visible !important;
+  width: 300px;
+  height: 200px;
+  bottom: 0;
+  right: 10px;
+  top: auto;
+  left: auto;
+
+  .close-lyrics-icon {
+    display: none;
+  }
+
+  > .modal-inner-container {
+    width: 100%;
+    height: 100%;
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+.lyrics-container {
+  display: none;
+
+  &.show {
+    display: flex;
+  }
+
+  > .modal-inner-container {
+    transform: none;
+    opacity: 1;
+    height: 95%;
+    flex: 0 0 auto;
+    max-height: none;
+
+    iframe, #lyrics-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+}

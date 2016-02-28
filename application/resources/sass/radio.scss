@@ -1,0 +1,200 @@
+.radio-loading {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.9);
+  
+  > #splash {
+    display: block;
+
+    > #splash-inner {
+      margin: 0 30px 30px 0;
+    }
+  }
+}
+
+#radio-page {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-position: 0 30%;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  > .overlay {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.85);
+  }
+
+  .radio-queue-item {
+    max-width: 300px;
+
+    .image {
+      width: 300px;
+      height: 300px;
+
+      .overlay {
+        padding-top: 68px;
+        display: flex;
+        background-color: transparent;
+        
+        > .add-remove-track, .play, .options {
+          display: none;
+        }
+
+        > .playing-icon-container {
+          display: none;
+          position: static;
+          width: 65px;
+          height: 65px;
+          border-radius: 50%;
+          background-color: rgba(0,0,0,0.7);
+          margin-right: 10px;
+
+          > .playing-icon {
+            width: 25px;
+            height: 25px;
+            margin-left: 6px;
+          }
+        }
+        
+        &.playing {
+          > .playing-icon-container {
+            display: flex;
+          }
+        }
+        
+        &:hover {
+          background-color: rgba(0,0,0,0.8);
+
+          > .playing-icon-container {
+            display: none;
+          }
+
+          > .add-remove-track, .options {
+            display: block;
+          }
+
+          > .play {
+            display: flex;
+          }
+        }
+      }
+
+      > img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+      }
+    }
+
+    .info {
+      background-color: $background-color-lighter;
+      padding: 15px 10px;
+      max-width: 100%;
+      display: flex;
+
+      > .rate {
+        font-size: 1.4rem;
+        display: flex;
+        justify-content: flex-end;
+        text-align: right;
+        width: 90px;
+
+        > .icon-button {
+          border: 1px solid $text-color;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+
+          &.liked {
+            color: #4CAF50;
+            border-color: #4CAF50;
+            pointer-events: none;
+          }
+
+          &:hover {
+            color: $primary-button-text-color;
+            border-color: $primary-button-text-color;
+          }
+
+          &:first-of-type {
+            margin-right: 5px;
+          }
+
+          > .icon-thumbs-up {
+            position: relative;
+            top: 3px;
+            left: -5px;
+          }
+
+          > .icon-thumbs-down {
+            position: relative;
+            top: 6px;
+            left: -5px;
+          }
+        }
+      }
+
+      > .radio-item-info {
+        flex: 1 1 auto;
+        overflow: hidden;
+        white-space: nowrap;
+
+        > .artist {
+          display: block;
+          color: $text-color;
+        }
+
+        > .track {
+          display: block;
+          color: $text-color-darker;
+        }
+      }
+    }
+  }
+
+  .next, .prev {
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid $text-color;
+    width: 50px;
+    height: 50px;
+
+    &.disabled {
+      color: $text-color-darker;
+      cursor: not-allowed;
+      border-color: $text-color-darker;
+    }
+
+    > .icon {
+      position: relative;
+      top: 3px;
+    }
+  }
+
+  .next {
+    margin-left: 20px;
+
+    > .icon {
+      left: 4px;
+    }
+  }
+
+  .prev {
+    margin-right: 20px;
+
+    > .icon {
+      right: -1px;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<div class="settings-container full-width">
+    <form ng-submit="updateSettings()">
+        <div class="admin-panel" id="view">
+            <div class="panel-header">Ads</div>
+            <div class="panel-body">
+                <div class="input-container">
+                    <label>Slot #1</label>
+                    <textarea ng-model="settings.ad_slot_1" columns="1"></textarea>
+                    <p>This ad will appear at the top of most pages. Best size <= 150px height or responsive.</p>
+                </div>
+
+                <div class="input-container">
+                    <label>Slot #2</label>
+                    <textarea ng-model="settings.ad_slot_2" columns="1"></textarea>
+                    <p>This ad will appear at the bottom of most pages. Best size <= 150px height or responsive.</p>
+                </div>
+
+                <div class="input-container">
+                    <label>Slot #3</label>
+                    <textarea ng-model="settings.ad_slot_3" columns="1"></textarea>
+                    <p>This ad will appear in artist page only (below popular songs). Best size <= 1000px width or responsive.</p>
+                </div>
+
+                <div class="input-container">
+                    <label>Slot #4</label>
+                    <textarea ng-model="settings.ad_slot_4" columns="1"></textarea>
+                    <p>This ad will appear in artist page only (below similar artists). Best size <= 430px width or responsive.</p>
+                </div>
+
+                <div class="input-container">
+                    <label>Slot #5</label>
+                    <textarea ng-model="settings.ad_slot_5" columns="1"></textarea>
+                    <p>This ad will appear in album page only (above album tracks). Best size is as wide as possible or responsive.</p>
+                </div>
+
+                <button class="primary">{{:: 'update' | translate }}</button>
+            </div>
+        </div>
+    </form>
+</div>

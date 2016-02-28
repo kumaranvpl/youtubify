@@ -1,0 +1,69 @@
+<div id="appearance" ng-controller="AppearanceController">
+    <section class="scrollspy-navigation">
+        <div class="nav-item" ng-repeat="(name,description) in descriptions" du-scrollspy="{{name}}" du-smooth-scroll="{{name}}">{{ name }}</div>
+    </section>
+
+    <section class="variables-panel">
+        <div class="group" ng-repeat="(name,description) in descriptions" id="{{ name }}">
+            <header>
+                <div class="name">{{ name }}</div>
+                <div class="description">{{ description }}</div>
+            </header>
+
+            <div class="group-variables">
+                <div class="variable" ng-repeat="variable in selectedStylesheet.variables[name]">
+                    <div class="input-container">
+                        <label for="{{ variable.name }}">{{ utils.dashesToSpaces(variable.name) }}</label>
+                        <div class="input-inner">
+                            <input type="text" id="{{ variable.name }}" ng-model="variable.value" appearance-input ng-if="!shouldBeSelect(variable.value)">
+                            <select id="{{ variable.name }}" ng-model="variable.value" ng-if="shouldBeSelect(variable.value)">
+                                <option value="true">{{:: 'yes' | translate }}</option>
+                                <option value="false">{{:: 'no' | translate }}</option>
+                            </select>
+                        </div>
+                        <div class="description">{{ originalVars[name][$index].description }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="options-panel">
+        <div class="admin-panel available-stylesheets">
+            <div class="panel-header flex">
+                <div class="name">{{:: 'availableStylesheets' | translate }}</div>
+                <div class="actions">
+                    <i class="icon icon-pencil" ng-click="showRenameStylesheetModal()" ng-if="selectedStylesheet.name !== 'original'"></i>
+                    <i class="icon icon-trash" ng-click="confirmStylesheetDeletion()" ng-if="selectedStylesheet.name !== 'original'"></i>
+                    <i class="icon icon-loop-outline" ng-click="confirmStylesheetReset()"></i>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="stylesheets" pretty-scrollbar>
+                    <div class="stylesheet" ng-click="selectStylesheet(stylesheet)" ng-repeat="stylesheet in stylesheets" ng-class="{ selected: selectedStylesheet.name === stylesheet.name }">
+                        <div class="name">{{ stylesheet.name }}</div>
+                        <div class="colors">
+                            <div class="color" ng-repeat="color in stylesheet.mainColors" ng-style="{ 'background-color': sass.applyTransforms(color, stylesheet.variables) }"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="primary" ng-click="updateStylesheet()">{{:: 'save' | translate }}</button>
+                <button class="cancel" ng-click="showStylesheetNameModal()">{{:: 'createNew' | translate }}</button>
+            </div>
+        </div>
+
+        <div class="admin-panel custom-css">
+            <div class="panel-header flex">
+                <div class="name">{{:: 'customCss' | translate }}</div>
+                <div class="actions">
+                    <i class="icon icon-resize-full" ng-click="openCustomCssModal()"></i>
+                </div>
+            </div>
+            <div class="panel-body">
+                <textarea ng-model="selectedStylesheet.customCss"></textarea>
+                <button class="primary" ng-click="updateStylesheet()">{{:: 'update' | translate }}</button>
+            </div>
+        </div>
+    </section>
+
+</div>

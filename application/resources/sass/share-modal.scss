@@ -1,0 +1,122 @@
+#share-modal {
+  overflow-y: auto;
+
+  > .modal-content {
+    min-width: 538px;
+  }
+
+  .input-group {
+    margin-top: 5px;
+    display: flex;
+
+    > input {
+      flex: 1 1 auto;
+      border: 1px solid rgba(0,0,0,.12);
+    }
+
+    > .primary {
+      padding: 9px 12px;
+      box-shadow: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      font-weight: 400;
+      text-transform: none;
+    }
+  }
+
+  .email-container {
+    display: block;
+  }
+
+  .buttons {
+    margin-top: 25px;
+
+    button {
+      float: right;
+    }
+  }
+
+  #share-modal-input {
+    cursor: copy;
+    border-color: rgba(0,0,0,0.12);
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-right: none;
+    height: 40px;
+    padding: 6px 12px;
+  }
+
+  .mail-spinner {
+    float: right;
+    transform: scale(0.7) !important;
+    margin-top: -7px;
+  }
+
+  .social-icon {
+    box-shadow: none;
+  }
+
+  textarea {
+    border-color: rgba(0,0,0,0.12);
+    padding: 7px 7px 7px 16px;
+    width: 100%;
+    position: relative;
+    outline: none !important;
+  }
+
+  .visibility-options {
+    padding: 10px 0;
+    margin-bottom: 20px;
+  }
+
+  .modal-header {
+    margin-bottom: 20px;
+  }
+
+  .social-icons {
+    margin: 10px 0 20px;
+  }
+}
+
+.social-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 5px;
+  background-size: 100%;
+  display: inline-block;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &.facebook {
+    background-image: url(../../../images/social-icons/facebook.png);
+  }
+
+  &.twitter {
+    background-image: url(../../../images/social-icons/twitter.png);
+  }
+
+  &.googleplus {
+    background-image: url(../../../images/social-icons/google-plus.png);
+  }
+
+  &.pinterest {
+    background-image: url(../../../images/social-icons/pinterest.png);
+  }
+
+  &.tumblr {
+    background-image: url(../../../images/social-icons/tumblr.png);
+  }
+
+  &.stumbleupon {
+    background-image: url(../../../images/social-icons/stumbleupon.png);
+  }
+
+  &.blogger {
+    background-image: url(../../../images/social-icons/bloggr.png);
+  }
+}

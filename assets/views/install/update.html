@@ -1,0 +1,29 @@
+<html ng-app="installer">
+	<head>
+		<title>Architect</title>
+		<link rel="stylesheet" href="{{ app.base_url ~ '/assets/css/builder.css' }}">
+		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Ubuntu:100,400,500,600,700' rel='stylesheet' type='text/css'>
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+
+	<body id="install">
+
+		<div class="container cont-pad-bottom" id="content">
+			
+			<div class="row logo"><img class="img-responsive" src="assets/images/logo.png" alt="logo"></div>
+			<hr>
+
+			<section class="row update-container">
+				<h2>Welcome to Architect Updater</h2>
+        		<p class="help-block">This might take several minutes, please don't close this browser tab while updating is not complete.</p>
+
+				<form method="POST" action="{{ app.base_url ~ '/run-update' }}">
+					<button type="submit" class="btn btn-success">Update Now</button>
+				</form>
+			</section>
+		</div>
+	</body>
+</html>
+	
+

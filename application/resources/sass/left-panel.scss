@@ -1,0 +1,261 @@
+#left-panel {
+  height: 100%;
+  background-color: $left-panel-color;
+  color: $left-panel-text-color;
+  flex: 0 0 $left-panel-width;
+  max-width: $left-panel-width;
+  z-index: 7;
+  transition: all .4s cubic-bezier(.25,.8,.25,1);
+
+  &.closed {
+    transform: translateX(-300px);
+  }
+
+  > .left-panel-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
+    overflow: auto;
+    position: relative;
+    flex: 1 1 auto;
+
+    > .logo {
+      width: 60%;
+      height: auto;
+      margin-bottom: 10px;
+
+      > img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .divider {
+      height: 1px;
+      width: calc(100% - 30px);
+      box-sizing: border-box;
+      background-color: $left-panel-divider-color;
+      margin-top: 25px;
+      flex: 0 0 auto;
+    }
+
+    .login-btns {
+      padding: 25px 15px 0;
+      flex: 0 0 auto;
+
+      > .register-btn {
+        color: $text-color;
+      }
+
+      > .login-btn {
+        box-shadow: none;
+      }
+    }
+  }
+
+  .playlists-container {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+  
+  .main-menu, .your-music, .playlists {
+    text-align: left;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: 100;
+
+    h2 {
+      font-size: 1rem;
+      padding: 6px 18px;
+      margin: 0;
+      text-transform: uppercase;
+      font-weight: 100;
+    }
+
+    .menu-item {
+      width: 100%;
+      padding: 8px 18px;
+      cursor: pointer;
+      box-sizing: border-box;
+      max-width: $left-panel-width;
+      border-right: 3px solid transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &.active {
+        background-color: $left-panel-active-item-color;
+        border-color: $accent-color;
+      }
+
+      &:hover {
+        background-color: $left-panel-active-item-color;
+      }
+    }
+  }
+
+  .search-bar {
+    width: 85%;
+    height: $search-bar-height;
+    position: relative;
+    background-color: $search-bar-color;
+    border: $search-bar-border;
+    border-radius: 3px;
+    flex: 0 0 auto;
+
+    > input {
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0 10px;
+      border-radius: 3px;
+      border: none;
+      background-color: transparent;
+
+      &:active, &:focus {
+        outline: none;
+      }
+    }
+
+    > .search-bar-spinner, .search-bar-clear {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    > .search-bar-spinner {
+      color: $accent-color;
+    }
+  }
+  
+  .new-playlist {
+    display: flex;
+    padding: 0 15px;
+    font-size: 1.03rem;
+    cursor: pointer;
+    border-top: 1px solid $player-container-border-color;
+    height: 51px;
+    flex: 0 0 auto;
+    align-items: center;
+
+    &:hover {
+      color: lighten($text-color, 10%);
+    }
+
+    > .icon {
+      margin-right: 5px;
+    }
+  }
+  
+  .current-track {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px 5px;
+    border-top: 1px solid $player-container-border-color;
+    flex: 0 0 auto;
+
+    .add-remove {
+      cursor: pointer;
+      width: 25px;
+      flex: 0 0 auto;
+      text-align: center;
+
+      .remove-track, .track-added {
+        display: none;
+      }
+
+      &.saved {
+        .track-added {
+          display: block;
+        }
+
+        .add-track {
+          display: none;
+        }
+
+        &:hover {
+          .track-added {
+            display: none;
+          }
+
+          .remove-track {
+            display: block;
+          }
+        }
+      }
+    }
+
+    > img {
+      width: 55px;
+      height: 55px;
+      flex: 0 0 auto;
+    }
+
+    > .info {
+      margin-left: 10px;
+      max-width: calc(100% - 90px);
+      flex: 1 1 auto;
+
+      > .track-name {
+        font-size: 1rem;
+        font-weight: 400;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      > .artist-name {
+        color: $left-panel-artist-name-text-color;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.9rem;
+
+        > .artists {
+          display: flex;
+          color: $text-color-darker;
+
+          > .artist {
+            cursor: pointer;
+            padding-left: 4px;
+
+            &:first-of-type {
+              padding-left: 0;
+            }
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width : $phone) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: $right-panel-absolute-box-shadow;
+    padding-top: 40px;
+
+    .search-bar {
+      display: none;
+    }
+
+    .main-menu {
+      margin: 0;
+    }
+  }
+}

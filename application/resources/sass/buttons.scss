@@ -1,0 +1,83 @@
+button, a.btn {
+  color: $button-text-color;
+  background-color: $button-color;
+  padding: 8px 16px;
+  border: 1px solid $button-border-color;
+  border-radius: 3px;
+  font-size: 1rem;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.options {
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    padding: 1px 0 0;
+    margin-left: 5px;
+    border-color: $text-color;
+  }
+
+  &.pill-button {
+    height: 28px;
+    padding: 0 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    min-width: 100px;
+  }
+
+  &.primary {
+    background-color: $primary-button-color;
+    color: $primary-button-text-color;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+    text-transform: uppercase;
+    border: none;
+    font-weight: 500;
+
+    &:hover {
+      background-color: darken($primary-button-color, 5%);
+    }
+  }
+
+  &.cancel {
+    background-color: transparent;
+    text-transform: uppercase;
+    border: none;
+    color: rgba(0, 0, 0, .87);
+    font-weight: 500;
+
+    &:hover {
+      background-color: rgba(158, 158, 158, 0.2);
+    }
+  }
+
+  &.danger {
+    background-color: $danger-button-color;
+    color: $danger-button-text-color;
+    border-color: $danger-button-border-color;
+
+    &:hover {
+      background-color: darken($danger-button-color, 5%);
+    }
+  }
+
+  &.no-shadow {
+    box-shadow: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: #E1E1E1;
+    box-shadow: none;
+    color: #B7B7B7;
+
+    &:hover {
+      background-color: #E1E1E1;
+    }
+  }
+}

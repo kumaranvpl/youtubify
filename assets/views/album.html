@@ -1,0 +1,76 @@
+<div id="album-page" class="page-shadow scroll-container" ng-show="albumReady" pretty-scrollbar>
+    <div class="album">
+        <div class="album-header" context-menu-item="album">
+            <div class="album-image">
+                <img ng-src="{{ utils.img(album.image, 'album') }}">
+            </div>
+
+            <div class="info">
+                <div class="album-name">{{ album.name }}</div>
+                <a class="artist-name" ng-if="album.artist" ng-href="{{ utils.artistUrl(album) }}">{{ album.artist.name }}</a>
+
+                <div class="album-info">
+                    <div class="info-container">
+                        <div class="name">{{:: 'releaseDate' | translate }}:</div>
+                        <div class="value">{{ album.release_date }}</div>
+                    </div>
+                    <div class="info-container">
+                        <div class="name">{{:: 'runningLength' | translate }}:</div>
+                        <div class="value">{{ album.tracks.length }}</div>
+                    </div>
+                    <div class="info-container">
+                        <div class="name">{{:: 'runningTime' | translate }}:</div>
+                        <div class="value">{{ totalLength }}</div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="primary pill-button" ng-if="!albumIsPlaying || !player.isPlaying" ng-click="playAllTracks()"><i class="icon icon-play"></i> {{:: 'play' | translate }}</button>
+                    <button class="primary pill-button" ng-if="albumIsPlaying && player.isPlaying" ng-click="pauseAllTracks()"><i class="icon icon-pause"></i> {{:: 'pause' | translate }}</button>
+                    <button more-options-menu="album" class="pill-button">{{:: 'more' | translate }}...</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-container" ng-if="ad5" ng-bind-html="ad5"></div>
+
+        <div class="flex-table album-table" ng-controller="ExternalPlayerControlsController">
+            <div class="flex-table-row flex-table-header" sortable-table-header>
+                <div class="flex-table-row-item track-number" sort-field="number">#</div>
+                <div class="flex-table-row-item add-remove-track hidden-phone"></div>
+                <div class="flex-table-row-item track-name" sort-field="name">{{:: 'song' | translate }}</div>
+                <div class="flex-table-row-item artist-name" ng-if="!album.artist" sort-field="artists">{{:: 'artist' | translate }}</div>
+                <div class="flex-table-row-item more-options"></div>
+                <div class="flex-table-row-item track-duration hidden-phone" sort-field="duration"><i class="icon icon-clock"></i></div>
+                <div class="flex-table-row-item popularity hidden-phone" sort-field="-spotify_popularity"><i class="icon icon-thumbs-up"></i></div>
+            </div>
+            <div class="flex-table-row" ng-repeat="track in album.tracks |orderBy:params.sort as sortedTracks" ng-class="{ playing: trackIsPlaying(track), saved: trackSaved(track) }" context-menu-item>
+                <div class="flex-table-row-item track-number hover-icon" ng-click="loadQueueAndPlayTrack(track, $index)">
+                    <span class="track-index hidden-tablet">{{ track.number }}</span>
+                    <div class="play-icon"><i class="icon icon-play"></i></div>
+                    <playing-icon class="inside-album-table"></playing-icon>
+                    <div class="pause-icon"><i class="icon icon-pause"></i></div>
+                </div>
+                <div class="flex-table-row-item add-remove-track hidden-phone">
+                    <i class="icon icon-plus add-track" ng-click="addTrack(track)"></i>
+                    <i class="icon icon-cancel-1 remove-track" ng-click="removeTrack(track)"></i>
+                    <i class="icon icon-ok track-added" ng-click="removeTrack(track)"></i>
+                </div>
+                <div class="flex-table-row-item track-name">
+                    {{ track.name }}
+                    <featured-artists artist="artist" artists="track.artists" ng-if="album.artist"></featured-artists>
+                </div>
+                <div class="flex-table-row-item artist-name" ng-if="!album.artist">
+                    <all-track-artists artists="track.artists"></all-track-artists>
+                </div>
+                <div class="flex-table-row-item more-options"><i class="icon icon-dot-3" more-options-menu="track" sub-name="album.artist.name"></i></div>
+                <div class="flex-table-row-item track-duration hidden-phone">{{ track.duration }}</div>
+                <div class="flex-table-row-item popularity hidden-phone">
+                    <div class="popularity-widget">
+                        <div class="popularity-fill" style="width: {{ track.spotify_popularity+'%' }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

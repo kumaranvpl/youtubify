@@ -1,0 +1,146 @@
+#right-panel {
+  width: $right-panel-width;
+  height: 100%;
+  background-color: $right-panel-color;
+  transition: all 0.3s ease;
+  flex: 0 0 auto;
+
+  @media only screen and (max-width : 1550px) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-shadow: $right-panel-absolute-box-shadow;
+  }
+
+  &.closed {
+    transform: translateX(300px);
+    width: 0;
+  }
+
+  > .queue {
+    height: 100%;
+    overflow: auto;
+    cursor: default;
+    position: relative;
+
+    > .track {
+      padding: 5px 8px;
+      background-color: $right-panel-queue-item-color;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      > .image {
+        width: 35px;
+        height: 35px;
+        position: relative;
+        margin-right: 11px;
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+        flex: 0 0 auto;
+
+        > img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        > .playing-icon-container {
+          background-color: rgba(0,0,0,0.2);
+        }
+
+        > .icon {
+          position: absolute;
+          top: 0;
+          left: 0;
+          color: #fff;
+          width: 100%;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(0,0,0,0.3);
+          font-size: 1.2rem;
+          display: none;
+        }
+      }
+
+      &:hover {
+        .more-options {
+          display: block;
+        }
+
+        .icon-play {
+          display: flex;
+        }
+      }
+      
+      &.playing {
+        background-color: $accent-color;
+
+        &:hover {
+          .icon-play, .playing-icon-container {
+            display: none;
+          }
+          
+          .icon-pause {
+            display: flex;
+          }
+        }
+        
+        .playing-icon-container {
+          display: flex;
+        }
+
+        .info {
+          > .track-name {
+            font-weight: 500;
+            color: $right-panel-playing-track-text-color;
+          }
+
+          > .artist-name {
+            color: $right-panel-playing-track-text-color;
+          }
+        }
+      }
+
+      .info {
+        flex: 1 1 auto;
+        white-space: nowrap;
+        max-width: 68%;
+
+        > .track-name {
+          font-size: 1rem;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: $right-panel-track-name-text-color;
+        }
+
+        > .artist-name {
+          color: $right-panel-artist-name-text-color;
+          font-size: 0.85rem;
+          max-width: 95%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  .more-options {
+    color: $right-panel-track-name-text-color;
+    cursor: pointer;
+    max-width: 20px;
+    display: none;
+    height: 100%;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    &:hover {
+      color: lighten($right-panel-track-name-text-color, 10%);
+    }
+  }
+}

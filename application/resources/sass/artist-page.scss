@@ -1,0 +1,405 @@
+.loading #artist-page {
+  visibility: hidden;
+}
+
+#artist-page {
+  background-color: $main-color;
+  color: $artist-page-color;
+  width: 100%;
+  max-width: 1700px;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+  
+  .navigation {
+    display: flex;
+    font-size: 1.1rem;
+    margin: 25px 40px 0;
+    border-bottom: 1px solid $border-color;
+    color: $text-color-darker;
+
+    > .nav-item {
+      margin-right: 20px;
+      border-bottom: 3px solid transparent;
+      padding-bottom: 7px;
+      cursor: pointer;
+
+      &.active {
+        border-color: $accent-color;
+      }
+    }
+
+    @media only screen and (max-width: $phone) {
+      display: none;
+    }
+  }
+
+  h4 {
+    font-weight: 400;
+    color: $text-color-darker;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+  }
+
+  .toggle-more-tracks {
+    margin-top: 20px;
+  }
+
+  .artist-body {
+    padding: 25px $artist-page-padding 0;
+
+    @media only screen and (max-width : $phone) {
+      padding: 0 15px 0;
+    }
+
+    > .tab {
+      display: flex;
+
+      > .media-col {
+        flex: 0 0 auto;
+        width: 70%;
+
+        @media only screen and (max-width : $tablet) {
+          width: 100%;
+        }
+      }
+
+      > .info-col {
+        width: 30%;
+        flex: 0 0 auto;
+
+        &.no-similar {
+          display: none;
+        }
+      }
+    }
+
+    .ad-container {
+      margin: 20px 0 0;
+    }
+  }
+  
+  .similar-artists {
+    margin-left: 20px;
+
+    @media only screen and (max-width : $tablet) {
+      display: none;
+    }
+
+    .artist {
+      display: flex;
+      padding: 5px;
+      margin-bottom: 4px;
+      background-color: $similar-artist-item-color;
+      align-items: center;
+      height: 48px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten($background-color-lighter, 5%);
+      }
+
+      > img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .separator {
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 10px;
+    margin: 40px 0 25px;
+    display: flex;
+
+    > .title {
+      color: $text-color;
+      text-transform: uppercase;
+      font-weight: 500;
+      width: 90%;
+    }
+
+    > .dropdown-container {
+      cursor: pointer;
+      width: 10%;
+      text-align: right;
+
+      &:hover {
+        color: lighten($text-color, 10%);
+      }
+    }
+  }
+
+  .album {
+    margin-bottom: 40px;
+  }
+
+  .albums {
+    > .album {
+      > .album-header {
+        display: flex;
+        color: darken($text-color, 5%);
+        margin-bottom: 20px;
+
+        .release-date {
+          color: $text-color-darker;
+        }
+
+        h2 {
+          margin: 4px 0 26px;
+          font-weight: 500;
+
+          > a {
+            color: darken($text-color, 5%);
+          }
+        }
+
+        > .album-image {
+          margin-right: 15px;
+
+          > img {
+            width: 110px;
+            height: 110px;
+          }
+        }
+      }
+    }
+  }
+
+  .top-tracks {
+    .flex-table {
+      .flex-table-header {
+      }
+
+      .playing {
+        .playing-icon-container {
+          display: flex !important;
+        }
+
+        &:hover {
+          .play-icon {
+            display: none !important;
+          }
+        }
+
+        .hover-icon {
+          cursor: pointer;
+
+          &:hover {
+            .playing-icon-container {
+              display: none !important;
+            }
+
+            .pause-icon {
+              display: flex !important;
+            }
+          }
+        }
+      }
+
+      @media only screen and (max-width:$tablet) {
+        .play-icon {
+          display: flex !important;
+        }
+
+        .playing {
+          .play-icon, .playing-icon-container {
+            display: none !important;
+          }
+
+          .pause-icon {
+            display: flex !important;
+          }
+        }
+      }
+
+      .add-remove-track {
+        flex-grow: 0.9;
+      }
+
+      .ellipses {
+        max-width: 95%;
+      }
+
+      .track-image {
+        position: relative;
+        cursor: pointer;
+        padding-right: 20px;
+        overflow: hidden;
+
+        > .play-icon, .pause-icon {
+          display: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+          color: #fff;
+          font-size: 1.1rem;
+          width: $top-track-image-height;
+          height: $top-track-image-height;
+          background-color: rgba(0,0,0,0.5);
+          border-radius: 0;
+          text-align: center;
+          align-items: center;
+          justify-content: center;
+        }
+
+        > .playing-icon-container {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      .track-duration {
+        padding-right: 15px;
+      }
+
+      .flex-table-row {
+        height: $top-track-image-height;
+
+        &:hover {
+          .play-icon {
+            display: flex;
+          }
+        }
+      }
+
+      .image {
+        width: $top-track-image-height;
+        height: $top-track-image-height;
+      }
+    }
+
+    .flex-table-header {
+      background-color: transparent;
+
+      .track-name {
+        padding-left: 20px;
+      }
+    }
+  }
+
+  .artist-header {
+    min-height: 320px;
+    background-position: 0 30%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+
+    @media only screen and (max-width : $phone) {
+      min-height: 320px;
+    }
+
+    .artist-info {
+      padding: 0 0 7px 30px;
+
+      > h1 {
+        font-weight: 300;
+        margin: 0 0 5px;
+        font-size: 3rem;
+        color: #F2F2F1;
+        line-height: 1;
+      }
+
+      .primary {
+        margin-right: 5px;
+        text-transform: none;
+        padding-right: 25px;
+      }
+
+      > .genres {
+        margin-bottom: 25px;
+
+        > .genre {
+          display: inline-block;
+          padding-right: 10px;
+          text-transform: capitalize;
+          color: #F2F2F1;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .artist-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 20px 0 0 $artist-page-padding;
+      overflow: hidden;
+
+      @media only screen and (max-width : $phone) {
+        display: none;
+      }
+
+      > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    > .header-overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(to bottom, transparent -80%, $artist-page-image-overlay-color 100%);
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 15px;
+    }
+  }
+}
+
+.tab {
+  width: 100%;
+
+  &.artists-page {
+    padding: 0;
+    margin: 0 -15px;
+  }
+}
+
+#about {
+  background-color: $background-color-lighter;
+  padding: 15px;
+  width: 100%;
+  flex-direction: column;
+  position: relative;
+  
+  #splash {
+    margin-top: 40px;
+
+    &.show {
+      display: flex;
+    }
+  }
+
+  > .images {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 30px;
+
+    > .image {
+      height: 275px;
+      overflow: hidden;
+      flex: 1 1 auto;
+      
+      > img {
+        width: auto;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+    }
+  }
+}

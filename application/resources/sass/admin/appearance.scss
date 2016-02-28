@@ -1,0 +1,152 @@
+#appearance {
+  display: flex;
+
+  .options-panel {
+    position: fixed;
+    flex: 0 0 auto;
+    width: 300px;
+
+    > .available-stylesheets {
+        .stylesheets {
+          max-height: 400px;
+          overflow: auto;
+          position: relative;
+          margin-bottom: 5px;
+
+          > .stylesheet {
+            padding: 10px;
+            text-transform: capitalize;
+            border: 1px solid $admin-panel-border-color;
+            cursor: pointer;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+
+            > .name {
+              flex: 1 1 auto;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            }
+
+            > .colors {
+              width: 90px;
+              height: 15px;
+              flex: 0 0 90px;
+
+              > .color {
+                width: 15px;
+                height: 100%;
+                display: inline-block;
+              }
+            }
+
+            &:hover {
+              background-color: $admin-panel-hover-color;
+            }
+
+            &.selected {
+              background-color: darken($admin-panel-hover-color, 3%);
+            }
+          }
+        }
+    }
+  }
+
+  .variables-panel {
+    flex: 1 1 auto;
+    margin: 0 30px 0 230px;
+    max-width: calc(100% - 230px - 320px);
+    padding-bottom: 300px;
+
+    .group {
+      background-color: $admin-panel-color;
+      border: 1px solid $admin-panel-border-color;
+      border-top: none;
+      margin-bottom: 20px;
+
+      > header {
+        padding: 10px;
+        background-color: $admin-panel-header-color;
+        color: $admin-panel-header-text-color;
+        border-bottom: 1px solid $admin-panel-border-color;
+        border-top: 3px solid $admin-panel-border-color;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+
+        > .name {
+          font-size: 1.02rem;
+          font-weight: 500;
+        }
+
+        > .description {
+          font-size: 0.88rem;
+          font-weight: 400;
+        }
+      }
+    }
+
+    .group-variables {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 8px;
+
+      > .variable {
+        width: 33.333%;
+        max-width: 33.333%;
+        flex: 1 1 auto;
+        padding: 0 10px;
+        margin: 10px 0;
+      }
+    }
+
+    .input-container {
+      > .input-inner {
+        display: flex;
+        height: 35px;
+        width: 100%;
+
+        > input, > select {
+          height: 100%;
+          border: 1px solid $admin-panel-border-color;
+          width: 100%;
+          outline: none !important;
+        }
+
+        > input {
+          padding: 10px;
+        }
+
+        > select {
+          padding: 0 7px;
+        }
+
+        > .color-preview {
+          width: 40px;
+          height: 100%;
+          cursor: pointer;
+          border: 1px solid $admin-panel-border-color;
+          border-left: none;
+        }
+      }
+
+      > .description {
+        font-size: 0.88rem;
+        font-weight: 400;
+        margin-top: 5px;
+        padding: 0 1px;
+
+        &:empty {
+          display: none;
+        }
+      }
+
+      > label {
+        display: block;
+        margin-bottom: 5px;
+        text-transform: capitalize;
+      }
+    }
+  }
+}
