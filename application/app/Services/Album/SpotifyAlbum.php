@@ -55,11 +55,11 @@ class SpotifyAlbum {
         if ( ! $artistName) {
             $response = $this->fetchByAlbumNameOnly(urlencode($albumName));
         } else {
-            $response = $this->httpClient->get('search?q=artist:'.$artistName.'%20album:'.$albumName.'&type=album&limit=10');
+            $response = $this->httpClient->get('search?q=artist:'.$artistName.'%20album:'.str_replace(':', '', $albumName).'&type=album&limit=10');
 
             //if we couldn't find album with artist and album name, search only by album name
             if ( ! isset($response['albums']['items'][0])) {
-                $response = $this->fetchByAlbumNameOnly(urlencode($albumName));
+                $response = $this->fetchByAlbumNameOnly(urlencode(str_replace(':', '', $albumName)));
             }
         }
 

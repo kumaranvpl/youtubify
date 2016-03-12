@@ -1,4 +1,4 @@
-<p>{{ $user->getNameOrEmail() }} have shared a link with you.<br />
+<p>{{ $user ? $user->getNameOrEmail() : App::make('Settings')->get('siteName') }} have shared a link with you.<br />
 <br />
 @if($emailMessage)<br />
 <br />

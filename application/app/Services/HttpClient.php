@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ParseException;
 
 class HttpClient {
 
@@ -29,7 +30,13 @@ class HttpClient {
 			$r = $this->get($url);
 		}
 
-		return is_array($r) ? $r : $r->json();
+        try {
+            $json = is_array($r) ? $r : $r->json();
+        } catch (ParseException $e) {
+            $json = '';
+        }
+
+		return $json;
 	}
 
 	public function post($url, $options)

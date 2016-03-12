@@ -56,10 +56,14 @@ class PrerenderIfCrawler  {
         $parts = $request->segments();
 
         if ($parts[0] === 'artist') {
-            return ['type' => 'artist', 'model' => Artist::where('name', urldecode($parts[1]))->firstOrFail()];
+            $name = urldecode(str_replace('+', ' ', $parts[1]));
+            return ['type' => 'artist', 'model' => Artist::where('name', $name)->firstOrFail()];
         } else if ($parts[0] === 'album') {
-            $album = Album::where('name', urldecode($parts[2]))->whereHas('artist', function($q) use($parts) {
-                $q->where('name', urldecode($parts[1]));
+            $albumName  = urldecode(urldecode(str_replace('+', ' ', $parts[2])));
+            $artistName = urldecode(urldecode(str_replace('+', ' ', $parts[1])));
+
+            $album = Album::where('name', $albumName)->whereHas('artist', function($q) use($artistName) {
+                $q->where('name', $artistName);
             })->first();
 
             return ['type' => 'album', 'model' => $album];

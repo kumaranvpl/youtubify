@@ -1,7 +1,7 @@
 <?php
 
 define('IS_DEMO', (gethostname() === 'youtubify' ? 1 : 0));
-define('VERSION', 1.4);
+define('VERSION', 1.5);
 
 /**
  * Laravel - A PHP Framework For Web Artisans

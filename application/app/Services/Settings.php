@@ -125,15 +125,21 @@ class Settings {
      */
     public function get($key, $default = null)
     {
+        $value = $default;
+
         if (isset($this->all[$key])) {
-            if ($this->all[$key] === '0' || $this->all[$key] === '1') {
-                return (int) $this->all[$key];
-            } else {
-                return $this->all[$key];
-            }
+            $value = $this->all[$key];
         }
 
-        return $default;
+        if (isset($this->all['env'][$key])) {
+            $value = $this->all['env'][$key];
+        }
+
+        if ($value === '0' || $value === '1') {
+            return (int) $value;
+        } else {
+            return $value;
+        }
     }
 
     /**

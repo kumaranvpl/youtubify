@@ -44,8 +44,7 @@ Route::post('playlist/{id}/follow', 'PlaylistController@follow');
 Route::post('playlist/{id}/unfollow', 'PlaylistController@unfollow');
 
 //SEARCH
-Route::get('search/{q}', 'SearchController@search');
-Route::get('full-search/{q}', 'SearchController@fullSearch');
+Route::get('get-search-results/{q}', 'SearchController@search');
 Route::get('search-audio/{artist}/{track}', 'SearchController@searchAudio');
 
 //RADIO

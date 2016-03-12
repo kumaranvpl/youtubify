@@ -30,7 +30,7 @@
 
         {{-- CSS --}}
         <link rel="stylesheet" id="main-stylesheet"
-              href="{{ asset('assets/css/custom-stylesheets', $settings->get('enable_https')).'/'.(($settings->get('selected_sheet') && ! IS_DEMO) ? $settings->get('selected_sheet').'/styles.min.css?v10' : 'original/styles.min.css?v10') }}">
+              href="{{ asset('assets/css/custom-stylesheets', $settings->get('enable_https')).'/'.(($settings->get('selected_sheet') && ! IS_DEMO) ? $settings->get('selected_sheet').'/styles.min.css?v13' : 'original/styles.min.css?v13') }}">
 
         {{-- Fonts --}}
         <link href='https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,600,700' rel='stylesheet' type='text/css'>
@@ -91,10 +91,10 @@
 
                 <right-panel></right-panel>
 
-                <div class="lyrics-container" lyrics-container>
+                <div class="lyrics-container hidden" lyrics-container>
                     <div class="backdrop"></div>
                     <div class="modal-inner-container">
-                        <div id="lyrics-iframe"></div>
+                        <div id="lyrics-panel" class="scroll-container" pretty-scrollbar></div>
                         <div class="close-lyrics-icon"><i class="icon icon-cancel"></i></div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
         <script id="vars">
             var vars = {
                 user: '{!! $user !!}',
-                baseUrl: '{{ $baseUrl  }}',
+                baseUrl: '{{ $baseUrl }}',
                 selectedLocale: '{{ Config::get('app.locale') }}',
                 trans: {!! $translations !!},
                 settings: {!! json_encode($settings->getAll()) !!},
@@ -136,7 +136,7 @@
             }
         </script>
 
-        <script src="{{ asset('assets/js/core.min.js?v10', $settings->get('enable_https')) }}"></script>
+        <script src="{{ asset('assets/js/core.min.js?v13', $settings->get('enable_https')) }}"></script>
 
         @if (($locale = $settings->get('dateLocale', 'en')) && $locale !== 'en')
             <script src="{{ asset('assets/js/locales/'.$locale.'.js')  }}"></script>

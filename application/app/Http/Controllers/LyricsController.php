@@ -27,6 +27,14 @@ class LyricsController extends Controller {
             abort(404);
         }
 
-        return $response['url'];
+        $html = $this->httpClient->get($response['url'])->getBody()->getContents();
+
+        preg_match("/<div class='lyricbox'>(.+?)<!--/", $html, $matches);
+
+        if ( ! isset($matches[1])) {
+            abort(404);
+        }
+
+        return html_entity_decode(preg_replace('#<script(.*?)>(.*?)</script>#is', '', $matches[1]));
 	}
 }

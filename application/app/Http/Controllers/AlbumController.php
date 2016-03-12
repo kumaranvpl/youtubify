@@ -108,7 +108,7 @@ class AlbumController extends Controller {
             if ($this->settings->get('latest_albums_strict', false)) {
                 return App::make('App\Services\Discover\SpotifyNewReleases')->get();
             } else {
-                return Album::with('artist')
+                return Album::with('artist', 'tracks')
                     ->join('artists', 'artists.id', '=', 'albums.artist_id')
                     ->orderBy('release_date', 'desc')
                     ->limit(40)

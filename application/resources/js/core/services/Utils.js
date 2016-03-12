@@ -288,7 +288,7 @@ angular.module('app')
          * @returns {*}
          */
         encodeUrlParam: function(string) {
-            if ( ! string) return;
+            if ( ! string || ! angular.isString(string)) return string;
 
             return string.replace('+', '%2B').replace(/ /g, '+').replace('#', '%23');
         },
@@ -300,7 +300,7 @@ angular.module('app')
          * @returns {*}
          */
         decodeUrlParam: function(string) {
-            if ( ! string) return;
+            if ( ! string || ! angular.isString(string)) return string;
 
             return decodeURIComponent(string.replace(/\+/g, ' '));
         },

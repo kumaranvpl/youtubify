@@ -74,7 +74,8 @@ class PlaylistController extends Controller {
 				$playlist->owner = 0;
 			}
 
-			$playlist->createdBy = $owner->email;
+			$playlist->createdBy = $owner->getNameOrEmail();
+			$playlist->creatorId = $owner->id;
 
 			return $playlist;
 		}

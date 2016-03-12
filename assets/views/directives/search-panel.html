@@ -33,5 +33,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="result-container playlists" ng-if="search.results.playlists.length">
+            <h2>{{:: 'playlists' | translate }}</h2>
+            <div class="media" ng-repeat="playlist in search.results.playlists | limitTo:3">
+                <img ng-src="{{ utils.img(playlist.image, 'album') }}" class="media-image" ng-click="search.goToPlaylistPage(playlist)">
+                <div class="media-body">
+                    <div class="media-text" ng-click="search.goToPlaylistPage(playlist)">{{ playlist.name }}</div>
+                    <div class="media-subtext" ng-click="search.goToUserPage(playlist.owner)">{{ playlist.owner.username }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-container users" ng-if="search.results.users.length">
+            <h2>{{:: 'users' | translate }}</h2>
+            <div class="media" ng-repeat="user in search.results.users | limitTo:3">
+                <img ng-src="{{ users.getAvatar(user) }}" class="media-image" ng-click="search.goToUserPage(user)">
+                <div class="media-body">
+                    <div class="media-text" ng-click="search.goToUserPage(user)">{{ users.getUsername(user) }}</div>
+                    <div class="media-subtext">{{ user.followers_count }} {{:: 'followers' | translate }}</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

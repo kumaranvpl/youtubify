@@ -182,7 +182,7 @@ angular.module('app').factory('users', function($http, $rootScope, $state, utils
             if (name) {
                 return name;
             } else {
-                return user.email;
+                return user.email.split('@')[0];
             }
         },
 
@@ -195,7 +195,11 @@ angular.module('app').factory('users', function($http, $rootScope, $state, utils
             if ( ! user) user = this.current;
 
             if (user.avatar_url) {
-                return $rootScope.baseUrl+user.avatar_url;
+                if ( ! user.avatar_url.indexOf('//')) {
+                    return $rootScope.baseUrl+user.avatar_url;
+                } else {
+                    return user.avatar_url;
+                }
             }
 
             if (user.gender === 'male' || ! user.gender) {

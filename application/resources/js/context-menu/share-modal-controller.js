@@ -9,6 +9,7 @@ angular.module('app').controller('ShareModalController', function($scope, $rootS
     $scope.shareable = $scope.$parent.shareable || contextMenu.item;
 
     $scope.makeShareableUrl = function(shareable) {
+        console.log(shareable);
         var url = $rootScope.baseUrl+(! utils.getSetting('enablePushState') ? '#/' : '');
 
         if (shareable.duration) {
@@ -18,6 +19,11 @@ angular.module('app').controller('ShareModalController', function($scope, $rootS
 
         else if (shareable.artist && shareable.artist.id) {
             url+='album/'+utils.encodeUrlParam(shareable.artist.name)+'/'+utils.encodeUrlParam(shareable.name);
+            $scope.type = 'album';
+        }
+
+        else if (shareable.artist_id) {
+            url+='album/'+utils.encodeUrlParam(shareable.tracks[0].artists[0])+'/'+utils.encodeUrlParam(shareable.name);
             $scope.type = 'album';
         }
 

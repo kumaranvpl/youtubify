@@ -9,7 +9,7 @@ angular.module('app').directive('prettyScrollbar', function() {
                     el.scrollTop(el.scrollTop()+1);
                     el.scrollTop(el.scrollTop()-1);
                 }
-            }, 300)
+            }, 350)
 		}
 	};
 });

@@ -18,7 +18,7 @@
         </div>
 
         <div class="navigation">
-            <div class="nav-item" ng-class="{ active: tabs.active === 'overview' }" ng-click="openTab('overview')">Overview</div>
+            <div class="nav-item" ng-class="{ active: tabs.active === 'overview' }" ng-click="openTab('overview')">{{:: 'overview' | translate }}</div>
             <div class="nav-item" ng-class="{ active: tabs.active === 'similarArtists' }" ng-click="openTab('similarArtists')">{{:: 'similarArtists' | translate }}</div>
             <div class="nav-item" ng-class="{ active: tabs.active === 'about' }" ng-click="openTab('about')" ng-if="utils.getSetting('echonest_api_key')">{{:: 'about' | translate }}</div>
         </div>
@@ -81,7 +81,7 @@
                             </div>
                         </div>
 
-                        <button ng-click="toggleTopTracksAmount()" class="toggle-more-tracks" ng-if="topTracks.length > 5">{{ showingMoreTopTracks ? 'Show Less' : 'Show More' }}</button>
+                        <button ng-click="toggleTopTracksAmount()" class="toggle-more-tracks" ng-if="topTracks.length > 5">{{ (showingMoreTopTracks ? 'showLess' : 'showMore') | translate }}</button>
                     </section>
 
                     <div class="ad-container" ng-if="ad3" ng-bind-html="ad3"></div>

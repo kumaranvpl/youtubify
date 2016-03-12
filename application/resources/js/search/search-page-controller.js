@@ -3,7 +3,7 @@ angular.module('app').controller('SearchPageController', function($rootScope, $h
 
     $scope.activeTab = 'all';
 
-    $http.get('search/'+utils.decodeUrlParam($stateParams.query)+'?limit=20').success(function(data) {
+    $http.get('get-search-results/'+utils.decodeUrlParam($stateParams.query)+'?limit=20').success(function(data) {
         $scope.results = data;
 
         for (var i = 0; i < $scope.results.tracks.length; i++) {

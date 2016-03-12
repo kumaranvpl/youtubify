@@ -4,8 +4,10 @@ use App;
 use Cache;
 use Input;
 use Carbon\Carbon;
+use App\Services\Search\UserSearch;
 use App\Services\Search\SearchSaver;
 use App\Services\Search\YoutubeSearch;
+use App\Services\Search\PlaylistSearch;
 
 class SearchController extends Controller {
 
@@ -14,14 +16,16 @@ class SearchController extends Controller {
      *
      * @param YoutubeSearch $audio
      */
-	public function __construct(YoutubeSearch $audio, SearchSaver $saver)
+	public function __construct(YoutubeSearch $audio, SearchSaver $saver, PlaylistSearch $playlistSearch, UserSearch $userSearch)
     {
         $this->provider = ucfirst(App::make('Settings')->get('search_provider', 'spotify'));
         $namespace = 'App\Services\Search\\'.$this->provider.'Search';
 
-        $this->generalSearch = App::make($namespace);
-        $this->audioSearch   = $audio;
-        $this->saver         = $saver;
+        $this->generalSearch  = App::make($namespace);
+        $this->playlistSearch = $playlistSearch;
+        $this->userSearch     = $userSearch;
+        $this->audioSearch    = $audio;
+        $this->saver          = $saver;
 	}
 
     /**
@@ -38,11 +42,14 @@ class SearchController extends Controller {
         return Cache::remember('search.'.$q.$limit, Carbon::now()->addDays(3), function() use($q, $limit) {
             $results = $this->generalSearch->search($q, $limit);
 
-            if ($this->provider === 'database') {
-                return $results;
+            if ($this->provider !== 'database') {
+                $results = $this->saver->save($results);
             }
 
-            return $this->saver->save($results);
+            $results['playlists'] = $this->playlistSearch->search($q, $limit);
+            $results['users']     = $this->userSearch->search($q, $limit);
+
+            return $results;
         });
     }
 

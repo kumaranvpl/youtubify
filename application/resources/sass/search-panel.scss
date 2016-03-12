@@ -155,5 +155,15 @@
         }
       }
     }
+
+    &.playlists {
+      .media-text {
+        text-transform: capitalize;
+      }
+
+      .media-subtext:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }

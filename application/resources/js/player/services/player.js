@@ -288,7 +288,8 @@ angular.module('app')
                 fetchTrack(track).success(function(data) {
                     if ( ! data.id) {
                         player.loadingTrack = false;
-                        alertify.delay(3000).error(utils.trans('couldntFindTrack'))
+                        alertify.delay(3000).error(utils.trans('couldntFindTrack'));
+                        player.playNext();
                     }
 
                     if (autoPlay) {
@@ -373,19 +374,22 @@ angular.module('app')
 
             if (this.isShowingVideo) {
                 this.isShowingVideo = false;
-                hideVideoModal();
+                hideLyricsOrVideoModal('video');
             }
 
             if ( ! this.isShowingLyrics) {
+                utils.showLoader();
                 $http.post('get-lyrics', { artist: player.currentTrack.artist, track: player.currentTrack.name }).success(function(data) {
-                    showLyricsModal(data);
+                    showLyricsOrVideoModal('lyrics', data);
                     player.isShowingLyrics = true;
+                    utils.hideLoader();
                 }).error(function() {
                     alertify.delay(2500).error(utils.trans('noLyricsFound'));
+                    utils.hideLoader();
                 });
             } else {
                 this.isShowingLyrics = false;
-                hideLyricsModal();
+                hideLyricsOrVideoModal('lyrics');
             }
         },
 
@@ -397,16 +401,16 @@ angular.module('app')
 
             if (this.isShowingLyrics) {
                 this.isShowingLyrics = false;
-                hideLyricsModal();
+                hideLyricsOrVideoModal('lyrics');
             }
 
             if ( ! this.isShowingVideo) {
                 player.play();
-                showVideoModal();
+                showLyricsOrVideoModal('video');
                 player.isShowingVideo = true;
             } else {
                 this.isShowingVideo = false;
-                hideVideoModal();
+                hideLyricsOrVideoModal('video')
             }
         },
 
@@ -586,8 +590,10 @@ angular.module('app')
      * @returns {promise}
      */
     function fetchTrack(track) {
-        var name = track.name.replace('/', ' ');
-        return $http.get('search-audio/'+track.artist+'/'+name);
+        var name   = track.name.replace('/', ' '),
+            artist = track.artist.replace('/', ' ');
+
+        return $http.get('search-audio/'+artist+'/'+name);
     }
 
     function initPlayer() {
@@ -623,6 +629,7 @@ angular.module('app')
                     onError:function(e) {
                         if (e.data == 150 || e.data == 101) {
                             alertify.delay(2500).error(utils.trans('couldntFindTrack'));
+                            player.playNext();
                             $rootScope.$apply(function() {
                                 player.stop();
                             })
@@ -651,49 +658,53 @@ angular.module('app')
     }
 
     /**
-     * Animate lyrics modal in.
-     */
-    function showLyricsModal(url) {
-        var node = angular.element(document.querySelector('#lyrics-iframe'));
-
-        node.html('<iframe src="'+url+'"></iframe>');
-
-        requestAnimationFrame(function() {
-            document.querySelector('.lyrics-container').classList.add('show');
-        });
-    }
-
-    /**
-     * Animate lyrics modal out.
-     */
-    function hideLyricsModal() {
-        document.querySelector('.lyrics-container').classList.remove('show');
-    }
-
-    /**
      * Animate video modal in.
      */
-    function showVideoModal() {
-        document.querySelector('.player-container').classList.remove('hidden');
+    function showLyricsOrVideoModal(type, text) {
+        if (type === 'lyrics') {
+            var className = 'lyrics';
+        } else {
+            var className = 'player';
+        }
+
+        document.querySelector('.'+className+'-container').classList.remove('hidden');
+
+        if (type === 'lyrics') {
+            var node = angular.element(document.querySelector('#lyrics-panel'));
+            node.html(text);
+
+            setTimeout(function() {
+                node.scrollTop(node.scrollTop()+1);
+                node.scrollTop(node.scrollTop()-1);
+            }, 350);
+        }
 
         requestAnimationFrame(function() {
-            document.querySelector('.player-container .modal-inner-container').classList.add('out');
+            document.querySelector('.'+className+'-container .modal-inner-container').classList.add('out');
         });
     }
 
     /**
      * Animate video modal out.
      */
-    function hideVideoModal() {
-        document.querySelector('.player-container .modal-inner-container').classList.remove('out');
+    function hideLyricsOrVideoModal(type) {
+        if (type === 'lyrics') {
+            var className = 'lyrics';
+        } else {
+            var className = 'player';
+        }
+
+        document.querySelector('.'+className+'-container .modal-inner-container').classList.remove('out');
 
         setTimeout(function() {
-            document.querySelector('.player-container').classList.add('hidden');
+            document.querySelector('.'+className+'-container').classList.add('hidden');
         }, 150);
     }
 
     function setDocumentTitle() {
-        document.title = player.currentTrack.artist+' - '+player.currentTrack.name+' - '+utils.getSetting('siteName');
+        if ( ! utils.stateIs('admin')) {
+            document.title = player.currentTrack.artist+' - '+player.currentTrack.name+' - '+utils.getSetting('siteName');
+        }
     }
 
     player.init();

@@ -237,23 +237,21 @@
 }
 
 .lyrics-container {
-  display: none;
-
-  &.show {
-    display: flex;
-  }
-
   > .modal-inner-container {
-    transform: none;
-    opacity: 1;
     height: 95%;
     flex: 0 0 auto;
     max-height: none;
 
-    iframe, #lyrics-iframe {
+    #lyrics-panel {
       width: 100%;
       height: 100%;
       border: none;
+      overflow: auto;
+      background-color: $main-color;
+      font-size: 1.4rem;
+      padding: 10px;
+      color: $text-color;
+      text-align: center;
     }
   }
 }

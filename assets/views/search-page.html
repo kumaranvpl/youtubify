@@ -14,18 +14,20 @@
 
                 <div class="navigation">
                     <div class="nav-item" ng-click="openTab('all')" ng-class="{ active: activeTab == 'all'}">{{:: 'all' | translate }}</div>
-                    <div class="nav-item" ng-click="openTab('songs')" ng-class="{ active: activeTab == 'songs'}">{{:: 'songs' | translate }}</div>
-                    <div class="nav-item" ng-click="openTab('albums')" ng-class="{ active: activeTab == 'albums'}">{{:: 'albums' | translate }}</div>
-                    <div class="nav-item" ng-click="openTab('artists')" ng-class="{ active: activeTab == 'artists'}">{{:: 'artists' | translate }}</div>
+                    <div class="nav-item" ng-click="openTab('songs')" ng-class="{ active: activeTab == 'songs'}" ng-if="results.songs.length">{{:: 'songs' | translate }}</div>
+                    <div class="nav-item" ng-click="openTab('albums')" ng-class="{ active: activeTab == 'albums'}" ng-if="results.albums.length">{{:: 'albums' | translate }}</div>
+                    <div class="nav-item" ng-click="openTab('artists')" ng-class="{ active: activeTab == 'artists'}" ng-if="results.artists.length">{{:: 'artists' | translate }}</div>
+                    <div class="nav-item" ng-click="openTab('playlists')" ng-class="{ active: activeTab == 'playlists'}" ng-if="results.playlists.length">{{:: 'playlists' | translate }}</div>
+                    <div class="nav-item" ng-click="openTab('users')" ng-class="{ active: activeTab == 'users'}" ng-if="results.users.length">{{:: 'users' | translate }}</div>
                 </div>
             </nav>
 
             <div class="tab" id="all" ng-show="activeTab === 'all'">
                 <section class="artists-albums">
-                    <div class="items-panel">
+                    <div class="items-panel" ng-if="results.artists.length">
                         <div class="header">
                             <div class="name">{{:: 'artists' | translate }}</div>
-                            <div class="see-all" ng-click="openTab('artists')" ng-if="results.artists.length > 1">{{:: 'seeAll' | translate }}</div>
+                            <div class="see-all" ng-click="openTab('artists')">{{:: 'seeAll' | translate }}</div>
                         </div>
                         <div class="artists hover-overlay">
                             <div class="artist" ng-repeat="artist in results.artists | limitTo:4" context-menu-item="artist">
@@ -42,7 +44,7 @@
                         </div>
                     </div>
 
-                    <div class="items-panel">
+                    <div class="items-panel" ng-if="results.albums.length">
                         <div class="header">
                             <div class="name">{{:: 'albums' | translate }}</div>
                             <div class="see-all" ng-click="openTab('albums')">{{:: 'seeAll' | translate }}</div>
@@ -58,6 +60,42 @@
                                 <div class="info">
                                     <div class="name" ui-sref="album({artistName:utils.encodeUrlParam(album.artist.name), name:utils.encodeUrlParam(album.name)})">{{ album.name }}</div>
                                     <a class="artist-name" ng-if="album.artist" ui-sref="artist({ name: utils.encodeUrlParam(album.artist.name) })">{{ album.artist.name }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="items-panel new-line" ng-if="results.playlists.length">
+                        <div class="header">
+                            <div class="name">{{:: 'playlists' | translate }}</div>
+                            <div class="see-all" ng-click="openTab('playlists')">{{:: 'seeAll' | translate }}</div>
+                        </div>
+                        <div class="playlists hover-overlay">
+                            <div class="playlist" ng-repeat="playlist in results.playlists | limitTo:4">
+                                <a class="image" ui-sref="playlist({id:playlist.id})">
+                                    <img lazy-img="{{ utils.img(playlist.image, 'album') }}" ng-src="{{ utils.img(false, 'playlist') }}" alt="{{ playlist.name }}">
+                                </a>
+                                <div class="info">
+                                    <div class="name" ui-sref="playlist({id:playlist.id})">{{ playlist.name }}</div>
+                                    <a class="artist-name" ui-sref="user({id:playlist.owner.id})">{{ playlist.owner.username }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="items-panel new-line" ng-if="results.users.length">
+                        <div class="header">
+                            <div class="name">{{:: 'users' | translate }}</div>
+                            <div class="see-all" ng-click="openTab('users')">{{:: 'seeAll' | translate }}</div>
+                        </div>
+                        <div class="users hover-overlay">
+                            <div class="user" ng-repeat="user in results.users | limitTo:4">
+                                <a class="image" ui-sref="user({id:user.id})">
+                                    <img lazy-img="{{ users.getAvatar(user) }}" ng-src="{{ users.getAvatar(false) }}" alt="{{ users.getUsername(user) }}">
+                                </a>
+                                <div class="info">
+                                    <div class="name" ui-sref="user({id:user.id})">{{ users.getUsername(user) }}</div>
+                                    <a class="artist-name">{{ user.followers_count }} {{:: 'followers' | translate }}</a>
                                 </div>
                             </div>
                         </div>
@@ -131,6 +169,34 @@
                         </div>
                         <figcaption>
                             <a class="artist-name" ui-sref="artist({ name: utils.encodeUrlParam(artist.name) })">{{ artist.name }}</a>
+                        </figcaption>
+                    </figure>
+                </section>
+            </div>
+
+            <div class="tab artists-page" ng-show="activeTab === 'playlists'">
+                <section class="artists hover-overlay">
+                    <figure class="artist" ng-repeat="playlist in results.playlists">
+                        <a class="image" ui-sref="playlist({ id: playlist.id })">
+                            <img lazy-img="{{ utils.img(playlist.image, 'album') }}" ng-src="{{ utils.img(false, 'album') }}" alt="{{ playlist.name }}">
+                        </a>
+                        <figcaption>
+                            <a class="artist-name" ui-sref="playlist({ id: playlist.id })">{{ playlist.id }}</a>
+                            <a class="number-of-tracks" ui-sref="user({id:playlist.owner.id})">{{ playlist.owner.username }}</a>
+                        </figcaption>
+                    </figure>
+                </section>
+            </div>
+
+            <div class="tab artists-page" ng-show="activeTab === 'users'">
+                <section class="artists hover-overlay">
+                    <figure class="artist" ng-repeat="user in results.users">
+                        <a class="image" ui-sref="user({ id: user.id })">
+                            <img lazy-img="{{ users.getAvatar(user) }}" ng-src="{{ users.getAvatar(false) }}" alt="{{ users.getUsername(user) }}">
+                        </a>
+                        <figcaption>
+                            <a class="artist-name" ui-sref="user({ id: user.id })">{{ users.getUsername(user) }}</a>
+                            <div class="number-of-tracks">{{ user.followers_count }} {{:: 'followers' | translate }}</div>
                         </figcaption>
                     </figure>
                 </section>

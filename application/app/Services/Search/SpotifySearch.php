@@ -1,6 +1,6 @@
 <?php namespace App\Services\Search;
 
-use Illuminate\Support\Str;
+use Stringy\StaticStringy;
 use App\Services\HttpClient;
 
 class SpotifySearch implements SearchInterface {
@@ -30,7 +30,16 @@ class SpotifySearch implements SearchInterface {
      */
     public function search($q, $limit = 10, $type = 'artist,album,track')
     {
-        $response = $this->httpClient->get("search?q=".Str::ascii($q)."*&type=$type&limit=$limit");
+        if ((bool) preg_match('/[\p{Cyrillic}]/u', $q)) {
+            $query = $q;
+        }
+        else {
+            $query = StaticStringy::toAscii($q, false);
+
+            $query = $query.' OR '.$query.'*';
+        }
+
+        $response = $this->httpClient->get("search?q=$query&type=$type&limit=$limit");
 
         return $this->formatResponse($response);
     }
@@ -96,9 +105,9 @@ class SpotifySearch implements SearchInterface {
         $formatted = ['albums' => [], 'tracks' => [], 'artists' => []];
 
         if ( ! isset($response['error'])) {
-            $formatted['albums']  = $this->getAlbums($response['albums']['items']);
-            $formatted['tracks']  = array_map($callback, $response['tracks']['items']);
-            $formatted['artists'] = array_map($callback, $response['artists']['items']);
+            $formatted['albums']  = $this->getAlbums(isset($response['albums']['items']) ? $response['albums']['items'] : []);
+            $formatted['tracks']  = array_map($callback, isset($response['tracks']['items']) ? $response['tracks']['items'] : []);
+            $formatted['artists'] = array_map($callback, isset($response['artists']['items']) ? $response['artists']['items'] : []);
         }
 
         return $formatted;

@@ -20,7 +20,7 @@ angular.module('app').factory('search', function($rootScope, $http, utils) {
 
             this.ajaxInProgress = true;
 
-            $http.get('search/'+query+'?limit=3').success(function(data) {
+            $http.get('get-search-results/'+query+'?limit=3').success(function(data) {
                 search.results = data;
                 search.showPanel();
                 search.ajaxInProgress = false;
@@ -66,12 +66,36 @@ angular.module('app').factory('search', function($rootScope, $http, utils) {
         },
 
         /**
-         * Open give artists state and close search panel.
+         * Open given artists state and close search panel.
          *
          * @param {object} artist
          */
         goToArtistPage: function(artist) {
             utils.toState('artist', {name: artist.name}).then(function() {
+                search.hidePanel();
+                search.clearQuery();
+            })
+        },
+
+        /**
+         * Open given playlists state and close search panel.
+         *
+         * @param {object} playlist
+         */
+        goToPlaylistPage: function(playlist) {
+            utils.toState('playlist', {id: playlist.id}).then(function() {
+                search.hidePanel();
+                search.clearQuery();
+            })
+        },
+
+        /**
+         * Open given users state and close search panel.
+         *
+         * @param {object} user
+         */
+        goToUserPage: function(user) {
+            utils.toState('user', {id: user.id}).then(function() {
                 search.hidePanel();
                 search.clearQuery();
             })

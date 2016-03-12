@@ -68,6 +68,7 @@
     
     > .artists-albums {
       display: flex;
+      flex-wrap: wrap;
 
       > .items-panel {
         flex: 0 0 50%;
@@ -98,10 +99,14 @@
         }
       }
 
-      .artists, .albums {
+      .new-line {
+        margin-top: 20px;
+      }
+
+      .artists, .albums, .playlists, .users {
         display: flex;
 
-        > .artist, .album {
+        > .artist, .album, .playlist, .user {
           background-color: $background-color-lighter;
           flex: 1 1 0;
           margin: 0 10px;

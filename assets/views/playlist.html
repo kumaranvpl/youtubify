@@ -11,7 +11,7 @@
                 <div class="playlist-info">
                     <div class="info-container">
                         <div class="name">{{:: 'createdBy' | translate }}:</div>
-                        <div class="value">{{ playlist.createdBy }}</div>
+                        <div class="value"><a ui-sref="user({ id:playlist.creatorId })">{{ playlist.createdBy }}</a></div>
                     </div>
                     <div class="info-container">
                         <div class="name">{{:: 'runningLength' | translate }}:</div>
@@ -34,8 +34,8 @@
                     <button class="option-btn" ng-click="copyPlaylistLink()" tooltips tooltip-title="{{:: 'copyPlaylistLink' | translate }}"><i class="icon icon-link"></i></button>
                     <button class="option-btn" ng-if="playlist.is_owner" ng-click="openRenamePlaylistModal()" tooltips tooltip-title="{{:: 'renamePlaylist' | translate }}"><i class="icon icon-pencil"></i></button>
                     <button class="option-btn" ng-if="playlist.is_owner" ng-click="confirmDeletePlaylist(playlist)" tooltips tooltip-title="{{:: 'deletePlaylist' | translate }}"><i class="icon icon-trash"></i></button>
-                    <button class="option-btn" ng-if="playlist.public && playlist.is_owner" ng-click="playlists.makePlaylistPrivate(playlist)" tooltips tooltip-title="{{:: 'makePlaylistPrivate' | translate }}"><i class="icon icon-lock"></i></button>
-                    <button class="option-btn" ng-if="!playlist.public && playlist.is_owner" ng-click="playlists.makePlaylistPublic(playlist)" tooltips tooltip-title="{{:: 'makePlaylistPublic' | translate }}"><i class="icon icon-lock-open"></i></button>
+                    <button class="option-btn" ng-if="playlist.public && playlist.is_owner" ng-click="playlists.makePlaylistPrivate(playlist)" tooltips tooltip-title="{{:: 'makePlaylistPrivate' | translate }}"><i class="icon icon-lock-open"></i></button>
+                    <button class="option-btn" ng-if="!playlist.public && playlist.is_owner" ng-click="playlists.makePlaylistPublic(playlist)" tooltips tooltip-title="{{:: 'makePlaylistPublic' | translate }}"><i class="icon icon-lock"></i></button>
                 </div>
             </div>
         </div>

@@ -99,6 +99,8 @@
     "startArtistRadio"      => "Start Artist Radio",
     "more"                  => "More",
     "about"                 => "About",
+    "showMore"              => "Show More",
+    "showLess"              => "Show Less",
 
     //Songs
     "length"                => "Length",

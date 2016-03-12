@@ -127,7 +127,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		if ($name) {
 			return $name;
 		} else {
-			return $this->email;
+			return explode('@', $this->email)[0];
 		}
 	}
 }

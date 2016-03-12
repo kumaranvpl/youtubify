@@ -28,6 +28,8 @@
             <meta name="twitter:image" content="{{ $model->image_large  }}">
             <meta itemprop="image" content="{{ $model->image_large }}">
             <meta itemprop="description" content="{{ trans('app.listenTo') }} {{ $model->name }} {{ trans('app.on') }} {{ $settings->get('siteName') }}">
+            <meta property="og:image:width" content="1000">
+            <meta property="og:image:height" content="667">
         @elseif ($type === 'album')
             <meta property="og:description" content="{{ $model->name }}, album by {{ $model->artist->name }} {{ trans('app.on') }} {{ $settings->get('siteName') }}" />
             <meta property="og:image" content="{{ $model->image  }}">
@@ -35,6 +37,8 @@
             <meta name="twitter:description" content="{{ $model->name }}, album by {{ $model->artist->name }} {{ trans('app.on') }} {{ $settings->get('siteName') }}" />
             <meta itemprop="description" content="{{ $model->name }}, album by {{ $model->artist->name }} {{ trans('app.on') }} {{ $settings->get('siteName') }}" />
             <meta itemprop="image" content="{{ $model->image }}">
+            <meta property="og:image:width" content="300">
+            <meta property="og:image:height" content="300">
         @elseif ($type === 'playlist')
             <meta property="og:description" content="{{ $model->name }}, playlist by {{ $model->users()->wherePivot('owner', 1)->first()->getNameOrEmail() }} {{ trans('app.on') }} {{ $settings->get('siteName') }}" />
             <meta name="twitter:description" content="{{ $model->name }}, playlist by {{ $model->users()->wherePivot('owner', 1)->first()->getNameOrEmail() }} {{ trans('app.on') }} {{ $settings->get('siteName') }}" />
@@ -44,6 +48,8 @@
             <meta name="twitter:image" content="{{ ! $model->tracks->isEmpty() ? $model->tracks->first()->album->image : url().'/assets/images/album-no-image.png' }}">
             <meta itemprop="image" content="{{ ! $model->tracks->isEmpty() ? $model->tracks->first()->album->image : url().'/assets/images/album-no-image.png' }}">
             <meta property="music:song_count" content="{{ count($model->tracks) }}">
+            <meta property="og:image:width" content="300">
+            <meta property="og:image:height" content="300">
 
             @foreach($model->tracks as $index => $track)
                 <meta property="music:song" content="{{ url().'/track/'.$track->id }}">
@@ -58,6 +64,8 @@
             <meta name="twitter:image" content="{{ $model->album->image }}" />
             <meta property="music:duration" content="{{ $model->duration }}">
             <meta itemprop="image" content="{{ $model->album->image }}">
+            <meta property="og:image:width" content="300">
+            <meta property="og:image:height" content="300">
         @endif
 
         @if ($type !== 'album' && $type !== 'track')

@@ -53,6 +53,10 @@
             min-width: 120px;
             color: darken($text-color, 15%);
           }
+
+          > .value > a {
+            color: inherit;
+          }
         }
       }
 

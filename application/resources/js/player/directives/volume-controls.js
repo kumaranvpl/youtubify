@@ -36,6 +36,10 @@ angular.module('app').directive('volumeControls', function($rootScope, player, l
     function setVolume(x) {
         var percentage, ratio;
 
+        if ($rootScope.isPhone) {
+            cacheNodes();
+        }
+
         if (x) {
             ratio       = (x-nodes.volumeBox.left)/nodes.volumeBox.width;
             percentage  = ratio*100;
