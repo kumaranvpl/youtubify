@@ -7,17 +7,16 @@ angular.module('app').factory('clipboard', function($translate) {
          * @param {string} text
          */
         copy: function(text) {
-
            var input = document.createElement('input'); input.value = text;
            document.body.appendChild(input);
-           input.setSelectionRange(0, input.value.length);
+           input.select();
 
            try {
                var copied = document.execCommand('copy');
            } catch(err) {
                var copied = false;
            }
-
+            console.log(copied);
            document.body.removeChild(input);
 
             if (copied) {

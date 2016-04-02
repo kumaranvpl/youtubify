@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use DB;
 use Cache;
 use Input;
 use App\Genre;
@@ -28,14 +29,15 @@ class GenreController extends Controller {
 	 */
 	public function getGenres($names)
 	{
-		$names = str_replace(', ', ',', $names);
+		$names    = str_replace(', ', ',', $names);
+        $orderBy  = implode(',', array_map(function($v) { return "'".$v."'"; }, explode(',', $names)));
 		$cacheKey = 'genres.'.Input::get('limit', 20).$names;
 
 		if (Cache::has($cacheKey)) {
 			return Cache::get($cacheKey);
 		}
 
-		$genres = Genre::whereIn('name', explode(',', $names))->get();
+		$genres = Genre::whereIn('name', explode(',', $names))->orderByRaw(DB::raw("FIELD(name, $orderBy)"))->get();
 
 		if ($genres->isEmpty()) {
 			abort(404);

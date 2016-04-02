@@ -1,6 +1,10 @@
-- Page title will now correctly show currently playing song and artist.
-- Page changes will now be correctly logged on google analytics.
-- Fixed an issue where responsive ads from adsense were not working properly.
-- Fixed an issue where some albums would have duplicate tracks.
-- Fixed some issues that occurred when using https.
-- Fixed an issue where context menu add to playlist panel was not scrollable.
+- Added SoundCloud player as an alternative to Youtube (can be changed in admin area).
+- Added full screen toggle button to video player (can be enabled in admin area).
+- Playlist tracks can now be re-ordered by dragging and dropping them in new position.
+- Default volume for player can now be set in admin area.
+- Youtubify should now work properly if PUT and DELETE requests are disabled on the server.
+- Added a way to block specific artists from the site.
+- Fixed an issue with artist details not being updatable from admin area.
+- Fixed an issue with copying track link from albums that belong to several artists.
+- Fixed some issues with email template editor in admin area.
+- Fixed several errors that occurred if 3rd party sites did not send back expected response.

@@ -70,6 +70,6 @@ class Track extends Model {
      */
     public function playlists()
     {
-        return $this->belongsToMany('App\Playlist');
+        return $this->belongsToMany('App\Playlist')->withPivot('position');
     }
 }

@@ -4,7 +4,20 @@ angular.module('app', ['ui.router', 'pascalprecht.translate', 'ngTagsInput', 'an
 
 .value('duScrollOffset', 20)
 
-.config(function($translateProvider, $compileProvider) {
+.factory('addMethodOverrideHeader', function() {
+    return {
+        request: function (config) {
+            if (['PATCH', 'PUT', 'DELETE'].indexOf(config.method) > -1) {
+                config.headers['X-HTTP-Method-Override'] = config.method;
+                config.method = 'POST';
+            }
+
+            return config;
+        }
+    };
+})
+
+.config(function($translateProvider, $compileProvider, $httpProvider) {
     $compileProvider.debugInfoEnabled(false);
 
     if (vars.selectedLocale) {
@@ -14,8 +27,11 @@ angular.module('app', ['ui.router', 'pascalprecht.translate', 'ngTagsInput', 'an
         $translateProvider.translations('en', vars.trans);
         $translateProvider.preferredLanguage('en');
     }
+
     $translateProvider.useUrlLoader('trans-messages');
     $translateProvider.useSanitizeValueStrategy('escaped');
+
+    $httpProvider.interceptors.push('addMethodOverrideHeader');
 })
 
 .run(function($rootScope, $state, users, utils) {

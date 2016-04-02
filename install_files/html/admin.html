@@ -1,0 +1,31 @@
+<div class="col-sm-12 step-panel admin-account">
+	<h2>Admin Account</h2>
+
+	<div ng-class="{ hidden: !error }" id="error">
+      	<span id="msg">{{ error }}</span>
+    </div>
+
+    <div class="input-container">
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" class="form-control" ng-model="admin.username">
+    </div>
+
+	<div class="input-container">
+		<label for="email">Email</label>
+		<input type="text" name="email" id="email" class="form-control" ng-model="admin.email">
+	</div>
+
+	<div class="input-container">
+		<label for="password">Password</label>
+		<input type="password" name="password" id="password" class="form-control" ng-model="admin.password">
+	</div>
+
+	<div class="input-container">
+		<label for="password_confirmation">Confirm Password</label>
+		<input type="password" name="password_confirmation" id="password_confirmation" class="form-control" ng-model="admin.password_confirmation">
+	</div>
+
+	<div class="next-button-right">
+		<button class="primary" ng-click="createAdmin()">Finalize Installation</button>
+	</div>
+</div>

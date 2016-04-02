@@ -1,4 +1,4 @@
-angular.module('app').directive('playerControls', function($rootScope, player, utils, queuePanelStatus, localStorage) {
+angular.module('app').directive('playerControls', function($rootScope, $timeout, player, utils, queuePanelStatus, localStorage) {
     var seekBarInterval = false;
     var nodes = {};
 
@@ -189,10 +189,11 @@ angular.module('app').directive('playerControls', function($rootScope, player, u
         duration = player.getDuration();
 
         if ( ! duration) {
+
             //if player isn't playing already, play it now
-            if (player.ytPlayer.getPlayerState() !== 1) {
-                player.ytPlayer.mute();
-                player.ytPlayer.playVideo();
+            if ( ! player.playerBackend.isPlaying()) {
+                player.playerBackend.mute();
+                player.playerBackend.play();
             }
 
             duration = player.getDuration();
@@ -205,9 +206,15 @@ angular.module('app').directive('playerControls', function($rootScope, player, u
             player.unMute();
             player.seekTo(ratio * duration, true);
 
-            $rootScope.$apply(function() {
-                startPlayback();
-            })
+            if (utils.getSetting('player_provider', 'Youtube') === 'SoundCloud') {
+                $timeout(function() {
+                    startPlayback();
+                }, 100);
+            } else {
+                $rootScope.$apply(function() {
+                    startPlayback();
+                })
+            }
         }
     }
 

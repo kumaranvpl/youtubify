@@ -3,7 +3,7 @@
     <head>
         {{-- Set base url if admin has enabled HTML5 push state --}}
         @if ($settings->get('enablePushState'))
-            <base href="{{ $settings->get('pushStateRootUrl')  }}">
+            <base href="{{ $pushStateRootUrl }}">
         @endif
 
         <title>{{ $settings->get('siteName') }}</title>
@@ -30,7 +30,7 @@
 
         {{-- CSS --}}
         <link rel="stylesheet" id="main-stylesheet"
-              href="{{ asset('assets/css/custom-stylesheets', $settings->get('enable_https')).'/'.(($settings->get('selected_sheet') && ! IS_DEMO) ? $settings->get('selected_sheet').'/styles.min.css?v13' : 'original/styles.min.css?v13') }}">
+              href="{{ asset('assets/css/custom-stylesheets', $settings->get('enable_https')).'/'.(($settings->get('selected_sheet') && ! IS_DEMO) ? $settings->get('selected_sheet').'/styles.min.css?v16' : 'original/styles.min.css?v16') }}">
 
         {{-- Fonts --}}
         <link href='https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,600,700' rel='stylesheet' type='text/css'>
@@ -64,7 +64,7 @@
                 <div class="inner three"></div>
             </div>
         </div>
-        
+
         <div ui-view="full" id="full-page-view"></div>
 
         <div class="app-container" ng-class="{ visible: !shouldPlayerControlsBeHidden() }">
@@ -104,6 +104,7 @@
                         <div id="player"></div>
                         <div class="yt-overlay"></div>
                         <div class="close-lyrics-icon"><i class="icon icon-cancel"></i></div>
+                        <div class="toggle-fullscreen" ng-if="utils.getSetting('show_fullscreen_button')"><i class="icon icon-resize-full"></i></div>
                     </div>
                     <div class="backdrop"></div>
                 </div>
@@ -136,7 +137,7 @@
             }
         </script>
 
-        <script src="{{ asset('assets/js/core.min.js?v13', $settings->get('enable_https')) }}"></script>
+        <script src="{{ asset('assets/js/core.min.js?v16', $settings->get('enable_https')) }}"></script>
 
         @if (($locale = $settings->get('dateLocale', 'en')) && $locale !== 'en')
             <script src="{{ asset('assets/js/locales/'.$locale.'.js')  }}"></script>

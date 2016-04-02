@@ -68,4 +68,23 @@ class PlaylistTracksController extends Controller {
 
         return $playlist;
     }
+
+    public function updateTracksOrder($playlistId) {
+        $orderedIds = Input::get('orderedIds');
+
+        if ( ! $orderedIds || empty($orderedIds)) abort(403);
+
+        $orderedIds = array_map(function($position) {
+            return ['position' => $position];
+        }, Input::get('orderedIds'));
+
+        $playlist = $this->user->playlists()->findOrFail($playlistId);
+        $playlist->id = $playlistId;
+
+        if ($playlist->is_owner || $this->user->is_admin) {
+            $playlist->tracks()->sync($orderedIds, true);
+        } else {
+            abort(403);
+        }
+    }
 }

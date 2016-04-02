@@ -16,7 +16,7 @@ class PasswordChangeController extends Controller {
     {
         $user = Auth::user();
 
-        if (IS_DEMO && $user->email === 'admin@admin.com') {
+        if (IS_DEMO && $user && $user->email === 'admin@admin.com') {
             return "you can't change admin password on demo site.";
         }
 

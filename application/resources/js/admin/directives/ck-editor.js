@@ -13,6 +13,7 @@ angular.module('app').directive('ckEditor', function(utils) {
     };
 
     function initEditor($scope, el, attrs) {
+        CKEDITOR.config.basicEntities = false;
         CKEDITOR.replace(el[0], {
             height: el.parent()[0].getBoundingClientRect().height - 145,
             skin: 'bootstrapck',

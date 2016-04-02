@@ -1,0 +1,37 @@
+<section><div class="step-panel database-details">
+	<h2>Database Configuration</h2>
+
+	<div ng-class="{ hidden: !error }" id="error" class="hidden">
+		{{ error }}
+	</div>
+
+	<div class="input-container">
+		<label for="host">Host</label>
+		<input type="text" name="host" id="host" class="form-control ng-pristine ng-untouched ng-valid" ng-model="dbDetails.host">
+	</div>
+
+	<div class="input-container">
+		<label for="database">Database Name</label>
+		<input type="text" name="database" id="database" class="form-control ng-pristine ng-untouched ng-valid" ng-model="dbDetails.database">
+	</div>
+
+	<div class="input-container">
+		<label for="username">Username</label>
+		<input type="text" name="username" id="username" class="form-control ng-pristine ng-untouched ng-valid" ng-model="dbDetails.username">
+	</div>
+
+	<div class="input-container">
+		<label for="password">Password</label>
+		<input type="password" name="password" id="password" class="form-control ng-pristine ng-untouched ng-valid" ng-model="dbDetails.password">
+	</div>
+
+	<div class="input-container">
+		<label for="prefix">Prefix</label>
+		<input type="text" name="prefix" id="prefix" class="form-control ng-pristine ng-untouched ng-valid" ng-model="dbDetails.prefix">
+		<div class="help-block">This will be prepended to database table names, you can leave it blank.</div>
+	</div>
+</div>
+
+<div class="next-button-right ng-scope">
+	<button ng-click="createDb()" class="primary">Next</button>
+</div></section>

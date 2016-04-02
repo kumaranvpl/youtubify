@@ -159,7 +159,7 @@ angular.module('app')
         /**
          * Convert seconds into 0:00 format
          *
-         * @param {int} time
+         * @param {int} time (seconds)
          * @returns {string}
          */
         secondsToMSS: function(time) {

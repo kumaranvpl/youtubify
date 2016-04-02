@@ -73,7 +73,11 @@ class ArtistController extends Controller {
 	{
 		$artist = $this->model->findOrFail($id);
 
-		$artist->fill(Input::all())->save();
+        foreach(($input = Input::all()) as $key => $value) {
+            if (is_array($value)) unset($input[$key]);
+        }
+
+		$artist->fill($input)->save();
 
 		return $artist;
 	}
@@ -178,12 +182,16 @@ class ArtistController extends Controller {
 		if ( ! Input::has('items')) return;
 
 		foreach (Input::get('items') as $artist) {
-			foreach($artist->albums as $album) {
-				$album->tracks()->delete();
-			}
+            $artist = Artist::find($artist['id']);
 
-			$artist->albums()->delete();
-			$artist->delete();
+			if ($artist) {
+                foreach($artist->albums as $album) {
+                    $album->tracks()->delete();
+                }
+
+                $artist->albums()->delete();
+                $artist->delete();
+            }
 		}
 
 		return response(trans('app.deleted', ['number' => count(Input::get('items'))]));

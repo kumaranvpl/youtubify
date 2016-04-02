@@ -9,10 +9,16 @@ angular.module('app').controller('TrackController', function($rootScope, $http, 
         };
 
         //load this tracks album state
-        utils.toState('album', {
-            artistName: data.album.artist.name,
-            name: data.album.name
-        })
+        if (data.artist) {
+            utils.toState('album', {
+                artistName: data.album.artist.name,
+                name: data.album.name
+            })
+        } else {
+            utils.toState('album', {
+                name: data.album.name
+            })
+        }
     }).error(function() {
         utils.toState('404');
         utils.hideLoader();

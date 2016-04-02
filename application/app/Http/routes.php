@@ -1,13 +1,6 @@
 <?php
 
-if ( ! env('INSTALLED', false)) {
-    Route::get('/', 'InstallController@index');
-    Route::post('/check-compat', 'InstallController@compat');
-    Route::post('/create-db', 'InstallController@createDb');
-    Route::post('/create-admin', 'InstallController@createAdmin');
-} else {
-    Route::get('/', 'HomeController@index');
-}
+Route::get('/', 'HomeController@index');
 
 Route::get('update', ['middleware' => ['admin', 'disableOnDemoSite'], 'uses' => 'UpdateController@index']);
 Route::post('run-update', ['middleware' => ['admin', 'disableOnDemoSite'], 'uses' => 'UpdateController@runUpdate']);
@@ -42,6 +35,7 @@ Route::post('playlist/{id}/add-tracks', 'PlaylistTracksController@addTracks');
 Route::post('playlist/{id}/remove-track', 'PlaylistTracksController@removeTrack');
 Route::post('playlist/{id}/follow', 'PlaylistController@follow');
 Route::post('playlist/{id}/unfollow', 'PlaylistController@unfollow');
+Route::put('playlist/{id}/update-order', 'PlaylistTracksController@updateTracksOrder');
 
 //SEARCH
 Route::get('get-search-results/{q}', 'SearchController@search');

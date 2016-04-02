@@ -48,8 +48,16 @@
     display: flex;
     flex-flow: row nowrap;
 
+    &.over .flex-table-row-item {
+      border-bottom-color: $accent-color;
+    }
+
     &:hover {
       background-color: lighten($main-color, 2%);
+    }
+
+    &.moving {
+      background-color: lighten($main-color, 6%);
     }
 
     &-item {

@@ -8,6 +8,7 @@
         <li class="nav-item" du-scrollspy="player-panel" du-smooth-scroll="player-panel">{{:: 'player' | translate }}</li>
         <li class="nav-item" du-scrollspy="cache" du-smooth-scroll="cache">{{:: 'cache' | translate }}</li>
         <li class="nav-item" du-scrollspy="mail" du-smooth-scroll="mail">{{:: 'mail' | translate }}</li>
+        <li class="nav-item" du-scrollspy="dmca" du-smooth-scroll="dmca">DMCA</li>
         <li class="nav-item" du-scrollspy="keys" du-smooth-scroll="keys">{{:: '3rdPartyServiceKeys' | translate }}</li>
     </ul>
 
@@ -128,11 +129,6 @@
                     </select>
                 </div>
 
-                <div class="input-container" ng-if="settings.enablePushState == 1">
-                    <label>PushState Root URL</label>
-                    <input ng-model="settings.pushStateRootUrl"/>
-                </div>
-
                 <div class="input-container">
                     <label>{{:: 'searchProvider' | translate }}</label>
                     <select ng-model="settings.search_provider">
@@ -173,22 +169,44 @@
         </section>
 
         <section class="admin-panel" id="player-panel">
-            <div class="panel-header"><i class="icon icon-users"></i> {{:: 'player' | translate }}</div>
+            <div class="panel-header"><i class="icon icon-play"></i> {{:: 'player' | translate }}</div>
             <div class="panel-body">
 
-                <div class="input-container">
+                <section class="input-container">
+                    <label>{{:: 'playerProvider' | translate }}</label>
+                    <select ng-model="settings.player_provider">
+                        <option value="Youtube">Youtube</option>
+                        <option value="SoundCloud">SoundCloud</option>
+                    </select>
+                    <p>{{:: 'playerProviderExpl' | translate }}</p>
+                </section>
+
+                <div class="input-container" ng-if="settings.player_provider === 'Youtube'">
                     <label>{{:: 'youtubeRegionCode' | translate }}</label>
                     <input ng-model="settings.youtube_region_code" type="text"/>
                     <p>{{:: 'youtubeRegionCodeExpl' | translate }}</p>
                 </div>
 
                 <section class="input-container">
-                    <label>{{:: 'showYoutubePlayer' | translate }}</label>
+                    <label>{{:: 'showPlayer' | translate }}</label>
                     <select ng-model="settings.show_youtube_player">
                         <option value="0" translate>no</option>
                         <option value="1" translate>yes</option>
                     </select>
-                    <p>{{:: 'showYoutubePlayerExpl' | translate }}</p>
+                    <p>{{:: 'showPlayerExpl' | translate }}</p>
+                </section>
+
+                <div class="input-container" ng-if="settings.player_provider === 'Youtube'">
+                    <label>{{:: 'defaultPlayerVolume' | translate }}</label>
+                    <input ng-model="settings.default_player_volume" type="number" minlength="1" maxlength="100"/>
+                </div>
+
+                <section class="input-container">
+                    <label>{{:: 'showFullscreenButton' | translate }}</label>
+                    <select ng-model="settings.show_fullscreen_button">
+                        <option value="0" translate>no</option>
+                        <option value="1" translate>yes</option>
+                    </select>
                 </section>
 
                 <section class="input-container">
@@ -305,7 +323,7 @@
         </section>
 
         <section class="admin-panel" id="mail">
-            <div class="panel-header"><i class="icon icon-users"></i> {{:: 'mail' | translate }}</div>
+            <div class="panel-header"><i class="icon icon-mail"></i> {{:: 'mail' | translate }}</div>
             <div class="panel-body">
 
                 <section class="input-container">
@@ -371,6 +389,22 @@
             </div>
         </section>
 
+        <section class="admin-panel" id="dmca">
+            <div class="panel-header flex">
+                <div class="name"><i class="icon icon-key"></i> DMCA
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="input-container">
+                    <label>{{:: 'blockedArtists' | translate }}</label>
+                    <textarea ng-model="settings.blockedArtists" rows="10"></textarea>
+                    <p>{{:: 'blockedArtistsExpl' | translate }}</p>
+                </div>
+
+                <button class="primary" type="submit">{{:: 'update' | translate }}</button>
+            </div>
+        </section>
+
         <section class="admin-panel" id="keys">
             <div class="panel-header flex">
                 <div class="name">
@@ -387,6 +421,11 @@
                     <label>Youtube API Key</label>
                     <input ng-model="settings.youtube_api_key" type="password">
                     <p>{{:: 'youtubeApiExpl' | translate }}</p>
+                </div>
+
+                <div class="input-container" ng-if="settings.player_provider === 'SoundCloud'">
+                    <label>SoundCloud API Key</label>
+                    <input ng-model="settings.soundcloud_api_key" type="password"/>
                 </div>
 
                 <div class="input-container">

@@ -24,6 +24,12 @@ angular.module('app').controller('UsersController', function($scope, $rootScope,
 
     $scope.showUpdateUserModal = function(user) {
         $scope.userModel = angular.copy(user);
+        delete $scope.userModel.password;
+
+        if (utils.isDemo) {
+            $scope.userModel.email = 'Hidden on demo site';
+        }
+
         modal.show('update-user', $scope);
     };
 

@@ -1,12 +1,12 @@
 angular.module('app')
 
-.factory('player', function($rootScope, $http, $timeout, localStorage, utils) {
+.factory('player', function($rootScope, $http, $timeout, $injector, localStorage, utils) {
     var player = {
 
         /**
-         * Youtube player instance.
+         * Backend player implementation instance (Youtube, SoundCloud, HTML5 etc)
          */
-        ytPlayer: false,
+        playerBackend: false,
 
         /**
          * Is player fully loaded and ready to play tracks.
@@ -97,7 +97,8 @@ angular.module('app')
             if ( ! player.currentTrack) return;
 
             if ( ! this.isPlaying) {
-                this.ytPlayer.playVideo();
+                this.playerBackend.play();
+
                 player.isPlaying = true;
 
                 $rootScope.$emit('player.trackStarted');
@@ -106,7 +107,7 @@ angular.module('app')
 
         pause: function() {
             if (this.isPlaying) {
-                this.ytPlayer.pauseVideo();
+                this.playerBackend.pause();
                 this.isPlaying = false;
 
                 $rootScope.$emit('player.trackPaused');
@@ -115,7 +116,7 @@ angular.module('app')
 
         stop: function() {
            if (this.isPlaying) {
-               this.ytPlayer.pauseVideo();
+               this.playerBackend.pause();
                this.isPlaying = false;
                player.seekTo(0);
                $rootScope.$emit('player.trackStopped');
@@ -293,18 +294,18 @@ angular.module('app')
                     }
 
                     if (autoPlay) {
-                        player.ytPlayer.loadVideoById(data.id, 0, 'large');
+                        player.playerBackend.loadVideo(data.id, autoPlay, 'large');
                         player.play();
                     } else {
-                        player.ytPlayer.cueVideoById(data.id, 0, 'large');
+                        player.playerBackend.cueVideo(data.id, autoPlay, 'large');
                     }
                 });
             } else {
                 if (autoPlay) {
-                    player.ytPlayer.loadVideoById(track.youtube_id, 0, 'large');
+                    player.playerBackend.loadVideo(track.youtube_id, autoPlay, 'large');
                     player.play();
                 } else {
-                    player.ytPlayer.cueVideoById(track.youtube_id, 0, 'large');
+                    player.playerBackend.cueVideo(track.youtube_id, autoPlay, 'large');
                 }
             }
 
@@ -414,39 +415,74 @@ angular.module('app')
             }
         },
 
+        /**
+         * Last last track that was playing before browser close.
+         */
+        loadLastPlayerTrack: function() {
+            if (player.currentTrack) {
+                player.loadTrack(player.currentTrack);
+            } else if (player.currentQueIndex) {
+                player.loadTrack(player.queue[player.currentQueIndex]);
+            }
+        },
+
         getVolume: function() {
-            return this.ytPlayer.getVolume();
+            return this.playerBackend.getVolume();
         },
 
         setVolume: function(number) {
             localStorage.set('youtubify-volume', number);
-            return this.ytPlayer.setVolume(number);
+            return this.playerBackend.setVolume(number);
         },
 
         mute: function() {
             this.isMuted = true;
-            this.ytPlayer.mute();
+            this.playerBackend.mute();
         },
 
         unMute: function() {
             this.isMuted = false;
-            this.ytPlayer.unMute();
+            this.playerBackend.unMute();
         },
 
         getDuration: function() {
-            return this.ytPlayer.getDuration();
+            return this.playerBackend.getDuration();
         },
 
         getCurrentTime: function() {
-            return this.ytPlayer.getCurrentTime();
+            return this.playerBackend.getCurrentTime();
         },
 
         seekTo: function(time) {
-            this.ytPlayer.seekTo(time, true);
+            this.playerBackend.seekTo(time, true);
+        },
+
+        goFullScreen: function() {
+            thisVid = document.getElementById('player');
+
+            if (thisVid.requestFullscreen) {
+                thisVid.requestFullscreen();
+            }
+            else if (thisVid.msRequestFullscreen) {
+                thisVid.msRequestFullscreen();
+            }
+            else if (thisVid.mozRequestFullScreen) {
+                thisVid.mozRequestFullScreen();
+            }
+            else if (thisVid.webkitRequestFullScreen) {
+                thisVid.webkitRequestFullScreen();
+            }
         },
 
         init: function() {
-            initPlayer();
+            loadLastPlayerState();
+            window.player = this;
+
+            var serviceName = utils.getSetting('player_provider', 'youtube').toLowerCase()+'Player';
+
+            this.playerBackend = $injector.get(serviceName);
+
+            this.playerBackend.init(this);
         }
     };
 
@@ -495,7 +531,7 @@ angular.module('app')
             image_large: track.image_large,
             artist: track.artist || track.artists[0] || track.album.artist.name,
             artists: track.artists,
-            echo_nest_id: track.echo_nest_id,
+            echo_nest_id: track.echo_nest_id
         };
     };
 
@@ -572,18 +608,6 @@ angular.module('app')
     }
 
     /**
-     * Last last track that was playing before browser close.
-     */
-    function loadLastPlayerTrack() {
-        if (player.currentTrack) {
-            player.loadTrack(player.currentTrack);
-        } else if (player.currentQueIndex) {
-            player.loadTrack(player.queue[player.currentQueIndex]);
-        }
-        window.player = player;
-    }
-
-    /**
      * Fetch track info from youtube.
      *
      * @param {object} track
@@ -594,67 +618,6 @@ angular.module('app')
             artist = track.artist.replace('/', ' ');
 
         return $http.get('search-audio/'+artist+'/'+name);
-    }
-
-    function initPlayer() {
-        //fetch youtube iframe API
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        document.body.appendChild(tag);
-
-        loadLastPlayerState();
-
-        //init player
-        window.onYouTubeIframeAPIReady = function() {
-            player.ytPlayer = new YT.Player('player', {
-                playerVars : {
-                    autoplay: 0,
-                    rel: 0,
-                    showinfo: 0,
-                    egm: 0,
-                    showsearch: 0,
-                    controls: 0,
-                    modestbranding: 1,
-                    iv_load_policy: 3,
-                    disablekb: 1,
-                    version: 3
-                },
-                events: {
-                    onReady: function() {
-                        $rootScope.$apply(function() {
-                            loadLastPlayerTrack();
-                        });
-                        $rootScope.$emit('player.loaded');
-                    },
-                    onError:function(e) {
-                        if (e.data == 150 || e.data == 101) {
-                            alertify.delay(2500).error(utils.trans('couldntFindTrack'));
-                            player.playNext();
-                            $rootScope.$apply(function() {
-                                player.stop();
-                            })
-                        }
-                    },
-                    onStateChange: function(ev) {
-                        if (ev.data === YT.PlayerState.ENDED) {
-                            $rootScope.$apply(function() {
-                                player.playNext();
-                            })
-                        } else if (ev.data === YT.PlayerState.CUED || ev.data === YT.PlayerState.PLAYING) {
-                            $rootScope.$apply(function() {
-                                player.loadingTrack = false;
-                            });
-
-                            if (ev.data === YT.PlayerState.PLAYING) {
-                                setTimeout(function() {
-                                    $rootScope.$emit('player.trackChanged');
-                                })
-                            }
-                        }
-                    }
-                }
-            });
-        };
     }
 
     /**
@@ -707,7 +670,9 @@ angular.module('app')
         }
     }
 
-    player.init();
+    setTimeout(function() {
+        player.init();
+    });
 
     return player;
 });

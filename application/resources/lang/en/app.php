@@ -62,6 +62,7 @@
     "save"                  => "Save",
     "lyrics"                => "Lyrics",
     "couldntFindTrack"      => "Sorry, this song is not available for streaming.",
+    "couldntDownloadTrack"  => "Sorry, this song is not available for downloading.",
     "noLyricsFound"         => "Could not find lyrics for this song.",
     "radioNoMoreTracks"     => "There are no more suggestions for this artist.",
 
@@ -278,11 +279,18 @@
     'youtubeRegionCode'    => 'Youtube Region Code',
     'youtubeRegionCodeExpl'=> 'For what country should youtube results be returned. US recommended. ISO 3166-1 alpha-2 Code.',
     'player'               => 'Player',
-    'showYoutubePlayer'    => 'Show Small Youtube Player',
-    'showYoutubePlayerExpl'=> 'Should small youtube player be shown in the bottom right corner by default.',
+    'showPlayer'    => 'Show Small Player',
+    'showPlayerExpl'=> 'Should small player be shown in the bottom right corner by default.',
+    'showDownloadButton'   => 'Show Download Button',
     'hideLyricsButton'     => 'Hide Lyrics Button',
     'hideVideoButton'      => 'Hide Video Button',
     'hideQueueByDefault'   => 'Hide Player Queue by Default',
+    'blockedArtists'       => 'Blocked Artists',
+    'blockedArtistsExpl'   => 'Artists that should be blocked on the site (they will not be searchable, indexable, or appear on the site in any other way. Separate each one with newline (enter), * can be used as a wildcard.',
+    'playerProvider'       => 'Player Provider',
+    'playerProviderExpl'   => 'What service should be used to stream music on the site.',
+    'showFullscreenButton' => 'Enable/Disable full screen toggle button on video modal.',
+    'defaultPlayerVolume'  => 'Default player volume (1 to 100)',
 
     //Admin- Users
     "rowsPerPage"          => "Rows per page",

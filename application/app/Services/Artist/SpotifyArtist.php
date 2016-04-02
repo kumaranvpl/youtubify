@@ -83,8 +83,10 @@ class SpotifyArtist {
 
         $formatted = [];
 
-        foreach($response['artists'] as $artist) {
-            $formatted[] = $this->formatArtistInfo($artist);
+        if (isset($response['artists'])) {
+            foreach($response['artists'] as $artist) {
+                $formatted[] = $this->formatArtistInfo($artist);
+            }
         }
 
         return $formatted;
@@ -118,7 +120,11 @@ class SpotifyArtist {
             //limit to 40 albums per artist max
             if ($key === 2) break;
 
-            $albums = array_merge($albums, $this->httpClient->get("albums?ids=$idsString")['albums']);
+            $response = $this->httpClient->get("albums?ids=$idsString");
+
+            if ( ! isset($response['albums'])) continue;
+
+            $albums = array_merge($albums, $response['albums']);
         }
 
         return $this->formatAlbums($albums, $albumsToFetch !== null);
@@ -214,7 +220,9 @@ class SpotifyArtist {
     {
         foreach($albums as $key => $album) {
             foreach($album['tracks']['items'] as $k => $track) {
-                $album['tracks']['items'][$k] = $tracks[$track['id']];
+                if (isset($tracks[$track['id']])) {
+                    $album['tracks']['items'][$k] = $tracks[$track['id']];
+                }
             }
 
             $album['tracks'] = $album['tracks']['items'];

@@ -130,6 +130,8 @@ class SpotifySearch implements SearchInterface {
 
         $formatted = [];
 
+        if ( ! isset($response['albums'])) return $formatted;
+
         foreach($response['albums'] as $album) {
             $artist = [
                 'name'           => $album['artists'][0]['name'],

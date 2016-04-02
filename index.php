@@ -1,7 +1,9 @@
 <?php
 
 define('IS_DEMO', (gethostname() === 'youtubify' ? 1 : 0));
-define('VERSION', 1.5);
+define('VERSION', 1.7);
+
+if ( ! file_exists(__DIR__.'/application/.env') && file_exists(__DIR__.'/install_files')) { require_once __DIR__.'/install_files/install.php'; exit; }
 
 /**
  * Laravel - A PHP Framework For Web Artisans

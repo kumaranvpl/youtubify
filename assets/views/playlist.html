@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="flex-table album-table" ng-show="playlist.tracks && playlist.tracks.length" sortable-table-header>
+        <div class="flex-table album-table" ng-show="playlist.tracks && playlist.tracks.length" sortable-table-header reorder-tracks>
             <div class="flex-table-row flex-table-header">
                 <div class="flex-table-row-item track-number">#</div>
                 <div class="flex-table-row-item add-remove-track hidden-phone"></div>
@@ -50,7 +50,7 @@
                 <div class="flex-table-row-item more-options"></div>
                 <div class="flex-table-row-item track-duration hidden-phone" sort-field="duration"><i class="icon icon-clock"></i></div>
             </div>
-            <div class="flex-table-row" ng-repeat="track in playlist.tracks as sortedTracks" ng-class="{ playing: trackIsPlaying(track), saved: trackSaved(track) }" context-menu-item>
+            <div class="flex-table-row track-row" ng-repeat="track in playlist.tracks | orderBy:'pivot.position' as sortedTracks" ng-class="{ playing: trackIsPlaying(track), saved: trackSaved(track) }" context-menu-item trackId="{{ track.id }}">
                 <div class="flex-table-row-item track-number hover-icon" ng-click="loadQueueAndPlayTrack(track, $index, sortedTracks)">
                     <span class="track-index hidden-tablet">{{ $index+1 }}</span>
                     <div class="play-icon"><i class="icon icon-play"></i></div>

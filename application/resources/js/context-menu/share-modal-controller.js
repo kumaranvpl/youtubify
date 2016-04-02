@@ -9,12 +9,16 @@ angular.module('app').controller('ShareModalController', function($scope, $rootS
     $scope.shareable = $scope.$parent.shareable || contextMenu.item;
 
     $scope.makeShareableUrl = function(shareable) {
-        console.log(shareable);
         var url = $rootScope.baseUrl+(! utils.getSetting('enablePushState') ? '#/' : '');
-
-        if (shareable.duration) {
+        console.log(shareable);
+        if (shareable.duration || shareable.identifier) {
             url+='track/'+shareable.id;
             $scope.type = 'track';
+        }
+
+        else if (shareable.release_date && shareable.artist_id === 0) {
+            url+='album/'+utils.encodeUrlParam(shareable.name);
+            $scope.type = 'album';
         }
 
         else if (shareable.artist && shareable.artist.id) {

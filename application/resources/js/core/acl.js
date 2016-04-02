@@ -78,7 +78,7 @@ angular.module('app').run(function($rootScope, $state, $location, users, utils) 
 
         //push url change event to google analytics
         if (window.ga) {
-            window.ga('send', 'pageview', { page: toState.url });
+            window.ga('send', 'pageview', { page: $location.path() });
         }
     })
 });

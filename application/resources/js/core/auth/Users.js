@@ -21,7 +21,9 @@ angular.module('app').factory('users', function($http, $rootScope, $state, utils
 
         follow: function(user) {
             return $http.post('users/'+user.id+'/follow').success(function() {
-                users.current.followed_users.push(user);
+                if (users.current) {
+                    users.current.followed_users.push(user);
+                }
             });
         },
 
@@ -171,6 +173,8 @@ angular.module('app').factory('users', function($http, $rootScope, $state, utils
 
             if ( ! user) user = this.current;
 
+            if ( ! user) return false;
+
             if (user.first_name) {
                 name = user.first_name;
             }
@@ -195,8 +199,9 @@ angular.module('app').factory('users', function($http, $rootScope, $state, utils
             if ( ! user) user = this.current;
 
             if (user.avatar_url) {
-                if ( ! user.avatar_url.indexOf('//')) {
-                    return $rootScope.baseUrl+user.avatar_url;
+                if (user.avatar_url.indexOf('//') === -1) {
+                    var avatar = (user.avatar_url.charAt(0) == '/') ? user.avatar_url.substr(1) : user.avatar_url;
+                    return $rootScope.baseUrl+avatar;
                 } else {
                     return user.avatar_url;
                 }

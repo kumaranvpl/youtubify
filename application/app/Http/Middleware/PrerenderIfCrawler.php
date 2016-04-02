@@ -37,7 +37,7 @@ class PrerenderIfCrawler  {
         if ($this->shouldPrerender($request)) {
             $model = $this->getShareableModel($request);
 
-            if ( ! $model) abort(404);
+            if ( ! $model || ! $model['model']) abort(404);
 
             return view('view-for-crawlers')->with('model', $model['model'])->with('type', $model['type'])->with('settings', App::make('Settings'));
         }

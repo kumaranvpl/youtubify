@@ -8,6 +8,12 @@ angular.module('app').directive('videoContainer', function(player) {
 						player.toggleVideo();
 					})
 				}
+
+                if (shouldToggleFullScreen) {
+                    $scope.$apply(function() {
+                        player.goFullScreen();
+                    })
+                }
 			});
 		}
 	};
@@ -16,4 +22,8 @@ angular.module('app').directive('videoContainer', function(player) {
 		return e.target.classList.contains('backdrop') ||
 			(e.target.classList.contains('close-lyrics-icon')) || e.target.parentNode.classList.contains('close-lyrics-icon');
 	}
+
+    function shouldToggleFullScreen(e) {
+        return (e.target.classList.contains('toggle-fullscreen')) || e.target.parentNode.classList.contains('toggle-fullscreen');
+    }
 });

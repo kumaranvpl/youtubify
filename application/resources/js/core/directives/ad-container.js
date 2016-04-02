@@ -9,6 +9,12 @@ angular.module('app').directive('adContainer', function(utils) {
 
                 if (html && html.indexOf('google') > -1) {
                     utils.loadScript('//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js');
+                } else {
+                    var pattern = /.+?src=.(.+?).>/g, match;
+
+                    while (match = pattern.exec(html)) {
+                        utils.loadScript(match[1]);
+                    }
                 }
 
                 setTimeout(function() {

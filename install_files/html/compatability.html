@@ -1,0 +1,28 @@
+<div id="compat-check" class="step-panel">
+	<div ng-if="compatResults" class="compat-checks">
+    <div ng-repeat="extension in compatResults.extensions" class="check-item animated zoomInRight">
+      <div class="check">
+        <i class="icon icon-ok-circled2" ng-if="(extension.actual === extension.expected)"></i>
+        <i class="icon icon-cancel-circled2" ng-if="(extension.actual !== extension.expected)"></i>
+        <span class="capitalize">{{ extension.name }} PHP Extension is required </span>
+      </div>
+      <div ng-if="extension.actual !== extension.expected">
+        <div class="info" ng-if="extension.type === 'extension'">This PHP extension is required. You'll need to enable it or ask your hosting provider to do it for you to continue the installation.</div>
+        <div class="info" ng-if="extension.type === 'function'">This PHP function is required. You'll need to enable it or ask your hosting provider to do it for you to continue the installation.</div>
+      </div>
+    </div>
+
+    <div ng-repeat="folder in compatResults.folders" class="check-item animated zoomInRight">
+      <div class="check">
+        <i class="icon icon-ok-circled2" ng-if="folder.writable"></i>
+        <i class="icon icon-cancel-circled2" ng-if=" ! folder.writable"></i>
+        <span>Directory {{ folder.path }} Writable</span>
+      </div>
+      <div class="info" ng-if="!folder.writable">Folder at this path needs to be writable. You can make it writable by giving it 777 permissions via file manager like filezilla or the one in your cpanel.</div>
+    </div>
+
+    <div ng-if="compatResults.problem" id="error"><span id="msg">Seems like compatabality check found a problem. Please consult the table above for more details.</span></div>
+  </div>
+
+  <button ng-disabled="!enableNextStep" ng-click="nextStep()">Continue</button>
+</div>  

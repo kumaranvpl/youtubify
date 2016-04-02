@@ -3,6 +3,7 @@
 use App;
 use GuzzleHttp\Client;
 use App\Services\HttpClient;
+use League\Flysystem\Exception;
 
 class YoutubeSearch {
 
@@ -38,7 +39,11 @@ class YoutubeSearch {
     {
         $params = $this->getParams($artist, $track, $limit, $type);
 
-        $response = $this->httpClient->get('search', ['query' => $params]);
+        try {
+            $response = $this->httpClient->get('search', ['query' => $params, 'config' => ['curl' => [CURLOPT_REFERER => url()]]]);
+        } catch(\Exception $e) {
+            $response = [];
+        }
 
         return $this->formatResponse($response);
     }
@@ -91,6 +96,8 @@ class YoutubeSearch {
     private function formatResponse($response) {
 
         $formatted = [];
+
+        if ( ! isset($response['items'])) return $formatted;
 
         foreach($response['items'] as $item) {
             $formatted[] = ['name' => $item['snippet']['title'], 'id' => $item['id']['videoId']];

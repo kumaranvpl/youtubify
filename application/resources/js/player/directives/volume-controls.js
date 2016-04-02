@@ -44,7 +44,7 @@ angular.module('app').directive('volumeControls', function($rootScope, player, l
             ratio       = (x-nodes.volumeBox.left)/nodes.volumeBox.width;
             percentage  = ratio*100;
         } else {
-            percentage = ((localStorage.get('youtubify-volume', 30)/100)*100);
+            percentage = ((localStorage.get('youtubify-volume', utils.getSetting('default_player_volume', 30))/100)*100);
         }
 
         if (percentage <= 0 && ! player.isMuted) {

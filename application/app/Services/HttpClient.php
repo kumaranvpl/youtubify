@@ -13,8 +13,9 @@ class HttpClient {
 		$options['timeout'] = 8.0;
 		$options['exceptions'] = false;
 
-		$this->client = new Client($options);
 
+
+		$this->client = new Client($options);
 		$this->showFeedback = $showFeedback;
 	}
 

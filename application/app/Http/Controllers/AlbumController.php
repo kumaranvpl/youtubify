@@ -202,8 +202,12 @@ class AlbumController extends Controller {
 		if ( ! Input::has('items')) return;
 
 		foreach (Input::get('items') as $album) {
-			$album->tracks()->delete();
-			$album->delete();
+            $album = Album::find($album['id']);
+
+            if ($album) {
+                $album->tracks()->delete();
+                $album->delete();
+            }
 		}
 
 		return response(trans('app.deleted', ['number' => count(Input::get('items'))]));

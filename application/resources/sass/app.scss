@@ -178,7 +178,7 @@
       opacity: 1;
     }
 
-    > .close-lyrics-icon {
+    > .close-lyrics-icon, .toggle-fullscreen {
       position: absolute;
       top: -8px;
       right: -8px;
@@ -197,7 +197,11 @@
       }
     }
 
-    > #player {
+    > .toggle-fullscreen {
+      right: 32px;
+    }
+
+    > #player{
       pointer-events: none;
       width: 100%;
       height: 100%;
@@ -255,3 +259,11 @@
     }
   }
 }
+
+#soundcloud-iframe {
+  position: absolute;
+  bottom: -3000px;
+  right: -3000px;
+  visibility: hidden;
+}
+

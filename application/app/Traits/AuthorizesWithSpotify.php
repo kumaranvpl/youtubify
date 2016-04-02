@@ -17,5 +17,4 @@ trait AuthorizesWithSpotify {
 
         $this->token = $result['access_token'];
     }
-
 }

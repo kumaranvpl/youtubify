@@ -7,6 +7,7 @@
         <title>{{ $model->name }} - {{ $settings->get('siteName') }}</title>
 
         <meta name="google" content="notranslate">
+        <link rel="canonical" href="{{ str_replace('%20', '+', Request::url()) }}" />
 
         <meta itemprop="name" content="{{ $model->name }}">
 
